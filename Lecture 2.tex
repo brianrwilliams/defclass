@@ -1,0 +1,490 @@
+\documentclass[11pt]{amsart}
+
+\usepackage{macros}
+
+\linespread{1.25}
+
+\usepackage[final]{pdfpages}
+
+\setcounter{tocdepth}{2}
+
+\def\Spec{{\rm Spec}}
+
+\title{Lecture 2: Deformation problems in algebraic geometry}
+
+\def\brian{\textcolor{blue}{BW: }\textcolor{blue}}
+
+\begin{document}
+\maketitle
+
+\section{Some algebraic geometry}
+
+Fix a field $k$ of characteristic zero.
+Let $\CAlg_k$ denote the category of commutative, associative, and unital algebras over $k$.
+For any $A \in \CAlg_k$ define the functor
+\[
+\begin{array}{cccc}
+h_{{\rm Spec}(A)} : & \CAlg_k & \to & \Set \\
+& B & \mapsto & {\rm Hom}_{\CAlg_k}(A,B) 
+\end{array}
+\]
+The assignment $A \mapsto h_{{\rm Spec}(A)}$ defines a functor
+\[
+h : \CAlg^{op}_k \to {\sf Fun}(\CAlg_k , \Set) .
+\]
+This is the Yoneda embedding for the category of commutative algebras. 
+It is fully faithful, in the sense that $h_{\Spec(A)} \cong h_{\Spec(B)}$ as functors if and only if $A$ and $B$ are isomorphic as algebras. 
+Thus, studying commutative $k$-algebras is equivalent to studying the functors $\{h_A \; : \; A \in \CAlg_k\}$. 
+
+\begin{rmk}
+The notation $h_{{\rm Spec}(A)}$ is used to indicate that we are representing the {\em affine scheme} ${\rm Spec}(A)$ through its functor of points. 
+In general, we can represent any scheme $X$ as a functor defined on the (opposite) category of schemes $h_X : Y \mapsto {\rm Hom}_{\rm Sch_{/k}} (Y, X)$, but we will mostly focus on the affine case in this lecture.
+\end{rmk}
+%In general, given any scheme $S$, we define the functor 
+%\end{rmk}
+
+We encode deformation problems in this sort of functor of points approach of describing algebraic structures. 
+As we saw in the last lecture, the overarching theme of deformation theory is to study moduli spaces of some mathematical structures. 
+At first pass in this lecture, the types of moduli spaces we consider will be defined as functors of the form
+\[
+\sX : \CAlg_k \to \Set .
+\]
+Not every functor $\sX$ comes from an algebra (or even a scheme) through the Yoneda embedding as above.
+So these are more general objects than one would consider in a first course in algebraic geometry. 
+
+\begin{dfn}
+A {\em classical moduli problem} (or {\em prestack}) is a functor $\sX : \CAlg_k \to \Set$. 
+\end{dfn}
+
+\begin{rmk}
+A moduli space $\sX$ parameterizes families of structures in the sense that maps $f : S \to X$ define an ``$S$-family" of structures. 
+If $\sX$ is a classical moduli problem, and $A$ is a commutative $k$-algebra, the set $\sX(A)$ thus has the following interpretation. 
+From our discussion in the beginning of this lecture, $\sX(A)$ is equal to the set of maps ${\rm Spec}(A) \to \sX$. 
+Thus, $\sX(A)$ corresponds to families of objects over ${\rm Spec}(A)$. 
+\end{rmk}
+
+It is unwieldy to study this huge class of moduli problems. 
+We turn our attention to ``deformation problems" which means that we are only looking at the moduli of structures infinitesimally near a fixed object. 
+Here is a geometric example to explain the type of behavior we are trying to codify. 
+
+\begin{eg}\label{eg: fml}
+Suppose $A$ is a commutative algebra and let $\phi : A \to k$ be a homomorphism of algebras.
+Denote by $X = {\rm Spec}(A)$ the corresponding affine scheme.  
+By our discussion above, this homomorphism $\theta$ is equivalent to choosing a closed point $x \in X$. 
+Let $\fm= \ker (\phi) \subset A$ be the corresponding maximal ideal.
+If $B$ is any commutative algebra, define the set
+\[
+X^{\Hat{\;\;}}_x (B) = \{f : A \to B \; | \phi = \psi \circ f \; \; , \;\; \forall\; \psi : B \to k \}
+\]
+The condition on the homomorphism $f : A \to B$ on the right hand side says that for {\em all} homomorphisms $\psi : B \to k$, the homomorphism $\phi$ factors as
+\[
+\begin{tikzcd}
+A \ar[dr, "\phi"'] \ar[rr,"f"] & & B \ar[dl, "\psi"] \\ 
+& k & 
+\end{tikzcd} .
+\]
+In other words, this is the set of all maps of schemes ${\rm Spec}(f) : {\rm Spec}(B) \to {\rm Spec}(A)$ such that all points $y \in {\rm Spec}(B)$ are mapped to $x$. 
+
+This construction defines a functor
+\beqn\label{fmlcpl}
+X^{\Hat{\;\;}}_x : \CAlg_k \to \Set 
+\eeqn
+that we call the ``formal completion of $X$ along $x$".
+\end{eg}
+
+\begin{ex}
+Let $A = k [t]$ be the polynomial algebra in one variable and $\phi : k[t] \to k$ be the homomorphism that sends a polynomial to its constant term so that $\ker \phi = (t)$ is the unique maximal ideal.
+Show that the formal completion of ${\rm Spec}(A)$ along $\phi$ is represented by the commutative algebra
+\[
+k[[t]] := \lim_{n}  k[t] / (t)^n .
+\]
+More generally, suppose $A$ is any commutative algebra and $\fm \subset A$ is a maximal ideal with corresponding homomorphism $\phi : A \to A / \fm = k$.
+Show that the formal completion of ${\rm Spec}(A)$ along $\varphi$ is represented by the commutative algebra
+\[
+A^{\Hat{\;\;}}_\fm = \lim_{n} A / \fm^n .
+\]
+\end{ex}
+
+The formal completion functor is completely determined on a certain subcategory of commutative $k$-algebras, called {\em local Artinian algebras}.
+One should think of Artinian algebras as being the precise mathematical language to speak of ``infinitesimal neighborhoods" of points inside of some big algebro-geometric object. 
+
+\begin{dfn}
+A $k$-algebra $A$ is {\em local} if it has a unique maximal ideal $\fm_A \subset A$. 
+A local algebra is {\em Artinian} if it is finite dimensional as a $k$-vector space.
+Let $\Art_k$ denote the category of local Artinian $k$-algebras.
+\end{dfn}
+
+\begin{rmk}
+Whenever we say ``Artinian" in these notes we mean ``local Artinian".
+We will often write the unique morphism $\psi_A : \to A / \fm_A = k$ and the corresponding closed point as $\star \in \Spec(A)$. 
+\end{rmk}
+
+The discussion in Example \ref{eg: fml} shows that $X^{\Hat{\;\;}}_x$ from (\ref{fmlcpl}) is equivalent to the data of the functor
+\[
+\begin{array}{cccc}
+X^{\Hat{\;\;}}_x : & \Art_k & \to & \Set \\
+& (B,\fm_B) & \mapsto & \{f : A \to B \; | \; \phi = \psi_B \circ f\} . 
+\end{array}
+\]
+Here, we use the notation $\psi_B : B \to B / \fm_B \cong k$ for the point corresponding to the maximal ideal of $B$. 
+In other words, the formal completion is completely determined by its value on Artinian algebras. 
+In this way, Artinian algebras probe infinitesimal behavior near a fixed point. 
+
+\begin{dfn}
+A {\em formal pre-deformation problem} is a functor
+\[
+F : \Art_k \to \Set
+\]
+such that $F(k) = \{\star\}$, the set with one element. 
+A map of formal pre-deformation problems is a natural transformation of functors. 
+\end{dfn}
+
+For an Artinian algebra $A$ and a formal pre-deformation problem $F$, we think of $F(A)$ as the set of classes of ``$A$-deformations" of the object $F(k) = \star$. 
+Note that for each $A$ we have inside of $F(A)$ the trivial deformation $\star = F(k) \to F(A)$ provided by the unit $k \to A$. 
+
+\begin{rmk}
+If $\sX$ is a classical moduli problem, we have seen that $\sX(A)$ corresponds to families of objects over ${\rm Spec}(A)$. 
+We can also think of a formal pre-deformation problem $F$ as parametrizing some (formal) moduli space $\Hat{\sX}$.
+Since $F(k) = \star$ is a single point, there is a unique map ${\rm Spec}(k) \to \Hat{\sX}$. 
+Moreover, the set $F(A)$ corresponds to families of objects $Z$ over ${\rm Spec}(A)$ that reduce to the unique object $Z_0$ under the natural map ${\rm Spec}(k) \to {\rm Spec}(A)$:
+\[
+\begin{tikzcd}
+Z_0 \ar[r] \ar[d] & Z \ar[d] \\
+{\rm Spec}(k) \ar[r] & {\rm Spec}(A) .
+\end{tikzcd}
+\]
+\end{rmk}
+
+\begin{eg}
+We have just seen that every scheme $X$ together with a point $x \in X$ defines a formal pre-deformation problem $X^{\Hat{\;\;}}_x$. 
+This construction works more generally for any classical moduli problem (or prestack). 
+Indeed, if $\sX : \CAlg_k \to \Set$ is any classical moduli problem, and $x \in \sX(k)$, then we define the the formal pre-deformation functor
+\[
+\begin{array}{cccc}
+\sX^{\Hat{\;\;}}_x : & \Art_k & \to & \Set \\
+& (B,\fm_B) & \mapsto & \{y \in \sX(B) \; | \; \sX(\psi_B)(y) = x\} . 
+\end{array}
+\]
+More categorically, we are defining $\sX^{\Hat{\;\;}}_x(B)$ as the fiber, over $x \in \sX(k)$, of the map $\sX(\psi_B) : \sX(B) \to \sX(k)$. 
+In other words, $\sX^{\Hat{\;\;}}_x(B)$ fits into a pull-back square of sets
+\[
+\begin{tikzcd}
+\sX^{\Hat{\;\;}}_x(B) \ar[d] \ar[r] & \sX(B) \ar[d, "\sX(\psi_B)"] \\
+\{x\} \ar[r] & \sX(k) .
+\end{tikzcd}
+\]
+\end{eg}
+
+\section{Formal deformation problems}
+
+\begin{dfn}\label{dfn: def}
+A {\em formal deformation problem} is a formal pre-deformation problem $F : \Art_k \to \Set$ such that for every fiber product
+\[
+\begin{tikzcd}
+D \ar[d] \ar[r] & B \ar[d, "\sigma"] \\
+C \ar[r] & A 
+\end{tikzcd}
+\]
+in $\Art_k$ the induced map
+\[
+F(D) \to F(B) \times_{F(A)} F(C)
+\]
+is
+\begin{enumerate}
+\item[(i)] surjective if $\sigma : B \to A$ is surjective;
+\item[(ii)] bijective if $A = k$.
+\end{enumerate}
+\end{dfn}
+
+\begin{rmk}
+The category of Aritnian algebras is closed under pull-backs. 
+Suppose that $A,B,C \in \Art_k$ and $C \to A$, $B \to A$ are homomorphisms.
+Then, $D = B \times_A C$ is an Artinian algebra. 
+As algebras, $D \subset B \times C$. 
+The unique maximal ideal of $D$ is $\pi_B^{-1}(\fm_B) = \pi_C^{-1}(\fm_C)$ where $\pi_B : B \times C \to B$, $\pi_C : B \times C \to C$ are the projections. 
+\end{rmk}
+
+\begin{dfn}
+A morphism $\sigma : B \to A$ is {\em small} if $\sigma$ is a surjection and $\ker(\sigma) \cdot \fm_B = 0$. 
+We call a short exact sequence of Artinian algebras
+\[
+M \to B \xto{\sigma} A
+\]
+a {\em small extension} if $\sigma$ is small. 
+Further, if $M$ is principal we call such an extension {\em elementary}. 
+\end{dfn}
+
+\begin{eg}
+Consider the ring of dual numbers $k[\epsilon] / \epsilon^2$. 
+The obvious map $k[\epsilon] / \epsilon^2 \to k$ is small (in fact elementary). 
+More generally, for any $n$ the morphism $k[\epsilon]/\epsilon^{n+1} \to k[\epsilon]/\epsilon^n$ is small (in fact elementary). 
+\end{eg}
+
+\begin{ex} 
+Show that every small homomorphism $B \to A$ can be written as a composition of elementary morphisms
+\[
+B \to A_1 \to A_2 \to \cdots \to A_N \to A .
+\]
+\end{ex}
+
+\begin{rmk}
+This example shows that Definition \ref{dfn: def} of a formal deformation problem is equivalent to requiring that the predeformation problem $F$ satisfy the following. 
+If $\sigma : B \to A$ is a {\em small} morphism in $\Art_k$ and $C \to A$ is any morphism then the induced map
+\[
+F(B \times_A C) \to F(B) \times_{F(A)} F(C)
+\]
+is
+\begin{enumerate}
+\item[(i)] surjective if $\sigma : B \to A$ is surjective;
+\item[(ii)] bijective if $A = k$.
+\end{enumerate}
+That is, we only have to check compatibility of pull-backs for small morphisms. 
+\end{rmk}
+
+\begin{prop} Let $F$ be a formal deformation problem. 
+Define $T_F = F(k[\epsilon]/\epsilon^2)$. 
+Then, $T_F$ has the natural structure of a $k$-vector space. 
+\end{prop}
+\begin{proof}
+\end{proof}
+
+On one hand, the tangent space is equal the set of all first order deformations, which we have just shown carries the natural structure of a $k$-vector space. 
+In addition, the tangent space controls the set of lifts of deformations along morphisms of Artinian algebras. 
+
+\begin{prop}
+Let $F$ be a formal deformation problem and suppose 
+\[
+M \to B \xto{\sigma} A
+\]
+is a small extension of Artinian algebras.
+Then, there is a canonical transitive action of $T_F \tensor_k M$ on the fibers of the induced map
+\[
+F(\sigma) : F(B) \to F(A) .
+\] 
+which is functorial with respect to morphisms of small extensions. 
+In particular, given $a \in F(A)$, the set of lifts $\Tilde{a} \in F(B)$ of $a$ is a torsor for the abelian group $T_F \tensor_k M$. 
+\end{prop}
+
+We have not addressed the issue of {\em existence} of deformations. 
+
+\begin{dfn}\label{dfn: obs}
+Let $F$ be a pre-deformation problem. 
+An {\em obstruction theory} $(V, \theta)$ of $F$ is the data of:
+\begin{enumerate}
+\item[(1)] a vector space $V$;
+\item[(2)] for every small extension
+\beqn\label{ses1}
+M \to B \to A
+\eeqn
+a map $\theta_{B} : F(A) \to V \tensor_k M$;
+\end{enumerate}
+such that:
+\begin{enumerate}
+\item[(i)] if $A = k$ in (\ref{ses1}), then $\theta_{B} (\star = F(k)) = 0$ for every small extension;
+\item[(ii)] the maps $\theta_{B}$ are functorial for maps of small extensions. 
+\end{enumerate}
+\end{dfn}
+
+The collection of obstructions theories for a fixed pre-deformation problem form a category in a natural way. 
+Indeed, we say a morphism of obstruction theories $f : (V, \theta) \to (W, \psi)$ is a map of vector spaces $f : V \to W$ such that $\theta_B = (f \tensor 1_M) \circ \theta_B$ for every small extension as in (\ref{ses1}). 
+
+This easy lemma shows that obstruction theories recognize lifting problems for deformation functors. 
+
+\begin{lem}
+Suppose $(V, \theta)$ is an obstruction theory for $F$ and suppose 
+\[
+M \to B \xto{\sigma} A 
+\]
+is a small extension. 
+If $a \in F(A)$ lifts to an element $\Tilde{a} \in F(B)$, then $\theta_B(a) = 0$. 
+\end{lem}
+\begin{proof}
+We can pull-back the small exact sequence along $\sigma$ to obtain the trivial small exact sequence
+\[
+M \to B \oplus M \to B .
+\] 
+Let $\theta_{B \oplus M} : F(B) \to V \tensor_k M$ be the corresponding obstruction map. 
+By functoriality, we know that if $\Tilde{a} \in F(B)$ is any lift of $a \in F(A)$ then $\theta_{B \oplus M} (\Tilde{a}) = \theta_B(a)$. 
+Thus, to prove the lemma, it suffices to assume that the small exact sequence is trivial. 
+The trivial small exact sequence is pulled back from the small exact sequence
+\[
+M \to M \to k
+\]
+along the natural map $\psi_B : B \to k$. 
+The statement then follows from condition (i) in Definition \ref{dfn: obs}
+\end{proof}
+
+\begin{dfn}
+An obstruction theory is {\em complete} if for every small exact sequence (\ref{ses1}) that $\theta(a) = 0$ if and only if there exists a lift $\Tilde{a} \in F(B)$ of $a$.
+\end{dfn}
+
+\begin{thm}
+Let $F$ be a formal deformation problem. 
+Then, there exists a unique universal complete deformation theory $(O_F, \theta)$.
+Here, universal means that it is initial in the category of complete deformation theories. 
+\end{thm}
+
+\section{Deformations of schemes}
+
+\begin{dfn}
+Suppose $X$ is a scheme over $k$. 
+If $A$ is any augmented commutative $k$-algebra, the an {\em $A$-deformation} of $X$ is a pair $(X_A, \varphi)$ where $X_A$ is a scheme flat over $A$ and $\varphi : X \to X_A$ is a morphism of schemes which induces an isomorphism $X \xto{\simeq} X_A |_{{\rm Spec}(k)}$. 
+In other words, $(X_A, \varphi)$ fit into a pull-back diagram of schemes
+\[
+\begin{tikzcd}
+X \ar[d] \ar[r, "\varphi"] & X_A \ar[d] \\ 
+{\rm Spec}(k) \ar[r] &{\rm Spec}(A) 
+\end{tikzcd} 
+\]
+where the right vertical arrow is flat.
+\end{dfn}
+
+The {\em trivial} $A$-deformation of $X$ is given by $X_A = X \times \Spec(A)$ where $\varphi : X \to X_A$ maps $x \in X$ to $x \times \{\star\} \in X \times \Spec(A)$.
+A {\em map} of $A$-deformations $f : X_A \to X_A'$ is a map of schemes over $\Spec(A)$ that restricts to the identity on $X$. 
+
+\begin{rmk}\label{rmk: adef}
+An $A$-deformation is equivalent to the data of a sheaf $\sF$ on $X$ of flat $A$-modules together with a map $\varphi^* : \sF \to \sO_X$ that induces an isomorphism of sheaves $\sF \tensor_A k \cong \sO_X$. 
+In the definition above $\sF = \sO_{X_A}$ and $\varphi^*$ is the pull-back of the map of schemes $\varphi$. 
+\end{rmk}
+
+Given a scheme $X$, we can define the functor
+\[
+{\rm Def}_X : \Art_k \to \Set
+\]
+by sending an Artinian algebra $A$ to the the collection of isomorphism classes of $A$-deformations of $X$ with respect to the natural augmentation $A \to k$. 
+
+\begin{prop}
+For any $X$, the pre-deformation functor ${\rm Def}_X$ is a deformation functor. 
+\end{prop}
+\begin{proof}
+Suppose $B \xto{\sigma_B} A \overset{\sigma_C}{\leftarrow} C$ are morphisms in $\Art_k$, where $\sigma_B$ is surjective. 
+We want to show that the induced map
+\[
+\Psi : \Def_X (B \times_A C) \to \Def_X(B) \times_{\Def_X(A)} \Def_X(C)
+\]
+is surjective. 
+
+Let's unpack this a bit. 
+An element in the codomain of $\Psi$ is a pair $(X_B, \varphi_B) \times (X_C,\varphi_C)$ where:
+\begin{itemize}
+\item $X_B,X_C$ are flat over $\Spec(B), \Spec(C)$, respectively;
+\item $\varphi_B : X \to X_B$, $\varphi_C : X \to X_C$ are maps;
+\end{itemize}
+such that 
+\begin{itemize}
+\item $\varphi_B,\varphi_C$ induce isomorphisms over $\Spec(k) \to \Spec(B), \Spec(C)$, respectively; 
+\item there is an isomorphism of schemes
+\[
+f : X_B |_{\Spec(A)} \xto{\cong} X_C |_{\Spec(B)}
+\] 
+intertwining $\varphi_B,\varphi_C$. 
+\end{itemize} 
+
+The map $\Psi$ sends a deformation $(\Tilde{X}, \Tilde{\varphi})$ over $\Spec(B \times_A C)$ to its restrictions
+\[
+(\Tilde{X} |_{\Spec(B)}, \Tilde{\varphi}_B) \times (\Tilde{X} |_{\Spec(C)}, \Tilde{\varphi}_C) .
+\]
+where ...
+We denote by $(Y, \sO_Y)$ either of the isomorphic schemes $(X_B, \sO_B) \cong_f (X_C, \sO_C)$. 
+Note that there are natural maps $X_B \leftarrow Y \to X_C$. 
+Define $Z$ to be the pushout in the category of ringed spaces
+\[
+\begin{tikzcd}
+Y \ar[r] \ar[d] & X_B \ar[d] \\ X_C \ar[r] & Z .
+\end{tikzcd}
+\] 
+The following is a technical lemma.
+\begin{lem} The ringed space $(Z,\sO_Z)$ is a scheme.
+\end{lem}
+
+By assumption, the compositions $X \to Y \to X_B \to Z$ and $X \to Y \to X_C \to Z$ are equal and exhibit a map $\varphi : X \to Z$. 
+Moreover, note that there are maps of schemes
+\[
+X_B \to \Spec(B) \to \Spec(B \times_A C)
+\]
+\[
+X_C \to \Spec(C) \to \Spec(B \times_A C) .
+\] 
+By the universal property of pushouts, these maps provide us a unique map rendering the diagram commutative
+\[
+\begin{tikzcd}
+Y \ar[r] \ar[d] & X_B \ar[d] \ar[ddr] & \\ 
+X_C \ar[r] \ar[drr] & Z \ar[dr, dotted] & \\ 
+& & \Spec(B \times_A C) .
+\end{tikzcd}
+\] 
+
+\begin{lem}
+The dotted map is flat.
+\end{lem}
+
+We have just constructed a pair $(Z, \varphi : X \to Z)$ where $Z$ is flat over $\Spec(B \times_A C)$. 
+It is immediate to check that $\varphi$ induces an isomorphism $\varphi |_{\Spec(k)} : X \xto{\cong} Z|_{\Spec(k)}$ so that $(Z, \varphi)$ is an $B \times_A C$-deformation of $X$. 
+Also, as an exercise one can check that $\Psi$ maps $(Z, \varphi)$ to the pair $(X_B, \varphi_B) \times (X_C,\varphi_C)$ we started with.
+
+It remains to see that $\Psi$ is an isomorphism when $A = k$. 
+\end{proof}
+
+\begin{lem}
+Suppose $X$ is an affine variety. 
+Then every $A$-deformation is isomorphic to the trivial one.
+\end{lem}
+
+\begin{proof}
+Let $X = \Spec(B)$.
+%First, we prove the assertion for a first order deformation. 
+%That is, the case $A = k[\epsilon] / \epsilon^2$. 
+By Remark \ref{rmk: adef}, the data of an $A$-deformation is an algebra $B_A$ that is flat over $A$ together with a map of algebras $\varphi : B_A \to B$ inducing an isomorphism 
+\beqn\label{def2}
+\varphi : B_A \tensor_A k \xto{\cong} B.
+\eeqn
+In other words, we have a pushout diagram of commutative algebras
+\[
+\begin{tikzcd}
+B & B_A \ar[l,"\varphi"']\\ 
+k \ar[u] & A \ar[u] \ar[l] .
+\end{tikzcd} 
+\]
+
+We first prove the assertion for the case that $A = k[\epsilon]/\epsilon^2$, so that $B_A$ is a first-order deformation. 
+In this case, the map $\varphi$ induces the diagram of short exact sequences
+\[
+\begin{tikzcd}
+& & & 0 & \\
+0 \ar[r] & B \ar[r] & B_A \ar[dr, dotted, "\cong"'] \ar[r,"\varphi"] & B \ar[u] \ar[r] & 0 \\
+& & & B \tensor_k k[\epsilon]/\epsilon^2 \ar[u] &  \\
+& & & B \ar[u] & \\
+& & & 0 \ar[u] & .
+\end{tikzcd}
+\]
+The horizontal short exact sequence follows from the condition (\ref{def2}) that reads $B_A \tensor_{k[\epsilon]/\epsilon^2} k = B_A / \epsilon B_A \cong B$ and the fact that $\epsilon B_A = B$. 
+The vertical short exact sequence comes from the trivial $k[\epsilon]/\epsilon^2$-deformation and is a sequence of $k[\epsilon]/\epsilon^2$-modules
+By flatness, the vertical short exact sequence is split, and hence the map $\varphi$ lifts as shown. 
+It is an isomorphism by the horizontal short exact sequence. 
+
+%The trivial $A$-deformation of $B$ leads to the short exact sequence
+%\[
+%0 \to A \to B \tensor_k A \to B \to 0 .
+%\]
+%This exhibits $B \tensor_k A$ as an $A$-extension, hence by flatness is trivial as an $A$-module. 
+%Thus, the map $\varphi : B_A \to B$ lifts to a map of $A$-algebras $\varphi : B_A \to B \tensor_k A$, which is an isomorphism since $B_A$ is an $A$-deformation. 
+
+\end{proof} 
+
+For a general scheme, it is difficult to completely characterize the tangent and obstruction spaces. 
+In the case that $X$ is a smooth variety, however, we have the following clean geometric result.
+
+\begin{thm}
+Suppose $X$ is a smooth variety over $k$. 
+Then:
+\begin{itemize}
+\item The tangent space $T_{{\rm Def}_X}$ is isomorphic to $H^1(X, T_X)$. 
+\item The universal obstruction space $O_{{\rm Def}_X}$ is isomorphic to $H^2(X, T_X)$. 
+\end{itemize}
+In particular, if $H^2(X, T_X) = 0$ (say, if $X$ is a Riemann surface) then there always exists deformations of $X$. 
+\end{thm}
+
+
+\brian{Fact: affine schemes have no deformations}
+
+\end{document}
