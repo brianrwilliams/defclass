@@ -68,6 +68,7 @@ We turn our attention to ``deformation problems" which means that we are only lo
 Here is a geometric example to explain the type of behavior we are trying to codify. 
 
 \begin{eg}\label{eg: fml}
+(Formal completion for affine schemes)
 Suppose $A$ is a commutative algebra and let $\phi : A \to k$ be a homomorphism of algebras.
 Denote by $X = {\rm Spec}(A)$ the corresponding affine scheme.  
 By our discussion above, this homomorphism $\theta$ is equivalent to choosing a closed point $x \in X$. 
@@ -244,8 +245,39 @@ That is, we only have to check compatibility of pull-backs for small morphisms.
 \begin{prop} Let $F$ be a formal deformation problem. 
 Define $T_F = F(k[\epsilon]/\epsilon^2)$. 
 Then, $T_F$ has the natural structure of a $k$-vector space. 
+Moreover, if $F \to G$ is a natural transformation between functors, then the induced map $T_F \to T_G$ is linear. 
 \end{prop}
 \begin{proof}
+First, we define addition.
+Consider the product algebra
+\[
+k[\epsilon]/\epsilon^2 \times_k k[\epsilon]/\epsilon^2 .
+\]
+This algebra consists of pairs of the form $(a + \epsilon b, a + \epsilon b')$. 
+Define the bilinear map
+\[
+\begin{array}{cccc}
++ : k[\epsilon]/\epsilon^2 \times k[\epsilon]/\epsilon^2 & \to & k[\epsilon]/\epsilon^2 \\
+(a + \epsilon b, a+ \epsilon b') & \mapsto & a + \epsilon (b + b') .
+\end{array}
+\]
+Applying $F$, we obtain a map
+\[
+F(+) : F\left(k[\epsilon]/\epsilon^2 \times k[\epsilon]/\epsilon^2\right) \to F\left(k[\epsilon]/\epsilon^2\right) = T_F .
+\]
+By condition (ii) of Definition \ref{dfn: def} the left-hand side is isomorphic to $T_F \times T_F$, so this gives us a map $+ : T_F \times T_F \to T_F$. 
+
+Next, we define scalar multiplication. 
+For $\lambda \in k$, consider the map of commutative algebras
+\[
+\begin{array}{cccc}
+\lambda \cdot (-) : & k[\epsilon]/\epsilon^2 & \to & k[\epsilon]/\epsilon^2 \\
+& a + \epsilon b & \mapsto & a + \epsilon \lambda b
+\end{array}
+\]
+Applying $F$ we obtain a map $\lambda \cdot (-) : T_F \to T_F$. 
+
+It is easy to check that this addition and scalar multiplication structures satisfy the axioms of a $k$-vector space. 
 \end{proof}
 
 On one hand, the tangent space is equal the set of all first order deformations, which we have just shown carries the natural structure of a $k$-vector space. 
@@ -484,7 +516,40 @@ Then:
 In particular, if $H^2(X, T_X) = 0$ (say, if $X$ is a Riemann surface) then there always exists deformations of $X$. 
 \end{thm}
 
+\begin{proof} 
+(Sketch)
+We have already seen that locally, over affine schemes, all first-order deformations are trivial. 
+So, pick a cover of $X$ by open affines
+\[
+\{U_\alpha\} = \{\Spec A_\alpha\} .
+\] 
+Let $\Tilde{X}$ be any first-order deformation.
+Then, we know that $\Tilde{X}|_{U_\alpha}$ is the trivial deformation for each $\alpha$. 
+Choose trivializations
+\[
+\varphi_\alpha : \Tilde{X}|_{U_\alpha} = U_\alpha \times \Spec(k[\epsilon]/\epsilon^2)
+\]
+for each $\alpha$.
+On overlaps, we have the composition
+\[
+\varphi_{\alpha \beta} :  U_{\alpha\beta} \times \Spec(k[\epsilon]/\epsilon^2) \xto{\varphi_{\beta}^{-1}} \Tilde{X}|_{U_{\alpha\beta}} \xto{\varphi_\alpha} U_{\alpha\beta} \times \Spec(k[\epsilon]/\epsilon^2) 
+\]
+which is the identity when restricted to $U_{\alpha\beta} \times \{\star\}$.
+Thus, the map is of the form
+\[
+a + \epsilon b \mapsto a + \epsilon(b + X_{\alpha\beta} (b))
+\]
+where $X_{\alpha \beta} : \sO(U_{\alpha\beta}) \to \sO(U_{\alpha\beta})$. 
+It's easy to see that this is actually a derivation. 
+Thus $\varphi_{\alpha\beta}$ is a local section of the tangent sheaf. 
 
-\brian{Fact: affine schemes have no deformations}
+The collection $\{\varphi_{\alpha \beta}\}$ satisfy the cocycle condition
+\[
+\varphi_{\alpha\beta} \circ \varphi_{\beta \gamma} = \varphi_{\alpha \gamma}
+\]
+on triple overlaps. 
+
+Thus, we have defined a map $T_{\Def_X} \to {C}^1(X, T_X)$. 
+\end{proof}
 
 \end{document}
