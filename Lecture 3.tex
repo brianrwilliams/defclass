@@ -1,0 +1,508 @@
+\documentclass[11pt]{amsart}
+
+\usepackage{macros}
+
+\linespread{1.25}
+
+\usepackage[final]{pdfpages}
+
+\setcounter{tocdepth}{2}
+
+\title{Lecture 3: dg Lie algebras and the Maurer-Cartan equation}
+
+\def\brian{\textcolor{blue}{BW: }\textcolor{blue}}
+
+
+
+\begin{document}
+\maketitle
+
+\section{Where are we going?}
+
+This lecture marks the end of motivation from classical deformation theory and begins the bulk portion of course. 
+Recall, we have defined the theory of formal moduli problems from a functor of points perspective. 
+Precisely, a formal moduli problem over $k$ is a functor
+\[
+F : \Art_k \to \Set
+\]
+satisfying some hypotheses. 
+In many examples, we found that such a formal moduli problem are ``controlled" by the cohomology of another algebraic object that was equipped with a Lie bracket of sorts. 
+
+In this lecture we begin to formalize this algebraic notion, namely {\em dg Lie algebras}, as well as connect it back to deformation theory through the Maurer-Cartan equation. 
+After introducing some definitions and foundational context, our goal in this lecture is to construct a functor
+\[
+\Def : \dgLie_k \to \Moduli_k
+\]
+from the category of dg Lie algebras to the category of formal moduli problems over $k$. 
+Most of the rest of the course contemplates how far (or close) this functor is from being an equivalence.
+
+\section{A introduction to dg Lie algebras}
+
+%Associated to any smooth manifold $M$ is a natural vector bundle $TM \to M$ called its tangent bundle. 
+
+Let $R$ be a commutative ring over $k$. 
+A derivation of $R$ is a $k$-linear map $D : R \to R$ such that for all $a,b \in R$ one has
+\[
+D(ab) = D(a) b + a D(b) .
+\] 
+Let $\Der(R)$ be the vector space of all derivations.
+Suppose $D_1,D_2$ are $R$-derivations and consider the composition $D_1 \circ D_2 : R \to R$. 
+Applied to the product of two elements we compute
+\[
+(D_1 \circ D_2) (ab) = D_1(D_2(a) b + a D_2(b)) = (D_1 \circ D_2)(a) b + D_1(a) D_2(b) + D_2(a) D_1(b) + a (D_1 \circ D_2)(b) .
+\] 
+In particular, $D_1 \circ D_2$ is not a derivation. 
+However, if we compute the flipped composition
+\[
+(D_2 \circ D_1) (ab) = (D_2 \circ D_1)(a) b + D_2(a) D_1(b) + D_1(a) D_2(b) + a (D_2 \circ D_1)(b)
+\]
+we notice that the {\em commutator}
+\[
+[D_1, D_2] := D_1 \circ D_2 - D_2 \circ D_1
+\]
+is a derivation. 
+This equips the vector space $\Der(R)$ with the structure of a {\em Lie algebra}. 
+
+\begin{dfn}
+A {\bf Lie algebra} over $k$ is a vector space $V$ equipped with a bilinear map
+\[
+[-,-] : V \times V \to V
+\]
+called the {\em bracket} satisfying the conditions:
+\begin{enumerate}
+\item[(1)] Skew symmetry.
+For all $x,y \in V$, one has $[x,y] = - [y,x]$. 
+\item[(2)] Jacobi identity. 
+For all $x,y,z \in V$ one has 
+\[
+[x,[y,z]] = [[x,y],z] + [y,[x,z]] .
+\]
+\end{enumerate}
+A map of Lie algebras is a linear map $f : V \to W$ preserving the brackets. 
+\end{dfn}
+
+\begin{rmk}
+Standard examples of Lie algebras from representation theory include the $n \times n$ matrix Lie algebras $\fgl(n), \fsl(n), \fu(n)$, etc.. 
+More generally, if $W$ is any vector space we let $\fgl(W)$ be the Lie algebra of endomorphisms of $W$ with bracket given by the commutator. 
+Note that for commutative rings $R$, there is an inclusion of Lie algebras $\Der (R) \hookrightarrow \fgl(R)$. 
+\end{rmk}
+ 
+
+\begin{rmk}
+If $(A,\cdot)$ is any associative algebra, the the commutator $[a,b] := a \cdot b  - b \cdot a$ endows $A$ with the structure of a Lie algebra. 
+Thus, there is a functor
+\[
+\Ass_k \to \Lie_k .
+\]
+\end{rmk}
+
+
+
+\begin{eg}
+One can associate a natural Lie algebra to any smooth (or complex) manifold $M$. 
+Let $TM \to M$ be the tangent bundle and $T_M$ its space of smooth sections. 
+The Lie bracket of vector fields 
+\[
+[-,-] : T_M \times T_M \to T_M
+\]
+endows $T_M$ with the structure of a Lie algebra.
+Locally, $T_M$ is generated over $C^\infty(M)$ by symbols $\{\partial/ \partial x_1,\ldots,\partial / \partial x_{{\rm dim}(M)}\}$. 
+The Lie bracket is defined locally by the formula
+\[
+\left[ f(x) \frac{\partial}{\partial x_i} , g(x) \frac{\partial}{\partial x_j} \right] = \frac{\partial f}{\partial x_j} (x) g(x) \frac{\partial}{\partial x_i} - f(x) \frac{\partial g}{\partial x_i} (x) \frac{\partial}{\partial x_j} 
+\]
+where $f,g \in C^\infty(M)$.
+\end{eg}
+
+\subsection{dg Lie algebras}
+
+In this course a more general object than a plain Lie algebra will play a central role. 
+We have already met the notion of a cochain complex as a $\ZZ$-graded vector space equipped with a {\em differential} that is square zero and of grading degree one. 
+The notion of a dg Lie algebra marries this concept with that of an ordinary Lie algebra. 
+
+\begin{dfn}
+A {\bf dg Lie algebra} (dgla) over $k$ is:
+\begin{enumerate}
+\item[(i)] a $\ZZ$-graded $k$-vector space $V = \{V^n\}_{n \in \ZZ}$;
+\item[(ii)] a degree $+1$ linear map $\d : V \to V$ called the {\em differential}.
+This is equivalent to a collection of linear maps
+\[
+\d^n : V^n \to V^{n+1};
+\]
+\item[(iii)] a bilinear map of degree zero $[-,-] : V \times V \to V$ called the {\em bracket}. This is equivalent to a collection of maps
+\[
+[-,-] : V^m \times V^n \to V^{m+n}. 
+\]
+\end{enumerate}
+This data must satisfy the conditions:
+\begin{enumerate}
+\item[(1)] Differential. $\d^2 = 0$ (Thus $(V,\d)$ is a cochain complex);
+\item[(2)] Graded skew symmetry. For all $x,y \in V$ one has $[x,y] = (-1)^{|x||y|} [y,x]$;
+\item[(3)] Graded Jacobi. For all $x,y,z \in V$ one has
+\[
+[x,[y,z]] = [[x,y],z] + (-1)^{|x||y|} [y,[x,z]];
+\]
+\item[(4)] Graded derivation.
+For all $x,y\in V$ one has
+\[
+\d([x,y]) = [\d x, y] + (-1)^{|x|} [x, \d y] .
+\]
+\end{enumerate}
+A map of dg Lie algebras is a linear map $f : V \to W$ of grading degree zero that preserves the differentials and Lie brackets.
+We denote the resulting category by $\dgLie_k$. 
+\end{dfn}
+
+\begin{rmk}
+If $V$ is a dg Lie algebra then the bracket restricts to $V^0 \subset V$ and endows $V^0$ with the structure of an ordinary Lie algebra.
+Also, since $\d^2 = 0$, it makes sense to consider the cohomology $H^*(V)$. 
+The cohomology inherits the Lie bracket from $V$ and has the structure of a dg Lie algebra with differential identically zero. 
+\end{rmk}
+
+\begin{eg}
+Let $(W, \d)$ be a cochain complex and consider its degree $n$ endomorphisms\footnote{If $W$ is a graded vector space we let $W[n]$ denote the graded vector space obtained by shifting all degrees down by $n$.
+That is, $W[n]^i = W^{i+n}$. 
+A linear endomorphism of degree $n$ on $W$ is then a degree zero map $\varphi : W \to W[n]$.}
+\[
+{\rm End}^n (V,W) = \{\varphi : W \to W \; | \; \varphi \; {\rm linear} \; , \; \varphi(W^i) \subset W^{i+n} \} .
+\]
+Define the $\ZZ$-graded vector space
+\[
+{\rm End}(W) = \bigoplus_{n \in \ZZ} {\rm Hom}^n(V,W)[-n] .
+\] 
+There is a natural differential on this graded vector space defined by
+\[
+\d_{\rm End} \varphi = \d_W \circ \varphi -  (-1)^{|\varphi|} \varphi \circ \d_V .
+\]
+Note that a {\em cochain map} is $\varphi : V \to W$ such that $\d_{\rm Hom} \varphi = 0$. 
+
+The complex $(\End(W), \d_{\rm End})$ has a natural Lie bracket extending the ordinary one in degree zero. 
+If $\varphi, \psi \in \End(W)$, define the graded commutator
+\[
+[\varphi, \psi] = \varphi \circ \psi - (-1)^{|\varphi| |\psi|} \psi \circ \varphi .
+\] 
+The bracket satisfies the graded version of skew symmetry and the graded version of the Jacobi identity (exercise). 
+In addition, it is compatible with the differential in the sense that $\d_{\End}$ is a graded derivation for it. 
+Thus, the triple $(\End(V), \d_{\End}, [-,-])$ is naturally a dg Lie algebra.
+\end{eg}
+
+\begin{eg}
+For a slightly more general example, take any associative dg algebra $A$. 
+Then, the graded commutator makes $A$ into a dg Lie algebra as well.
+\end{eg}
+
+\begin{ex}
+Let $R$ be a commutative dg algebra. 
+Define a derivation of degree $n$ to be a linear map $D : R \to R[n]$ satisfying
+\[
+D(ab) = D(a) b + (-1)^{n|a|} a D(b) .
+\] 
+Define the $\ZZ$-graded vector space $\Der(R) = \{\Der^n(R)\}_{n \in \ZZ}$ where $\Der^n(R)$ is the space of derivations of degree $n$.
+Show that $\Der(R)$ has the natural structure of a dg Lie algebra in such a way that there is an inclusion of dg Lie algebras $\Der(R) \hookrightarrow \End(R)$.
+\end{ex}
+
+\section{Maurer-Cartan equation and nilpotency}
+
+Throughout the rest of this section we let $(\fg, \d, [-,-])$ be a dg Lie algebra which we will simply refer to by $\fg$.
+We have already noticed that the degree zero part of $\fg$ has the structure of an ordinary Lie algebra.
+We are actually most interested in what goes on in higher cohomological degrees. 
+
+\begin{dfn}
+A degree one element $x \in \fg^1$ is a {\bf Maurer-Cartan element} of $\fg$ if it satisfies the equation
+\beqn\label{MC}
+\d x + \frac{1}{2} [x,x] = 0 .
+\eeqn
+Let $\MC (\fg) \subset \fg^1$ denote the set of Maurer-Cartan elements. 
+\end{dfn}
+
+Equation (\ref{MC}) is called the Maurer-Cartan equation.  
+It cuts out a quadratic algebraic variety inside the linear space $\fg^1$. 
+
+\begin{lem}\label{lem: easy}
+Suppose $\alpha \in \MC(\fg)$ and define the new triple
+\[
+\fg_\alpha = (\fg, \d + [\alpha,-], [-,-]) .
+\]
+Then $\fg_{\alpha}$ has the structure of a dg Lie algebra. 
+\end{lem}
+\begin{proof}
+We need to check that $\left(\d + [\alpha,-]\right)^2 = 0$. 
+This equation is evidently equivalent to the Maurer-Cartan equation for $\alpha$. 
+\end{proof}
+
+\subsection{Gauge transformations}
+
+Given any Lie group $G$, the tangent space at the unit $T_e G$ has the natural structure of a Lie algebra. 
+Conversely, if $\fg$ is any Lie algebra there is a unique simply connected Lie group whose tangent space at the unit is $\fg$. 
+This means that phenomena in Lie groups can be translated to problems in Lie algebras and vice-versa. 
+
+For simplicity, we work over $\CC$. 
+Let $G$ is a Lie group with Lie algebra $\fg$. 
+For any $X \in \fg$ there is a map of Lie algebras
+\[
+\tau_X : \CC \to \fg
+\]
+sending $t \mapsto t X$. 
+Here, $\CC$ is a Lie algebra with trivial bracket. 
+Via the correspondence between Lie groups and Lie algebras, there is then a unique map of Lie groups
+\[
+\gamma_X : \CC \to G .
+\]
+We are viewing $\CC$ as a Lie group with group operation given by addition. 
+We define the {\em exponential map} by
+\[
+\exp : \fg \to G \;\; , \;\; X \mapsto \gamma_X(1) .
+\] 
+
+Given two elements $X,Y$ of $\fg$ we can consider the product $\exp(X) \exp(Y)$ in $G$.
+A natural question is whether this product can be expressed in the form $\exp(Z)$ for some $Z \in \fg$. 
+Since $\exp$ is a local diffeomorphism, this is possible whenever $X,Y$ are close enough to zero in $\fg$.
+However, in general, $Z$ may not exist. 
+
+\begin{eg}
+Let $\fg = \fgl(2)$ and consider the elements
+\[
+X = \left(\begin{array}{cc} 0 & -1 \\ 1 & 0 \end{array} \right) \;\; , \;\; Y = \left(\begin{array}{cc} 0 & 1 \\ 0 & 0 \end{array} \right) .
+\] 
+Then, there is no matrix $Z$ such that $\exp(Z) = \exp(X) \exp(Y)$.
+\end{eg}
+
+When such a $Z$ exists, a combinatorial presentation for it in terms of $X,Y$ is given by the {\em Baker-Campbell-Hausdorff} formula.
+
+\subsubsection{}
+
+Now, let's go back to the case of a dg Lie algebra $(\fg, \d, [-,-])$. 
+Notice that $\fg^0 \subset \fg$ is a sub dg Lie algebra. 
+In fact, $\fg^n$ is a module for the Lie algebra $\fg^0$ through the adjoint action for each $n \in \ZZ$.  
+In formulas, if $X \in \fg^0$ and $Y \in \fg^n$ then this action is
+\[
+\ad(X) (Y) = [X,Y]  \in \fg^n .
+\]
+
+The object we are interested in is the Maurer-Cartan set $\MC(\fg)$ of the dg Lie algebra. 
+Although $\fg^0$ does not act on $\MC(\fg)$ in any natural way (in fact, $\MC(\fg)$ is rarely even a vector space) we can formally define the action of a group $\exp(\fg^0)$ on $\MC(\fg)$. 
+For now, we think of $\exp(\fg^0)$ as the simply connected Lie group corresponding via Lie's theorem to $\fg^0$. 
+In most examples, this is not quite valid since $\fg^0$ may not even by finite dimensional. 
+
+Assuming that this exponential exists, we observe the following. 
+Since $\fg^1$ is a $\fg^0$-module, we see that $\fg^1$ is formally a $\exp(\fg^0)$-representation. 
+By formal properties of the exponential, we see that if an element $\alpha \in \fg^1$ solves the Maurer-Cartan equation then so does $\exp(X) \cdot \alpha$ for any $X \in \fg^0$. 
+Thus $\exp(\fg^0)$ acts on the set $\MC(\fg)$.
+
+To make this situation well-defined, we need to make some extra assumptions about the Lie algebra $\fg^0$. 
+
+\begin{dfn}
+Let $\fh$ be an ordinary Lie algebra.
+We say $\fh$ is {\bf nilpotent} if its lower central series terminates at some finite order. 
+That is, there exists $N \in \ZZ_{\geq 0}$ such that 
+\[
+[X_1,[X_2,[\cdots[X_N,Y]\cdots]]] = 0
+\]
+for all $X_1,\ldots,X_N, Y \in \fh$.
+\end{dfn}
+
+If $\fh$ is nilpotent then for any $X, Y \in \fh$ the Baker-Campell-Hausdorff formula for $\exp(X)\exp(Y)$ converges. 
+In fact, one has the following.
+
+\begin{prop}
+If $\fh$ is a nilpotent Lie algebra with corresponding simply connected Lie group $H$, then the exponential map
+\[
+\exp : \fh \to H
+\] 
+is a diffeomorphism.
+\end{prop}
+
+We can now make the above arguments precise. 
+We say a dg Lie algebra $\fg$ is nilpotent if its degree zero sub Lie algebra $\fg^0 \subset \fg$ is nilpotent. 
+Let $\dgLienil$ be the category of nilpotent dg Lie algebras.
+Recall that every graded piece $\fg^n$ of $\fg$ is a module for the Lie algebra $\fg^0$. 
+
+\begin{lem}
+Suppose $\fg$ is a dg Lie algebra such that $\fg^0$ is nilpotent.
+Let $G^0$ be the corresponding simply connected Lie group. 
+Then, the action of $\fg^0$ on $\fg^n$ exponentiates to an action of $G^0$ on $\fg^n$ for each $n$. 
+Moreover, $G^0$ preserves the solutions to the Maurer-Cartan equation in $\fg^1$.
+\end{lem}
+
+There is an explicit formula for this action given by the BCH formula. 
+Given $X \in \fg^0$ and $\alpha \in \fg$, we have
+\[
+\exp(X) \cdot \alpha = \alpha + \sum_{n \geq 0} \frac{{\rm ad}(X)^n}{(n+1)!} ([X, \alpha] - \d X) .
+\] 
+Evidently, the right hand side only makes sense if $\ad(X)^n = 0$ for $n$ large enough.
+This is where nilpotence is essential!
+
+\begin{rmk}
+Note that if $\fg^0$ is nilpotent, then the action of $\exp(X)$ corresponding to an element in $X \in \fg^0$ on $\fg^1$ makes sense even if $\fg^0$ is infinite dimensional. 
+\end{rmk}
+
+\begin{lem}
+Suppose $\alpha \in \MC(\fg)$ and consider the dg Lie algebra $\fg_\alpha$ as in Lemma \ref{lem: easy}. 
+If $\fg^0$ is nilpotent, then for any $X \in \fg^0$ there is an isomorphism of dg Lie algebras
+\[
+\varphi_X : \fg_{\alpha} \xto{\cong} \fg_{\exp(X) \cdot \alpha}
+\]
+defined by $\varphi_X(y) = \exp(X) \cdot y$. 
+\end{lem}
+
+\section{Deformation problems from dg Lie algebras}
+
+We now connect dg Lie algebras to the concept of deformation theory that we met in the first few lectures. 
+
+\subsection{}
+
+\begin{dfn}
+A commutative dg algebra (cdga) is a graded vector space $V$ equipped with a differential $\d$ of degree one and square zero, together with a product $V \times V \to V \;,\; (x,y) \mapsto xy$ of degree zero such that 
+\begin{enumerate}
+\item[(1)] Graded commutative. 
+For any $x,y \in V$ one has $xy = (-1)^{|x||y|} y x$;
+\item[(2)] Derivation. $\d (xy) = (\d x) y + (-1)^{|x|} x \d y$.
+\end{enumerate}
+A morphism of cdgas is a linear map preserving the differential and product. 
+%Denote the category of cdgas by $\dgCAlg_k$.
+\end{dfn}
+
+\begin{dfn} Suppose $(R,\d_R)$ is a cdga and $(\fg,\d_{\fg}, [-,-]_\fg)$ is a dg Lie algebra. 
+Define the dg Lie algebra $(\fg \tensor_k R, \d, [-,-])$ where the differential is 
+\[
+\d = \d_\fg \tensor 1 + 1 \tensor \d_{R}
+\]
+and the bracket is defined by
+\[
+[x \tensor a, y \tensor b] = [x,y]_\fg \tensor ab .
+\] 
+This construction defines a functor
+\[
+\begin{array}{cccc}
+\fg \tensor (-) : & \dgCAlg_k & \to & \dgLie_k \\
+& R & \mapsto & \fg \tensor R .
+\end{array}
+\]
+for any dg Lie algebra $\fg$. 
+\end{dfn}
+
+The following lemma is an easy exercise. 
+
+\begin{lem}
+Let $\fg$ be a dg Lie algebra and suppose $(A,\fm_A)$ is an Artinian algebra.
+Consider the dg Lie algebra $\fg \tensor A$. 
+Then, the sub dg Lie algebra
+\[
+\fg \tensor \fm_A \subset \fg \tensor A
+\]
+is nilpotent.
+\end{lem}
+
+This lemma implies that when restricted to Artinian algebras, the functor $\fg \tensor (-) : \CAlg_k \to \dgLie_k$ defines a functor
+\[
+\begin{array}{cccc}
+\fg \tensor (-) : & \Art_k & \to & \dgLienil_k \\
+& (A,\fm) & \mapsto & \fg \tensor \fm_A .
+\end{array}
+\]
+
+This allows us to enhance the construction of the Maurer-Cartan elements of a dg Lie algebra $\MC(\fg)$ to a functor.
+
+\begin{dfn}
+Let $\fg$ be any dg Lie algebra.
+Define the {\bf Maurer-Cartan} functor $\MC_\fg$ to be the composition
+\[
+\begin{array}{cccccccc}
+\MC_\fg: & \Art_k & \xto{\fg \tensor (-)} & \dgLienil_k & \xto{\MC(-)} & \Set \\
+& (A,\fm_A) & \mapsto & \fg \tensor \fm_A & & \\
+& & & \fh & \mapsto & \MC(\fh) .
+\end{array}
+\]
+Explicitly, this composition can be read off as $A \mapsto \MC(\fg \tensor \fm_A)$. 
+\end{dfn}
+
+The functor $\MC_\fg$ enjoys a lot of nice properties. 
+First of all, it is functorial in the sense that every map of dg Lie algebras $\fg \to \fh$ induces a natural transformation $\MC_\fg \to \MC_\fh$. 
+Also, it is an immediate observation that $\MC_\fg(k) = \{\star\}$ is the set with one element. 
+Next, it preserves a well-behaved class of pull-backs. 
+
+\begin{ex}
+\label{ex: MC}
+Let $\sigma : B \to A, \sigma' : C \to A$ be morphisms of Artinian algebras where $\sigma$ is surjective.
+Then, the natural map
+\[
+\MC_\fg(B \times_A C) \xto{\cong} \MC_\fg(B) \times_{\MC_\fg(A)} \MC_\fg(C)
+\]
+is an isomorphism.
+\end{ex}
+%\begin{proof}
+%Injectivity is obvious.
+%Suppose that $\beta \times \gamma \in \MC_\fg(B) \times_{\MC_\fg(A)} \MC_\fg(C)$.
+%Unravelling this, we have an element $\beta \in \MC(\fg \tensor \fm_B)$ and $\gamma \in \MC(\fg \tensor \fm_C)$ which satisfy $\sigma(\beta) = \sigma'(\gamma)$. 
+%Since $\sigma
+%\end{proof}|
+
+Similarly, taking into account gauge transformations, we can make the following definition.
+To state it, recall that when $\fg$ is a nilpotent Lie algebra that there is a group action by elements $X \in \fg^0$ through their exponential $\exp(X)$ (which is well-defined by nilpotency). 
+This group action preserves the set of Maurer-Cartan elements. 
+
+\begin{dfn}
+Let $\fg$ be any dg Lie algebra.
+Define the associated {\bf deformation} functor
+\[
+\begin{array}{cccc}
+\Def_\fg : & \Art_k & \to & \Set \\
+& (A,\fm_A) & \mapsto & \frac{\MC(\fg \tensor \fm_A)}{\exp((\fg \tensor \fm_A)^0)} .
+\end{array}
+\]
+This functor assigns to every Artinian algebra $A$ the quotient of the set of Maurer-Cartan elements of $\fg \tensor \fm_A$ by the equivalence relation induce by gauge equivalence from elements in $(\fg \tensor \fm_A)^0 = \fg^0 \tensor \fm_A$. 
+\end{dfn}
+
+Note that the deformation functor is functorial in the sense that every map of dg Lie algebra $\fg \to \fh$ induces a natural transformation $\Def_\fg \to \Def_\fh$. 
+Note that there is an obvious natural transformation of functors
+\[
+[-] : \MC_\fg \to \Def_\fg .
+\] 
+
+
+\begin{prop}
+The pre-deformation functor $\Def_\fg$ is a deformation functor.
+\end{prop}
+
+\begin{proof}
+We need to check that if $\sigma : B \to A$, $\sigma' : C \to A$ are maps of Artinian algebras with $\sigma$ surjective that the induced map
+\beqn\label{defmap}
+\Def_\fg (B \times_A C) \to \Def_\fg(B) \times_{\Def_\fg(A)} \Def_\fg(C)
+\eeqn
+is:
+\begin{itemize}
+\item[(A)] an isomorphism if $A = k$;
+\item[(B)] surjective otherwise. 
+\end{itemize} 
+The first case (A) is obvious since $\Def_\fg(B \times C) = \Def_{\fg}(B) \times \Def_\fg(C)$. 
+
+In general, suppose $[\beta] \times [\gamma] \in \Def_\fg(B) \times_{\Def_\fg(A)} \Def_\fg(C)$.
+By assumption, $\sigma([\beta]) = \sigma'([\gamma])$ in $\Def_\fg(A)$.\footnote{If $\alpha \in \MC(\fg)$ we denote by $[\alpha]$ its class in $\Def(\fg)$.}
+Choose lifts $\Tilde{\beta} \in \MC_\fg (B)$, $\Tilde{\gamma} \in \MC_\fg(C)$ of the classes $[\beta], [\gamma]$ respectively.
+There then exists $a \in \fg^0 \tensor \fm_A$ such that 
+\[
+\sigma'(\Tilde{\gamma}) = \exp(a) \cdot \sigma(\Tilde{\beta}) .
+\] 
+By surjectivity of $\sigma$, there exists $b \in \fg^0 \tensor \fm_B$ such that $\sigma(b) = a$. 
+
+By construction, the element $\exp(b) \cdot \Tilde{\beta}$ satisfies $\sigma'(\Tilde{\gamma}) = \sigma(\exp(b) \cdot \Tilde{\beta})$ in $\MC_\fg(A)$. 
+Thus, $(\exp(b) \cdot \Tilde{\beta}) \times \Tilde{\gamma}$ determines an element in $\MC_\fg(B) \times_{\MC_\fg(A)} \MC_\fg(C)$.
+By Exercise \ref{ex: MC}, there exists a unique $\alpha \in \MC_\fg (B \times_A C)$ that lifts $(\exp(b) \cdot \Tilde{\beta}) \times \Tilde{\gamma}$. 
+The element $[\alpha]$ maps to $\beta \times \gamma$ under the natural map (\ref{defmap}).
+This shows axiom (B), so we are done. 
+\end{proof}
+
+Recall the category of formal moduli problems $\Moduli_k$. 
+Its objects are formal moduli problems over $k$, that is, functors
+\[
+F : \Art_k \to \Set
+\]
+and the morphisms are given by natural transformation. 
+It is an immediate consequence of our discussion above that we have constructed a functor
+\[
+\begin{array}{cccc}
+\Def : & \dgLie_k & \to & \Moduli_k \\
+& \fg & \mapsto & \Def_\fg .
+\end{array}
+\] 
+We will study further properties of this functor in our next lecture.
+\end{document}
