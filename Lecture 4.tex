@@ -12,10 +12,185 @@
 
 \begin{document}
 
-\section{Deformation from a dg Lie algebra}
+\section{Deformation problems from dg Lie algebras}
+
+We are ready to connect dg Lie algebras to the version of deformation theory that we met in the first few lectures. 
+
+\subsection{From dg Lie to formal moduli}
+
+\begin{dfn}
+A {\bf commutative dg algebra (cdga)} is a dg vector space $(V,\d)$, together with a product $V \times V \to V \;,\; (x,y) \mapsto xy$ of degree zero, such that 
+\begin{enumerate}
+\item[(1)] Graded commutative. 
+For any $x,y \in V$ one has $xy = (-1)^{|x||y|} y x$;
+\item[(2)] Derivation. $\d (xy) = (\d x) y + (-1)^{|x|} x \d y$.
+\end{enumerate}
+A morphism of cdgas is a linear map preserving the differential and product. 
+Denote the category of cdgas by $\dgCAlg_k$.
+\end{dfn}
+
+\begin{dfn} Suppose $(R,\d_R)$ is a cdga and $(\fg,\d_{\fg}, [-,-]_\fg)$ is a dg Lie algebra. 
+Define the dg Lie algebra $(\fg \tensor_k R, \d, [-,-])$ where the differential is 
+\[
+\d = \d_\fg \tensor 1 + 1 \tensor \d_{R}
+\]
+and the bracket is defined by
+\[
+[x \tensor a, y \tensor b] = [x,y]_\fg \tensor ab .
+\] 
+This construction defines a functor
+\[
+\begin{array}{cccc}
+\fg \tensor (-) : & \dgCAlg_k & \to & \dgLie_k \\
+& R & \mapsto & \fg \tensor R .
+\end{array}
+\]
+for any dg Lie algebra $\fg$. 
+\end{dfn}
+
+\begin{rmk}
+Given any two dg vector spaces $V, W$ we can define there tensor product $V \tensor_k W \in \dgVect_k$. 
+Its graded pieces are given by
+\[
+(V \tensor_k W)^m = \{V^i \tensor_k W^j\}_{i+j = m}
+\]
+where $V^i \tensor_k W^j$ is the ordinary tensor product of vector spaces.
+The differential is
+\[
+\d_{V \tensor W} (v \tensor w) = \d_V(v) \tensor w + (-1)^{|v|} v \tensor \d_W (w) .
+\]
+In the definition above, we are simply taking the tensor product of underlying dg vector spaces. 
+\end{rmk}
+
+The following lemma is an easy exercise. 
+
+\begin{lem}
+Let $\fg$ be a dg Lie algebra and suppose $(A,\fm_A)$ is an Artinian algebra.
+Consider the dg Lie algebra $\fg \tensor A$. 
+Then, the sub dg Lie algebra
+\[
+\fg \tensor \fm_A \subset \fg \tensor A
+\]
+is nilpotent.
+\end{lem}
+
+This lemma implies that when restricted to Artinian algebras, the functor $\fg \tensor (-) : \CAlg_k \to \dgLie_k$ defines a functor
+\[
+\begin{array}{cccc}
+\fg \tensor (-) : & \Art_k & \to & \dgLienil_k \\
+& (A,\fm) & \mapsto & \fg \tensor \fm_A .
+\end{array}
+\]
+
+This allows us to enhance the construction of the Maurer-Cartan elements of a dg Lie algebra $\MC(\fg)$ to a functor.
+
+\begin{dfn}
+Let $\fg$ be any dg Lie algebra.
+Define the {\bf Maurer-Cartan} functor $\MC_\fg$ to be the composition
+\[
+\begin{array}{cccccccc}
+\MC_\fg: & \Art_k & \xto{\fg \tensor (-)} & \dgLienil_k & \xto{\MC(-)} & \Set \\
+& (A,\fm_A) & \mapsto & \fg \tensor \fm_A & & \\
+& & & \fh & \mapsto & \MC(\fh) .
+\end{array}
+\]
+Explicitly, this composition can be read off as $A \mapsto \MC(\fg \tensor \fm_A)$. 
+\end{dfn}
+
+The functor $\MC_\fg$ enjoys a lot of nice properties. 
+First of all, it is functorial in the sense that every map of dg Lie algebras $\fg \to \fh$ induces a natural transformation $\MC_\fg \to \MC_\fh$. 
+Also, it is an immediate observation that $\MC_\fg(k) = \{\star\}$ is the set with one element. 
+Next, it preserves a well-behaved class of pull-backs. 
+
+\begin{ex}
+\label{ex: MC}
+Let $\sigma : B \to A, \sigma' : C \to A$ be morphisms of Artinian algebras where $\sigma$ is surjective.
+Then, the natural map
+\[
+\MC_\fg(B \times_A C) \xto{\cong} \MC_\fg(B) \times_{\MC_\fg(A)} \MC_\fg(C)
+\]
+is an isomorphism.
+\end{ex}
+%\begin{proof}
+%Injectivity is obvious.
+%Suppose that $\beta \times \gamma \in \MC_\fg(B) \times_{\MC_\fg(A)} \MC_\fg(C)$.
+%Unravelling this, we have an element $\beta \in \MC(\fg \tensor \fm_B)$ and $\gamma \in \MC(\fg \tensor \fm_C)$ which satisfy $\sigma(\beta) = \sigma'(\gamma)$. 
+%Since $\sigma
+%\end{proof}|
+
+Similarly, taking into account gauge transformations, we can make the following definition.
+To state it, recall that when $\fg$ is a nilpotent Lie algebra that there is a group action by elements $X \in \fg^0$ through their exponential $\exp(X)$ (which is well-defined by nilpotency). 
+This group action preserves the set of Maurer-Cartan elements. 
+
+\begin{dfn}
+Let $\fg$ be any dg Lie algebra.
+Define the associated {\bf deformation} functor
+\[
+\begin{array}{cccc}
+\Def_\fg : & \Art_k & \to & \Set \\
+& (A,\fm_A) & \mapsto & \frac{\MC(\fg \tensor \fm_A)}{\exp((\fg \tensor \fm_A)^0)} .
+\end{array}
+\]
+This functor assigns to every Artinian algebra $A$ the quotient of the set of Maurer-Cartan elements of $\fg \tensor \fm_A$ by the equivalence relation induce by gauge equivalence from elements in $(\fg \tensor \fm_A)^0 = \fg^0 \tensor \fm_A$. 
+\end{dfn}
+
+Note that the deformation functor is functorial in the sense that every map of dg Lie algebra $\fg \to \fh$ induces a natural transformation $\Def_\fg \to \Def_\fh$. 
+Note that there is an obvious natural transformation of functors
+\[
+[-] : \MC_\fg \to \Def_\fg .
+\] 
+
 
 \begin{prop}
-There are natural isomorphisms
+The pre-deformation functor $\Def_\fg$ is a deformation functor.
+\end{prop}
+
+\begin{proof}
+We need to check that if $\sigma : B \to A$, $\sigma' : C \to A$ are maps of Artinian algebras with $\sigma$ surjective that the induced map
+\beqn\label{defmap}
+\Def_\fg (B \times_A C) \to \Def_\fg(B) \times_{\Def_\fg(A)} \Def_\fg(C)
+\eeqn
+is:
+\begin{itemize}
+\item[(A)] an isomorphism if $A = k$;
+\item[(B)] surjective otherwise. 
+\end{itemize} 
+The first case (A) is obvious since $\Def_\fg(B \times C) = \Def_{\fg}(B) \times \Def_\fg(C)$. 
+
+In general, suppose $[\beta] \times [\gamma] \in \Def_\fg(B) \times_{\Def_\fg(A)} \Def_\fg(C)$.
+By assumption, $\sigma([\beta]) = \sigma'([\gamma])$ in $\Def_\fg(A)$.\footnote{If $\alpha \in \MC(\fg)$ we denote by $[\alpha]$ its class in $\Def(\fg)$.}
+Choose lifts $\Tilde{\beta} \in \MC_\fg (B)$, $\Tilde{\gamma} \in \MC_\fg(C)$ of the classes $[\beta], [\gamma]$ respectively.
+There then exists $a \in \fg^0 \tensor \fm_A$ such that 
+\[
+\sigma'(\Tilde{\gamma}) = \exp(a) \cdot \sigma(\Tilde{\beta}) .
+\] 
+By surjectivity of $\sigma$, there exists $b \in \fg^0 \tensor \fm_B$ such that $\sigma(b) = a$. 
+
+By construction, the element $\exp(b) \cdot \Tilde{\beta}$ satisfies $\sigma'(\Tilde{\gamma}) = \sigma(\exp(b) \cdot \Tilde{\beta})$ in $\MC_\fg(A)$. 
+Thus, $(\exp(b) \cdot \Tilde{\beta}) \times \Tilde{\gamma}$ determines an element in $\MC_\fg(B) \times_{\MC_\fg(A)} \MC_\fg(C)$.
+By Exercise \ref{ex: MC}, there exists a unique $\alpha \in \MC_\fg (B \times_A C)$ that lifts $(\exp(b) \cdot \Tilde{\beta}) \times \Tilde{\gamma}$. 
+The element $[\alpha]$ maps to $\beta \times \gamma$ under the natural map (\ref{defmap}).
+This shows axiom (B), so we are done. 
+\end{proof}
+
+Recall the category of formal moduli problems $\Moduli_k$. 
+Its objects are formal moduli problems over $k$, that is, functors
+\[
+F : \Art_k \to \Set
+\]
+and the morphisms are given by natural transformations. 
+It is an immediate consequence of our discussion above that we have constructed a functor
+\[
+\begin{array}{cccc}
+\Def : & \dgLie_k & \to & \Moduli_k \\
+& \fg & \mapsto & \Def_\fg .
+\end{array}
+\] 
+
+\subsection{Tangent and obstruction spaces}
+
+\begin{prop}
+There are natural isomorphisms of tangent spaces
 \[
 T_{\MC_\fg} \cong Z^1(\fg)
 \] 
@@ -24,8 +199,28 @@ and
 T_{\Def_\fg} \cong H^1(\fg) .
 \] 
 \end{prop}
+\begin{proof}
+Recall, the tangent space of a formal moduli problem $F$ is simply its value on the ring of dual numbers $F(k[\epsilon]/\epsilon^2)$. 
 
-\subsection{}
+For the first claim, we compute
+\begin{align*}
+\MC_\fg(k[\epsilon]/\epsilon^2) & = \MC(\fg \tensor \epsilon k) \\ & = \left\{\epsilon x \in \epsilon \fg^1 \; | \; \d (\epsilon x) + \frac{1}{2} [\epsilon x, \epsilon x] = 0 \right\} \\ & = \{x \in \fg^1 \; | \; \d x = 0\} ,
+\end{align*}
+since $\epsilon^2 = 0$. 
+
+For the second claim, we recall from last lecture that the action of $X \in \fg^0$ on $\alpha \in \MC(\fg)$ (when it exists) is defined by 
+\[
+\exp(X) \cdot \alpha = \alpha + \sum_{n \geq 0} \frac{{\rm ad}(X)^n}{(n+1)!} ([X, \alpha] - \d X) .
+\]
+For the tangent space, we are looking at the quotient 
+\[
+T_{\Def_\fg} = \MC(\epsilon \fg) / \{\exp(\epsilon X) \; | \; X \in \fg^0\}
+\] 
+Since $\epsilon^2 = 0$ the only term that survives is $\exp(\epsilon X) \cdot (\epsilon \alpha) = \alpha - \d X$.
+Thus, we see that $T_{\Def_\fg} = T_{\MC_\fg} / \d \fg^0 = Z^1 \fg / B^1 \fg = H^1(\fg)$. 
+\end{proof}
+
+\subsection{Aside on obstruction space}
 
 Suppose we have a small exact sequence of Artinian algebras
 \beqn\label{smallexact}
@@ -57,6 +252,19 @@ The assignment that sends any small exact sequence (\ref{smallexact}) to the map
 defines a complete obstruction theory for $\MC_\fg$. 
 \end{prop}
 
+\subsection{Not the whole story}
+
+We have just seen a nice explicit story relating the theory of dg Lie algebras to formal moduli problems. 
+This correspondence, however, loses a lot of information.
+For instance, the formal moduli problem $\MC_\fg$ depends only on the pieces of the dg Lie algebra in degrees $1, 2$.
+The formal moduli problem $\Def_\fg$ depends only on degrees $0,1,2$ of the dg Lie algebra. 
+
+A precise way of stating the failure of this map to be an equivalence will be given in Section \ref{sec: quasi} below.
+It says that $\Def_\fg$ only depends on the cohomology, or {\em homotopy type}, of $\fg$.
+The main idea is enhance the category of formal moduli problems to be sensitive to this sort of weak equivalence. 
+This will lead us naturally to the world of $\infty$-categories and higher algebra. 
+Before embarking on this, we will recount some more machinery for dg Lie algebras. 
+
 \section{Formal aspects of dg Lie algebras}
 
 \def\oblv{{\rm oblv}}
@@ -70,14 +278,48 @@ Thus, there are forgetful functors
 \] 
 
 \subsection{A slew of functors}
+\def\Tens{{\rm Tens}}
 
 \subsubsection{The free algebras}
 
+The free algebra functor is given by the tensor algebra 
+\[
+\begin{array}{cccc}
+\Tens(-) : & \dgVect_k & \to & \dgAss_k \\
+& V & \mapsto & \Tens(V) = \bigoplus_{n \geq 0} V^{\tensor n} . 
+\end{array}
+\]
+One extends the differential by the rule
+\[
+\d(v_1 \tensor \cdots \tensor v_n) = \sum_{i = 1}^n (-1)^{|v_1|\cdots |v_{i-1}|} v_1 \tensor \cdots (\d v_{i}) \tensor \cdots \tensor v_n .
+\]
+
+\begin{fact}
+The functor $\Tens(-)$ is {\em left adjoint} to the forgetful functor $\oblv_A : \dgAss_k \to \dgVect_k$. 
+\end{fact}
+
+The free commutative algebra is the symmetric algebra on the dg vector space. 
+This is the functor
+\[
+\begin{array}{cccc}
+\Sym(-) : & \dgVect_k & \to & \dgAss_k \\
+& V & \mapsto & \Sym (V) = \bigoplus_{n \geq 0} \left(V^{\tensor n}\right)_{S_n} . 
+\end{array}
+\]
+The differential is defined in the same way as the tensor algebra. 
+
+\begin{fact}
+The functor $\Sym(-)$ is {\em left adjoint} to the forgetful functor $\oblv_C : \dgCAlg_k \to \dgVect_k$.
+\end{fact}
+
+Finally, there is a free dg Lie algebra functor define as follows. 
+Take the tensor algebra $\Tens(V)$ and look at the dg subspace $V = V^{\tensor 1} \subset \Tens(V)$. 
+One defines ${\rm free}_{\rm Lie}(V)$ to be the sub dg Lie algebra of $\Tens(V)_L$ generated by this subspace $V$. 
+
+\begin{fact} The functor ${\rm free}_{\rm L}$ is {\em left adjoint} to the forgetful functor $\oblv_L : \dgLie_k \to \dgVect_k$. 
+\end{fact}
 \subsubsection{The enveloping algebra}
 
-\def\Tens{{\rm Tens}}
-
-\begin{dfn}
 The enveloping algebra functor is
 \[
 \begin{array}{cccc}
@@ -89,7 +331,13 @@ where $\cJ$ is the dg ideal of $\Tens(\fg)$ generated by expressions of the form
 \[
 x \tensor y - (-1)^{|x||y|} (y \tensor x) - [x,y].
 \]
-\end{dfn}
+
+\begin{fact}
+The enveloping algebra functor $U(-)$ is {\em left adjoint} to the forgetful functor 
+\[
+(-)_L : \dgAss_k \to \dgLie_k .
+\]
+\end{fact}
 
 \begin{rmk}
 Just like the tensor algebra, the enveloping algebra admits a natural increasing filtration
@@ -104,7 +352,7 @@ By the Poincar\'{e}-Birkoff-Witt theorem, the natural linear map $\fg \to F^{\le
 \] 
 \end{rmk}
 
-\subsection{Quasi-isomorphisms}
+\subsection{Quasi-isomorphisms}\label{sec: quasi}
 
 A map of dg vector spaces (cochain complexes) $f : V \to W$ is a linear map of grading degree zero that commutes with the differentials. 
 If $V = \{V^n\}_{n \in \ZZ}$, $W = \{W^n\}_{n \in \ZZ}$,
@@ -153,6 +401,15 @@ Thus, in one direction, if $\fg \to \fh$ is a quasi-isomorphism, we obtain a qua
 
 In the other direction, if $U(\fg) \to U(\fh)$ is a quasi-isomorphism, then taking associated gradeds we obtain a quasi-isomorphism $\Sym^*(\fg) \to \Sym^*(\fh)$ and hence $\fg \to \fh$ is a quasi-isomorphism by the above remark. 
 \end{proof}
+
+\begin{thm}
+Suppose $f : \fg \xto{\simeq} \fh$ is a quasi-isomorphism of dg Lie algebras. 
+Then, the corresponding map of deformation functors
+\[
+\Def(f) : \Def_\fg \xto{\cong} \Def_\fh
+\]
+is an {\bf isomorphism}. 
+\end{thm}
 
 
 \section{Modules and (co)homology}

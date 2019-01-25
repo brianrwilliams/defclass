@@ -29,7 +29,7 @@ satisfying some hypotheses.
 In many examples, we found that such a formal moduli problem are ``controlled" by the cohomology of another algebraic object that was equipped with a Lie bracket of sorts. 
 
 In this lecture we begin to formalize this algebraic notion, namely {\em dg Lie algebras}, as well as connect it back to deformation theory through the Maurer-Cartan equation. 
-After introducing some definitions and foundational context, our goal in this lecture is to construct a functor
+After introducing some definitions and foundational context, our goal in the next few lectures is to construct a functor
 \[
 \Def : \dgLie_k \to \Moduli_k
 \]
@@ -152,14 +152,19 @@ A map of dg Lie algebras is a linear map $f : V \to W$ of grading degree zero th
 We denote the resulting category by $\dgLie_k$. 
 \end{dfn}
 
+\begin{rmk} A dg Lie algebra is simply a Lie algebra object in the category of dg vector spaces (cochain complexes). 
+\end{rmk}
+
 \begin{rmk}
 If $V$ is a dg Lie algebra then the bracket restricts to $V^0 \subset V$ and endows $V^0$ with the structure of an ordinary Lie algebra.
-Also, since $\d^2 = 0$, it makes sense to consider the cohomology $H^*(V)$. 
+This defines a functor of ordinary Lie algebras into the category $\dgLie_k$. 
+
+Since $\d^2 = 0$, it makes sense to consider the cohomology $H^*(V)$. 
 The cohomology inherits the Lie bracket from $V$ and has the structure of a dg Lie algebra with differential identically zero. 
 \end{rmk}
 
 \begin{eg}
-Let $(W, \d)$ be a cochain complex and consider its degree $n$ endomorphisms\footnote{If $W$ is a graded vector space we let $W[n]$ denote the graded vector space obtained by shifting all degrees down by $n$.
+Let $(W, \d)$ be a dg vector space and consider its degree $n$ endomorphisms \footnote{If $W$ is a graded vector space we let $W[n]$ denote the graded vector space obtained by shifting all degrees down by $n$.
 That is, $W[n]^i = W^{i+n}$. 
 A linear endomorphism of degree $n$ on $W$ is then a degree zero map $\varphi : W \to W[n]$.}
 \[
@@ -344,165 +349,4 @@ If $\fg^0$ is nilpotent, then for any $X \in \fg^0$ there is an isomorphism of d
 defined by $\varphi_X(y) = \exp(X) \cdot y$. 
 \end{lem}
 
-\section{Deformation problems from dg Lie algebras}
-
-We now connect dg Lie algebras to the concept of deformation theory that we met in the first few lectures. 
-
-\subsection{}
-
-\begin{dfn}
-A commutative dg algebra (cdga) is a graded vector space $V$ equipped with a differential $\d$ of degree one and square zero, together with a product $V \times V \to V \;,\; (x,y) \mapsto xy$ of degree zero such that 
-\begin{enumerate}
-\item[(1)] Graded commutative. 
-For any $x,y \in V$ one has $xy = (-1)^{|x||y|} y x$;
-\item[(2)] Derivation. $\d (xy) = (\d x) y + (-1)^{|x|} x \d y$.
-\end{enumerate}
-A morphism of cdgas is a linear map preserving the differential and product. 
-%Denote the category of cdgas by $\dgCAlg_k$.
-\end{dfn}
-
-\begin{dfn} Suppose $(R,\d_R)$ is a cdga and $(\fg,\d_{\fg}, [-,-]_\fg)$ is a dg Lie algebra. 
-Define the dg Lie algebra $(\fg \tensor_k R, \d, [-,-])$ where the differential is 
-\[
-\d = \d_\fg \tensor 1 + 1 \tensor \d_{R}
-\]
-and the bracket is defined by
-\[
-[x \tensor a, y \tensor b] = [x,y]_\fg \tensor ab .
-\] 
-This construction defines a functor
-\[
-\begin{array}{cccc}
-\fg \tensor (-) : & \dgCAlg_k & \to & \dgLie_k \\
-& R & \mapsto & \fg \tensor R .
-\end{array}
-\]
-for any dg Lie algebra $\fg$. 
-\end{dfn}
-
-The following lemma is an easy exercise. 
-
-\begin{lem}
-Let $\fg$ be a dg Lie algebra and suppose $(A,\fm_A)$ is an Artinian algebra.
-Consider the dg Lie algebra $\fg \tensor A$. 
-Then, the sub dg Lie algebra
-\[
-\fg \tensor \fm_A \subset \fg \tensor A
-\]
-is nilpotent.
-\end{lem}
-
-This lemma implies that when restricted to Artinian algebras, the functor $\fg \tensor (-) : \CAlg_k \to \dgLie_k$ defines a functor
-\[
-\begin{array}{cccc}
-\fg \tensor (-) : & \Art_k & \to & \dgLienil_k \\
-& (A,\fm) & \mapsto & \fg \tensor \fm_A .
-\end{array}
-\]
-
-This allows us to enhance the construction of the Maurer-Cartan elements of a dg Lie algebra $\MC(\fg)$ to a functor.
-
-\begin{dfn}
-Let $\fg$ be any dg Lie algebra.
-Define the {\bf Maurer-Cartan} functor $\MC_\fg$ to be the composition
-\[
-\begin{array}{cccccccc}
-\MC_\fg: & \Art_k & \xto{\fg \tensor (-)} & \dgLienil_k & \xto{\MC(-)} & \Set \\
-& (A,\fm_A) & \mapsto & \fg \tensor \fm_A & & \\
-& & & \fh & \mapsto & \MC(\fh) .
-\end{array}
-\]
-Explicitly, this composition can be read off as $A \mapsto \MC(\fg \tensor \fm_A)$. 
-\end{dfn}
-
-The functor $\MC_\fg$ enjoys a lot of nice properties. 
-First of all, it is functorial in the sense that every map of dg Lie algebras $\fg \to \fh$ induces a natural transformation $\MC_\fg \to \MC_\fh$. 
-Also, it is an immediate observation that $\MC_\fg(k) = \{\star\}$ is the set with one element. 
-Next, it preserves a well-behaved class of pull-backs. 
-
-\begin{ex}
-\label{ex: MC}
-Let $\sigma : B \to A, \sigma' : C \to A$ be morphisms of Artinian algebras where $\sigma$ is surjective.
-Then, the natural map
-\[
-\MC_\fg(B \times_A C) \xto{\cong} \MC_\fg(B) \times_{\MC_\fg(A)} \MC_\fg(C)
-\]
-is an isomorphism.
-\end{ex}
-%\begin{proof}
-%Injectivity is obvious.
-%Suppose that $\beta \times \gamma \in \MC_\fg(B) \times_{\MC_\fg(A)} \MC_\fg(C)$.
-%Unravelling this, we have an element $\beta \in \MC(\fg \tensor \fm_B)$ and $\gamma \in \MC(\fg \tensor \fm_C)$ which satisfy $\sigma(\beta) = \sigma'(\gamma)$. 
-%Since $\sigma
-%\end{proof}|
-
-Similarly, taking into account gauge transformations, we can make the following definition.
-To state it, recall that when $\fg$ is a nilpotent Lie algebra that there is a group action by elements $X \in \fg^0$ through their exponential $\exp(X)$ (which is well-defined by nilpotency). 
-This group action preserves the set of Maurer-Cartan elements. 
-
-\begin{dfn}
-Let $\fg$ be any dg Lie algebra.
-Define the associated {\bf deformation} functor
-\[
-\begin{array}{cccc}
-\Def_\fg : & \Art_k & \to & \Set \\
-& (A,\fm_A) & \mapsto & \frac{\MC(\fg \tensor \fm_A)}{\exp((\fg \tensor \fm_A)^0)} .
-\end{array}
-\]
-This functor assigns to every Artinian algebra $A$ the quotient of the set of Maurer-Cartan elements of $\fg \tensor \fm_A$ by the equivalence relation induce by gauge equivalence from elements in $(\fg \tensor \fm_A)^0 = \fg^0 \tensor \fm_A$. 
-\end{dfn}
-
-Note that the deformation functor is functorial in the sense that every map of dg Lie algebra $\fg \to \fh$ induces a natural transformation $\Def_\fg \to \Def_\fh$. 
-Note that there is an obvious natural transformation of functors
-\[
-[-] : \MC_\fg \to \Def_\fg .
-\] 
-
-
-\begin{prop}
-The pre-deformation functor $\Def_\fg$ is a deformation functor.
-\end{prop}
-
-\begin{proof}
-We need to check that if $\sigma : B \to A$, $\sigma' : C \to A$ are maps of Artinian algebras with $\sigma$ surjective that the induced map
-\beqn\label{defmap}
-\Def_\fg (B \times_A C) \to \Def_\fg(B) \times_{\Def_\fg(A)} \Def_\fg(C)
-\eeqn
-is:
-\begin{itemize}
-\item[(A)] an isomorphism if $A = k$;
-\item[(B)] surjective otherwise. 
-\end{itemize} 
-The first case (A) is obvious since $\Def_\fg(B \times C) = \Def_{\fg}(B) \times \Def_\fg(C)$. 
-
-In general, suppose $[\beta] \times [\gamma] \in \Def_\fg(B) \times_{\Def_\fg(A)} \Def_\fg(C)$.
-By assumption, $\sigma([\beta]) = \sigma'([\gamma])$ in $\Def_\fg(A)$.\footnote{If $\alpha \in \MC(\fg)$ we denote by $[\alpha]$ its class in $\Def(\fg)$.}
-Choose lifts $\Tilde{\beta} \in \MC_\fg (B)$, $\Tilde{\gamma} \in \MC_\fg(C)$ of the classes $[\beta], [\gamma]$ respectively.
-There then exists $a \in \fg^0 \tensor \fm_A$ such that 
-\[
-\sigma'(\Tilde{\gamma}) = \exp(a) \cdot \sigma(\Tilde{\beta}) .
-\] 
-By surjectivity of $\sigma$, there exists $b \in \fg^0 \tensor \fm_B$ such that $\sigma(b) = a$. 
-
-By construction, the element $\exp(b) \cdot \Tilde{\beta}$ satisfies $\sigma'(\Tilde{\gamma}) = \sigma(\exp(b) \cdot \Tilde{\beta})$ in $\MC_\fg(A)$. 
-Thus, $(\exp(b) \cdot \Tilde{\beta}) \times \Tilde{\gamma}$ determines an element in $\MC_\fg(B) \times_{\MC_\fg(A)} \MC_\fg(C)$.
-By Exercise \ref{ex: MC}, there exists a unique $\alpha \in \MC_\fg (B \times_A C)$ that lifts $(\exp(b) \cdot \Tilde{\beta}) \times \Tilde{\gamma}$. 
-The element $[\alpha]$ maps to $\beta \times \gamma$ under the natural map (\ref{defmap}).
-This shows axiom (B), so we are done. 
-\end{proof}
-
-Recall the category of formal moduli problems $\Moduli_k$. 
-Its objects are formal moduli problems over $k$, that is, functors
-\[
-F : \Art_k \to \Set
-\]
-and the morphisms are given by natural transformation. 
-It is an immediate consequence of our discussion above that we have constructed a functor
-\[
-\begin{array}{cccc}
-\Def : & \dgLie_k & \to & \Moduli_k \\
-& \fg & \mapsto & \Def_\fg .
-\end{array}
-\] 
-We will study further properties of this functor in our next lecture.
 \end{document}
