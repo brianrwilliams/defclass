@@ -1,0 +1,39 @@
+\documentclass[11pt]{amsart}
+
+\usepackage{macros}
+
+\linespread{1.25}
+
+\usepackage[final]{pdfpages}
+
+\setcounter{tocdepth}{2}
+
+\title{Lecture 3: Deformations problems and dg Lie algebras}
+
+\def\brian{\textcolor{blue}{BW: }\textcolor{blue}}
+
+\begin{document}
+\maketitle
+
+\section{A introduction to dg Lie algebras}
+
+\section{Maurer-Cartan classes and nilpotency}
+
+\section{Deformation problems from dg Lie algebras}
+
+\begin{dfn}
+Let $\fg$ be a dg Lie algebra over $k$. 
+Define the pre-deformation functor $B \fg$ by
+\[
+\begin{array}{cccc}
+B \fg : & \Art_k & \to & \Set \\
+ & A & \mapsto & \MC(\fg \tensor \fm_A) / \exp(\fg^0) .
+ \end{array}
+\]
+\end{dfn}
+
+\begin{prop}
+The pre-deformation functor $B \fg$ is a deformation functor.
+\end{prop}
+
+\end{document}

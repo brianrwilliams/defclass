@@ -1,0 +1,46 @@
+\documentclass[11pt]{amsart}
+
+\usepackage{macros}
+
+\linespread{1.25}
+
+\usepackage[final]{pdfpages}
+
+\setcounter{tocdepth}{2}
+
+\title{Lecture 4: Model categories}
+
+\begin{document}
+
+\section{The idea of a model category}
+Roughly, the theory of model categories was developed to better handle the notion of a ``homotopy equivalence". 
+For us, the fundamental example of a homotopy equivalence is a quasi-isomorphism of dg vector spaces. 
+
+The first, and perhaps most obvious, attempt to encode homotopy, or {\em weak}, equivalences in a category is to prescribe some class of morphisms that ware well-behaved with respect to composition. 
+The definition is the following. 
+
+\begin{dfn}
+A {\bf category with weak equivalences} is a category $\sC$ together with a set
+\[
+\sW \subset {\rm Mor}(\sC)
+\]
+such that
+\begin{enumerate}
+\item If $f$ is an isomorphism, then $f \in \sW$;
+\item if $f,g$ are morphisms such that $f \circ g$ exists then: if two of $f, g, f \circ g$ are in $\sW$ then the third is as well (`two out of three").
+\end{enumerate}
+\end{dfn}
+
+\section{Localization}
+
+\brian{Whitehead localization of cat with weak equiv. Cof/fib construction for model cats. Why its better behaved for model cats.}
+
+\section{Adjoints and extensions}
+
+\brian{Quillen adjunction, left/right Kan extensions, examples, Quillen equivalence}
+
+\section{Examples}
+
+\section{dgVect, dgLie, etc. Top.}
+
+\end{document}

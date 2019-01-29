@@ -457,51 +457,59 @@ Also, as an exercise one can check that $\Psi$ maps $(Z, \varphi)$ to the pair $
 It remains to see that $\Psi$ is an isomorphism when $A = k$. 
 \end{proof}
 
+A standard lemma in commutative algebra shows that over smooth affine schemes, all first-order deformations are trivial. 
+
 \begin{lem}
-Suppose $X$ is an affine variety. 
+Suppose $X$ is a smooth affine variety. 
 Then every $A$-deformation is isomorphic to the trivial one.
 \end{lem}
 
-\begin{proof}
-Let $X = \Spec(B)$.
-%First, we prove the assertion for a first order deformation. 
-%That is, the case $A = k[\epsilon] / \epsilon^2$. 
-By Remark \ref{rmk: adef}, the data of an $A$-deformation is an algebra $B_A$ that is flat over $A$ together with a map of algebras $\varphi : B_A \to B$ inducing an isomorphism 
-\beqn\label{def2}
-\varphi : B_A \tensor_A k \xto{\cong} B.
-\eeqn
-In other words, we have a pushout diagram of commutative algebras
-\[
-\begin{tikzcd}
-B & B_A \ar[l,"\varphi"']\\ 
-k \ar[u] & A \ar[u] \ar[l] .
-\end{tikzcd} 
-\]
+\begin{rmk}
+The condition of being smooth is necessary here. 
+In fact, there is a whole theory of deformations of non-smooth commutative algebras which is measured by an object called {\em Harrison cohomology}. 
+It plays an analogous role as how Hochschild cohomology controls deformations of associative algebras.
+\end{rmk}
 
-We first prove the assertion for the case that $A = k[\epsilon]/\epsilon^2$, so that $B_A$ is a first-order deformation. 
-In this case, the map $\varphi$ induces the diagram of short exact sequences
-\[
-\begin{tikzcd}
-& & & 0 & \\
-0 \ar[r] & B \ar[r] & B_A \ar[dr, dotted, "\cong"'] \ar[r,"\varphi"] & B \ar[u] \ar[r] & 0 \\
-& & & B \tensor_k k[\epsilon]/\epsilon^2 \ar[u] &  \\
-& & & B \ar[u] & \\
-& & & 0 \ar[u] & .
-\end{tikzcd}
-\]
-The horizontal short exact sequence follows from the condition (\ref{def2}) that reads $B_A \tensor_{k[\epsilon]/\epsilon^2} k = B_A / \epsilon B_A \cong B$ and the fact that $\epsilon B_A = B$. 
-The vertical short exact sequence comes from the trivial $k[\epsilon]/\epsilon^2$-deformation and is a sequence of $k[\epsilon]/\epsilon^2$-modules
-By flatness, the vertical short exact sequence is split, and hence the map $\varphi$ lifts as shown. 
-It is an isomorphism by the horizontal short exact sequence. 
-
-%The trivial $A$-deformation of $B$ leads to the short exact sequence
+%\begin{proof}
+%Let $X = \Spec(B)$.
+%%First, we prove the assertion for a first order deformation. 
+%%That is, the case $A = k[\epsilon] / \epsilon^2$. 
+%By Remark \ref{rmk: adef}, the data of an $A$-deformation is an algebra $B_A$ that is flat over $A$ together with a map of algebras $\varphi : B_A \to B$ inducing an isomorphism 
+%\beqn\label{def2}
+%\varphi : B_A \tensor_A k \xto{\cong} B.
+%\eeqn
+%In other words, we have a pushout diagram of commutative algebras
 %\[
-%0 \to A \to B \tensor_k A \to B \to 0 .
+%\begin{tikzcd}
+%B & B_A \ar[l,"\varphi"']\\ 
+%k \ar[u] & A \ar[u] \ar[l] .
+%\end{tikzcd} 
 %\]
-%This exhibits $B \tensor_k A$ as an $A$-extension, hence by flatness is trivial as an $A$-module. 
-%Thus, the map $\varphi : B_A \to B$ lifts to a map of $A$-algebras $\varphi : B_A \to B \tensor_k A$, which is an isomorphism since $B_A$ is an $A$-deformation. 
-
-\end{proof} 
+%
+%We first prove the assertion for the case that $A = k[\epsilon]/\epsilon^2$, so that $B_A$ is a first-order deformation. 
+%In this case, the map $\varphi$ induces the diagram of short exact sequences
+%\[
+%\begin{tikzcd}
+%& & & 0 & \\
+%0 \ar[r] & B \ar[r] & B_A \ar[dr, dotted, "\cong"'] \ar[r,"\varphi"] & B \ar[u] \ar[r] & 0 \\
+%& & & B \tensor_k k[\epsilon]/\epsilon^2 \ar[u] &  \\
+%& & & B \ar[u] & \\
+%& & & 0 \ar[u] & .
+%\end{tikzcd}
+%\]
+%The horizontal short exact sequence follows from the condition (\ref{def2}) that reads $B_A \tensor_{k[\epsilon]/\epsilon^2} k = B_A / \epsilon B_A \cong B$ and the fact that $\epsilon B_A = B$. 
+%The vertical short exact sequence comes from the trivial $k[\epsilon]/\epsilon^2$-deformation and is a sequence of $k[\epsilon]/\epsilon^2$-modules
+%By flatness, the vertical short exact sequence is split, and hence the map $\varphi$ lifts as shown. 
+%It is an isomorphism by the horizontal short exact sequence. 
+%
+%%The trivial $A$-deformation of $B$ leads to the short exact sequence
+%%\[
+%%0 \to A \to B \tensor_k A \to B \to 0 .
+%%\]
+%%This exhibits $B \tensor_k A$ as an $A$-extension, hence by flatness is trivial as an $A$-module. 
+%%Thus, the map $\varphi : B_A \to B$ lifts to a map of $A$-algebras $\varphi : B_A \to B \tensor_k A$, which is an isomorphism since $B_A$ is an $A$-deformation. 
+%
+%\end{proof} 
 
 For a general scheme, it is difficult to completely characterize the tangent and obstruction spaces. 
 In the case that $X$ is a smooth variety, however, we have the following clean geometric result.
@@ -518,13 +526,15 @@ In particular, if $H^2(X, T_X) = 0$ (say, if $X$ is a Riemann surface) then ther
 
 \begin{proof} 
 (Sketch)
-We have already seen that locally, over affine schemes, all first-order deformations are trivial. 
+We have just mentioned that over affine schemes, all first-order deformations are trivial. 
 So, pick a cover of $X$ by open affines
 \[
-\{U_\alpha\} = \{\Spec A_\alpha\} .
+\{U_\alpha\} = \{\Spec A_\alpha\}
 \] 
+such that all the intersections $U_{\alpha\beta} = U_{\alpha} \cap U_\beta$ are also affine. 
 Let $\Tilde{X}$ be any first-order deformation.
 Then, we know that $\Tilde{X}|_{U_\alpha}$ is the trivial deformation for each $\alpha$. 
+
 Choose trivializations
 \[
 \varphi_\alpha : \Tilde{X}|_{U_\alpha} = U_\alpha \times \Spec(k[\epsilon]/\epsilon^2)
@@ -544,12 +554,22 @@ It's easy to see that this is actually a derivation.
 Thus $\varphi_{\alpha\beta}$ is a local section of the tangent sheaf. 
 
 The collection $\{\varphi_{\alpha \beta}\}$ satisfy the cocycle condition
-\[
+\beqn\label{cocycle}
 \varphi_{\alpha\beta} \circ \varphi_{\beta \gamma} = \varphi_{\alpha \gamma}
-\]
+\eeqn
 on triple overlaps. 
 
 Thus, we have defined a map $T_{\Def_X} \to {C}^1(X, T_X)$. 
+It is an easy exercise to show that equivalent first-order deformations introduce coboundary degree one \v{C}ech cohomology classes. 
+Thus $T_{\Def_X} \cong H^1(X, T_X)$. 
+
+We will not prove that the universal obstruction space is equal to $H^2(X,T_X)$, but simply try to give some intuition as to why this cohomology group shows up. 
+Suppose we have a small map of algebras $B \to A$ and a given $A$-deformation $X_A$ of $X$. 
+Choosing an affine cover as above, we obtain trivialized $A$-deformations on $U_{\alpha}$. 
+These pull-back to trivializable $B$-deformations in the sense that we can always choose an isomorphism of $U_{\alpha}|_{\Spec(B)}$ with $U_\alpha \times \Spec(B)$. 
+Just as in the case above we obtain a \v{C}ech $1$-cochain defined on the overlaps. 
+The problem is, this $1$-cochain does not necessarily satisfy the $1$-cocycle condition Equation (\ref{cocycle}), and hence we may not be able to glue the $B$-deformation along $X$. 
+However, its failure {\em does} satisfy the $2$-cocycle condition so that the obstruction determines an element in $H^2(X, T_X)$. 
 \end{proof}
 
 \end{document}
