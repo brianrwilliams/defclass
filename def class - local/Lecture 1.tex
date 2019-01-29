@@ -1,0 +1,556 @@
+\documentclass[11pt]{amsart}
+
+\usepackage{macros}
+
+\linespread{1.25}
+
+\usepackage[final]{pdfpages}
+
+\setcounter{tocdepth}{2}
+
+\def\Spec{{\rm Spec}}
+
+\title{Lecture 1: Introduction to the class}
+
+\def\brian{\textcolor{blue}{BW: }\textcolor{blue}}
+
+\begin{document}
+\maketitle
+
+\section{Moduli}
+
+In this course, we are broadly interested in studying ``moduli spaces of structures".
+This is the fundamental context of deformation theory. 
+What is a ``moduli space?"
+Depending on who you ask, you will get a plethora of answers, but one common theme is that moduli spaces describe mathematical structures that can be ``varied". 
+
+\begin{evdfn}
+A moduli space $\sM$ parametrizes a ``universal family of structures". 
+Given a space $X$ and a map $f : X \to \sM$ is equivalent to prescribing an $X$-family of structures. 
+\end{evdfn} 
+
+\begin{eg}
+In topology, one studies the space $B \GL(m)$. 
+This is the classifying space of rank $m$ vector bundles in the sense that homotopy classes of maps $f : X \to B \GL(m)$ are equivalent to rank $m$ vector bundles on $X$ modulo isomorphism. 
+Thus $B \GL(m)$ describes the ``moduli space of vector spaces of dimension $m$". 
+\end{eg}
+
+\begin{eg}
+The moduli space of Riemann surfaces of genus $g$ is very familiar in algebraic geometry. 
+It is defined by the property that the collection of maps 
+\[
+f : X \to \sM_g
+\]
+is equivalent to prescribing a (flat) family over $X$ of Riemann surfaces of genus $g$. 
+\end{eg}
+
+\subsection{A more precise notion}
+
+Let $k$ be a field of characteristic zero and suppose $A$ is a commutative $k$-algebra.
+Consider the functor
+\[
+\begin{array}{cccc}
+h_{{\rm Spec}(A)} : & \CAlg_k & \to & \Set \\
+& B & \mapsto & {\rm Hom}_{\CAlg_k}(A,B) 
+\end{array}
+\]
+The assignment $A \mapsto h_{{\rm Spec}(A)}$ defines a functor
+\[
+h : \CAlg^{op}_k \to {\sf Fun}(\CAlg_k , \Set) .
+\]
+This is the Yoneda embedding for the category of commutative algebras. 
+
+We encode deformation problems in this sort of functor of points approach of describing algebraic structures. 
+Consider a functor of the form
+\[
+\sM : \CAlg_k \to \Set .
+\]
+Not every $\sX$ comes from an algebra (or even a scheme) through the Yoneda embedding as above.
+So these are more general objects than one would consider in a first course in algebraic geometry. 
+
+\begin{dfn}
+A {\em classical moduli space} (or {\em prestack}) is a functor $\sM : \CAlg_k \to \Set$. 
+\end{dfn}
+
+A moduli space $\sM$ parameterizes families of structures in the sense that maps $f : S \to X$ define an ``$S$-family" of structures. 
+If $\sM$ is a classical moduli problem, and $A$ is a commutative $k$-algebra, the set $\sM(A)$ thus has the following interpretation. 
+From our discussion above, $\sM(A)$ is equal to the set of maps ${\rm Spec}(A) \to \sM$. 
+Thus, $\sM(A)$ corresponds to families of objects over ${\rm Spec}(A)$. 
+
+Often times it is very difficult to describe a general $S$-family of structures. 
+There are two types of $S$ we will mostly restrict ourselves to in this lecture.
+
+\subsubsection{}
+
+Consider the ring $k[\epsilon]$ of polynomials in a single variable $\epsilon$. 
+This ring has a truncation $k[\epsilon] / \epsilon^2$ of polynomials defined modulo $\epsilon^2$.
+This is sometimes called the ring of ``dual numbers". 
+As a $k$-vector space, $k[\epsilon] / \epsilon^2 = k \oplus k$.
+Moreover, the unique maximal ideal $\epsilon \cdot k \subset k[\epsilon]/\epsilon^2$ defines an algebra homomorphism $k[\epsilon]/\epsilon^2 \to k$. 
+Thus, the spectrum $\Spec(k[\epsilon]/\epsilon^2)$ is topologically a point $\star$. 
+
+A $\Spec(k[\epsilon]/\epsilon^2)$-family of structures is defined by a map $f : \Spec(k[\epsilon]/\epsilon^2) \to \sM$.
+Topologically, it is specified by where the unique closed point is sent $\star \mapsto X$.
+Such a family is called the ``first-order" deformations of $X$. 
+We will see many examples below. 
+
+\begin{rmk}
+In the next lecture, we will see how $\sM(k[\epsilon]/\epsilon^2)$ can be thought of as the tangent space of $\sM$ at $X$.
+\end{rmk}
+
+\subsubsection{}
+
+The second type of family we will look at today is a ``formal family". 
+This is very similar to the last example, where we replace the dual numbers $k[\epsilon]/\epsilon^2$ by the power series algebra $k[[\epsilon]]$.
+Again, topologically, a $\Spec(k[[\epsilon]])$-family is specified by an object $X \in \sM$. 
+We will call such families ``formal deformations" of $X$. 
+
+\begin{rmk}
+In the next lecture we will see how to carefully identify $\sM(k[[\epsilon]])$ with the formal neighborhood of the point $X$ in $\sM$. 
+\end{rmk}
+
+In even more generality we have the following.
+For now, we will be vague about what a ``small" algebra $A$ is. 
+In particular, it means that there is a unique point $\star$ in its spectrum $\Spec(A)$. 
+
+\begin{vdfn} 
+A ``formal moduli space" is an assignment $F$ of a set $F(A)$ to a ``small" commutative algebra $A$ satisfying some coherence conditions.
+In particular, the algebras $k[\epsilon]/\epsilon^2$, $k[[\epsilon]]$ are ``small", so that it makes sense to talk about first-order and formal deformations of $F(\star)$.
+\end{vdfn}
+
+The main goal in this class is to give a complete {\em algebraic} characterization of formal moduli spaces. 
+
+\section{Some examples}
+
+\subsection{Deformations of algebras}
+
+Let $k$ be a field and $A$ a finite-dimensional $k$-vector space. 
+An associative multiplication is a bilinear map
+\[
+m : A \tensor_k A \to A
+\]
+satisfying 
+\[
+m(ab,c) = m(a,bc)
+\]
+for all $a,b,c \in A$. 
+In other words, $m \circ (m \tensor {\rm id}_A) = m \circ ({\rm id}_A \tensor m)$ as maps $A^{\tensor 3} \to A$. 
+
+A particular multiplcation $m$ is an element of the vector space ${\rm Hom}(A^{\tensor 2}, A)$, and the space of all multiplication cuts out some subspace. 
+Given $A$, the space of {\em all} associative products can be describes as the fiber over zero of the (non-linear) map
+\[
+\begin{array}{ccccl}
+\d_2 & : & {\rm Hom}(A^{\tensor 2}, A) & \to & {\rm Hom}(A^{\tensor 3}, A) \\
+ & & \mu & \mapsto & \mu \circ (\mu \tensor {\rm id}_A) - \mu \circ ({\rm id}_A \tensor \mu)
+\end{array}
+\]
+That is, 
+\[
+\{{\rm Associative\;algebra\;structures\;on\;}A\} = d_2^{-1}(0) .
+\]
+
+This is not yet the moduli space of associative products on $A$.
+To obtain the moduli, we must identify associative products that are equivalent. 
+This is the case if there exists a linear automorphism $\varphi : A \to A$ such that $\varphi \circ m = m' \circ \varphi$. 
+Thus, $m$ is equivalent to $\varphi^{-1} \circ m \circ \varphi$. 
+
+In conclusion, we find that the moduli space of all associative algebra structures on the $k$-vector space $A$ is 
+\[
+\d_2^{-1} (0) / \GL(A) .
+\]
+
+To obtain something meaningful, we must be careful when we take this quotient.
+In any case, the description of this moduli space is abstract and is not very manageable for concrete calculations. 
+If $\dim_k A = n$, the space ${\rm Hom}(A^{\tensor 2}, A)$ is of dimension $n^3$.
+We are looking at an algebraic subvariety $\d_2^{-1}(0)$ cut out by a quadratic equation and then taking the quotient by a linear group that acts in a potentially wild way.
+
+\subsubsection{}
+
+Instead of trying to understand the full moduli space of associative products, we try to understand ``formal" deformations of a fixed associative product. 
+Let $(A, m)$ be a given associative algebra. 
+We consider associative products on the vector space $A[[\epsilon]] = A \tensor_k k[[\epsilon]]$ of the form
+\[
+m + \epsilon m^{(1)} + \epsilon^2 m^{(2)} + \cdots .
+\] 
+Note that modulo $\epsilon$ we get back the algebra we started with. 
+This aligns with what we we called a ``formal deformation" above. 
+
+For each $k$, we have $m^{(k)} \in {\rm Hom}(A^{\tensor 2}, A)$.
+Of course, not every choice of such homomorphisms will result in an associative product.
+We proceed by constructing the product ``order by order" in the formal parameter $\epsilon$.
+Concretely, we view the power series algebra as a limit
+\[
+A[[\epsilon]] = \lim \left(\cdots \to A[\epsilon] / \epsilon^3 \to A[\epsilon] / \epsilon^2 \to A[\epsilon] / \epsilon^1 = A \right) .
+\] 
+Given a product defined modulo $\epsilon^{k+1}$
+\[
+m + \epsilon m^{(1)} + \cdots + \epsilon^k m^{(k)}
+\]
+we try to {\em lift} to a product defined modulo $\epsilon^{k+2}$
+\[
+m + \epsilon m^{(1)} + \cdots + \epsilon^k m^{(k)} + \epsilon^{k+1} m^{(k+1)} .
+\]
+
+\subsubsection{}
+
+Even the first stage in this process is non-trivial. 
+We are searching for $m^{(1)}$ so that $m + \epsilon m^{(1)}$ defines an associative product on $A[\epsilon]/\epsilon^2$. 
+This is a ``first-order" deformation in the general language set up above.
+
+The condition that $m + \epsilon m^{(1)}$ be associativity is equivalent to the vanishing of the expression
+\begin{align*}
+\d_2(m + \epsilon m^{(1)}) & = (m + \epsilon m^{(1)}) \circ \left((m + \epsilon m^{(1)}) \tensor \id_A - \id_A \tensor (m + \epsilon m^{(1)})\right) \\ & = \d_2(m) + \epsilon m^{(1)} \circ (m \tensor \id_A - \id \tensor m) \\ 
+& \;\;\;\;\;\;\;\;\;\;\;\;\;\;\; + \epsilon m \circ (m^{(1)} \tensor \id_A - \id_A \tensor m^{(1)}) + O(\epsilon^2) \\ & = 
+\epsilon \left(m^{(1)} \circ (m \tensor \id_A - \id \tensor m) + m \circ (m^{(1)} \tensor \id_A - \id_A \tensor m^{(1)})\right)
+\end{align*}
+
+We observe two features of this calculation. 
+The lowest order $\epsilon^0$ term has dropped out since $m$ is itself an associative product, and is hence killed by $\d_2$. 
+Secondly, the resulting expression is {\em linear} in the homomorphism $m^{(1)}$. 
+We let 
+\[
+\begin{array}{ccccl}
+\delta_2 & : & {\rm Hom}(A^{\tensor 2}, A) & \to & {\rm Hom}(A^{\tensor 3}, A) \\
+ & & \mu & \mapsto & \mu \circ (m \tensor {\rm id}_A - \id_A \tensor m) - m \circ ({\rm id}_A \tensor \mu - \mu \tensor {\rm id}_A) .
+\end{array}
+\]
+The map $\delta_2$ is linear and its kernel consists of those $m^{(1)}$ that define first-order deformations, by the above calculation.
+
+When are two first-order deformations equivalent? 
+This is the case when we have an algebra isomorphism
+\[
+\psi : \left(A[\epsilon]/\epsilon^2, m + \epsilon m^{(1)}\right) \xto{\cong} \left(A[\epsilon]/\epsilon^2, m + \epsilon m^{(1)'}\right)
+\]
+which is the identity modulo $\epsilon$.
+Thus, the automorphism is of the form $\psi = \id_V + \epsilon \psi^{(1)}$.
+
+\begin{ex}
+Show that the condition that $\psi = \id_V + \epsilon \psi^{(1)}$ be an automorphism implies that $\psi^{(1)}$ satisfies
+\[
+[m, \psi^{(1)}] = m^{(1)} - m^{(1)'} .
+\] 
+Here, if $\alpha : A \to A$ is any linear map, we define 
+\[
+\begin{array}{cccl}
+[m, \alpha] : & A \tensor A & \to & A \\
+&  a \tensor b & \mapsto & m (\alpha(a), b) + m (a, \alpha(b)) - \alpha (m(a,b)) .
+\end{array}
+\]
+Note that the map
+\[
+\delta_1 = [m, -] : {\rm Hom}(A,A) \to {\rm Hom}(A^{\tensor 2}, A)
+\]
+embeds linear maps as a subspace of maps $A^{\tensor 2} \to A$. 
+\end{ex}
+This exercise shows that $m^{(1)}$ and $m^{(1)} + [m, \psi^{(1)}]$ determine completely equivalent first-order deformations for any $\psi^{(1)} \in \Hom(A,A)$. 
+Thus, the moduli space of first order deformations is of the form  
+\[
+\ker\left(\delta_2\right) \; / \; {\rm Im} \left(\delta_1\right) .
+\]
+
+\subsubsection{}
+
+What about going further up the tower defining $A[[\epsilon]]$? 
+For the next stage, give $m^{(1)}$ we want to find a product of the form
+\[
+m + \epsilon m^{(1)} + \epsilon^2 m^{(2)}
+\]
+defining a algebra structure on $A[\epsilon]/\epsilon^3$. 
+In general, there is an {\em obstruction} to extending to a second-order deformation. 
+This obstruction is measured by a certain quantity involving $m^{(1)}, m^{(2)}$.
+More on this later.  
+
+\subsection{Cochain complexes}
+
+Suppose $(V, \d)$ is a $k$-linear cochain complex. 
+This means that $V$ is a $\ZZ$-graded vector space $V = \oplus_{i \in \ZZ} V^i [-i]$, where the $k$-vector space $V^i$ is in degree $i$.
+If $v \in V^i$ we say that $v$ has homogenous degree $i$ and write $|v| = i$. 
+The differential is a linear map $\d : V \to V$ of degree one, so that $\d (V^i) \subset V^{i+1}$, satisfying $\d^2 = \d \circ \d = 0$. 
+
+Given two cochain complexes $(V, \d_V)$ and $(W, \d_W)$ we have the vector space of {\em degree $n$ maps} from $V$ to $W$
+\[
+{\rm Hom}^n (V,W) = \{\varphi : V \to W \; | \; \varphi \; {\rm linear} \; , \; \varphi(V^i) \subset W^{i+n} \} .
+\]
+Define the $\ZZ$-graded vector space
+\[
+{\rm Hom}(V,W) = \bigoplus_{n \in \ZZ} {\rm Hom}^n(V,W)[-n] .
+\] 
+There is a natural differential on this graded vector space defined by
+\[
+\d_{\rm Hom} \varphi = \d_W \circ \varphi -  (-1)^{|\varphi|} \varphi \circ \d_V .
+\]
+A {\em cochain map} is $\varphi : V \to W$ such that $\d_{\rm Hom} \varphi = 0$. 
+
+\subsubsection{}
+
+What are the deformations of a cochain complex $(V,\d)$? 
+The only piece of data we have to deform is the differential, so it is natural to expect that these come from deforming the differential.
+As above, we look at formal deformations which have the form
+\[
+(V[[\epsilon]], \Tilde{\d}) = (V [[\epsilon]] , \d + \epsilon \d^{(1)} + \epsilon^2 \d^{(2)} + \cdots) 
+\]
+where $\epsilon$ is a formal parameter of grading degree zero. 
+
+Of course, not every $\Tilde{\d}$ endows the graded vector space $V[[\epsilon]]$ with the structure of a cochain complex.
+First of all, the differential is a linear endomorphism of degree $1$.
+Thus, for each $k$ one has $\d^{(k)} \in \End^1(V)$.
+The condition that $\Tilde{\d}$ define a differential is simply
+\[
+\Tilde{\d}^2 = 0 .
+\] 
+Just like the algebraic case, on the face of it this equation seems quite complicated. 
+We proceed by constructing the deformation order by order in the parameter $\epsilon$. 
+
+The first few terms are of the form:
+\[
+\cdots \to \left(V[\epsilon] / \epsilon^3, \d + \epsilon \d^{(1)} + \epsilon^2 \d^{(2)}\right) \to \left(V[\epsilon] / \epsilon^2 , \d + \epsilon \d^{(1)} \right) \to (V, \d) .
+\] 
+
+In order for $\d + \epsilon \d^{(1)}$ to define a first-order deformation we must solve the equation 
+\[
+0 = \left(\d + \epsilon \d^{(1)}\right)^2 = \epsilon \left(\d \circ \d^{(1)} - \d^{(1)} \circ \d\right)
+\]
+Note that the right hand side simply says that $\d_{\rm End} (\d^{(1)}) = 0$, where $\d_{\rm End}$ is the differential of the cochain complex $\End(V)$.
+Thus, $\d + \epsilon \d^{(1)}$ is a first order deformation if and only if $\d^{(1)} \in \End^1(V)$ is $\d_{\rm End}$-closed. 
+
+When are two first order deformations isomorphic?
+Suppose $\d^{(1)}$ and $\d^{(1)'}$ are two first order deformations. 
+They are isomorphic if there is an isomorphism of cochain complexes
+\[
+\psi : (V[\epsilon]/\epsilon^2 , \d + \epsilon \d^{(1)}) \xto{\cong} (V[\epsilon]/\epsilon^2, \d + \epsilon \d^{(1)'})
+\]
+such that $\psi \mod \epsilon = {\rm id}_V$. 
+Thus, we can write $\psi = {\rm id}_V + \epsilon \psi^{(1)}$ 
+Unravelling the condition that $\psi$ is a cochain map, we find that $\psi^{(1)}$ satisfies 
+\[
+\d_{\rm End} (\psi^{(1)}) = \d^{(1)} - \d^{(1)'} .
+\] 
+In other words, if $\d^{(1)}$ is any first-order deformation, and $\psi^{(1)} \in \End^0(V)$, then $\d^{(1)} + \d_{\rm End}(\psi^{(1)})$ determines an isomorphic first-order deformation. 
+
+We conclude that the space of first-order deformations modulo equivalence is the cohomology
+\[
+H^1(\End(V)) = \ker \left(\d_{{\rm End}^1}\right) / {\rm Im} \left(\d_{{\rm End}^0} \right) .
+\] 
+
+%By the same calculation, see that the zeroeth cohomology
+%\[
+%H^0(\End(V)) 
+%\] 
+%has the following interpretation. 
+%Given $\psi^{(1)} \in \End^0(V)$ such that $\d_{\End(V)} \psi^{(1)} = 0$ we obtain an automorphism $\id_V + \epsilon \psi^{(1)}$ of the trivial deformation $(V[\epsilon] / \epsilon^2, \d)$. 
+%On the other hand, if $\eta \in \End^{(-1)}(V)$, then there is a commuting square
+%\[
+%\begin{tikzcd}
+%(V[\epsilon] / \epsilon^2, \d) \ar[r, "
+
+\subsubsection{}
+
+Now, suppose that $\d^{(1)}$ is a given first-order deformation. 
+We want to study the problem of lifting to a second order deformation of the form
+\[
+\left(V [\epsilon] / \epsilon^3 = \d + \epsilon \d^{(1)} + \epsilon^2 \d^{(2)}\right) .
+\]
+We must find $\d^{(2)}$ solving the equation
+\[
+0 = \left(\d + \epsilon \d^{(1)} + \epsilon^2 \d^{(2)}\right)^2 .
+\] 
+Since $\d^{(1)}$ is a given first-order deformation, we have $(\d + \epsilon \d^{(1)})^2 = 0 \mod \epsilon$. 
+Thus, the equation above becomes
+\[
+0 = \epsilon^2 \left([\d, \d^{(2)}] + (\d^{(1)})^2\right) . 
+\]
+If this equation is {\em not} satisfied, then we do not obtain a deformation modulo $\epsilon^3$. 
+In this sense, the right-hand side can be thought of as an {\em obstruction} to having a deformation. 
+
+%\d_{\rm End} (\Tilde{\d}^{(2)}) + \frac{1}{2} [\Tilde{\d}^{(2)}, \Tilde{\d}^{(2)}] = 0 \mod \epsilon^2
+%This equation is equivalent to
+%\[
+%
+%\]
+%where $\Tilde{\d}^{(2)} = \epsilon \d^{(1)} + \epsilon^2 \d^{(2)}$. 
+
+\subsection{Flat bundles}
+
+Let $M$ be a smooth manifold and $E \to M$ a vector bundle. 
+A connection on $E$ is a linear map
+\[
+\nabla : \Gamma(E) \to \Gamma(T^*M \tensor E) = \Omega^1(M, E)
+\] 
+satisfying the Leibniz rule $\nabla (f s) = \d f \tensor s + f \nabla(s)$ for all $s \in \Gamma(E)$, $f \in C^\infty(M)$. 
+We can extend $\nabla$ to a map (denoted by the same symbol)
+\[
+\nabla : \Omega^1(M, E) \to \Omega^2(M,E) = \Gamma(\wedge^2 T^* M \tensor E)
+\]
+by the rule $\nabla(\omega \tensor s) = (\d \omega) \tensor s - \omega \wedge \nabla(s)$. 
+The composition $\nabla \circ \nabla : \Gamma(E) \to \Omega^2(M , E)$ is, in general, nonzero. 
+It is, however, a $C^\infty(M)$-linear operator, and hence determines a section
+\[
+F_\nabla \in \Omega^2(M, \End(E))
+\]
+called the {\em curvature} of $\nabla$. 
+A connection $\nabla$ is {\em flat} if $F_\nabla = 0$. 
+
+We'd like to describe all flat connections of the fixed vector bundle $E$. 
+We first unravel the flatness equation $F_\nabla = 0$. 
+Any connection $\nabla$ can be written in the form
+\[
+\nabla = \d + \theta
+\]
+for $\theta \in \Omega^1(M, \End(E))$. 
+Here, $\End(E)=E \tensor E^\vee$ is the endomorphism bundle. 
+The condition that $F_\nabla = 0$ is equivalent to the {\em Maurer-Cartan equation}
+\[
+\d \theta + \frac{1}{2} [\theta, \theta] = 0 
+\]  
+where $[-,-]$ is defined using the commutator of endomorphisms together with the wedge product of forms. 
+
+There is a notion of equivalence of connections through so-called ``gauge transformations". 
+Given a section $g \in \Gamma({\rm Aut}(E))$, we define a new connection $g \cdot \nabla$ by
+\[
+(g \cdot \nabla)(s) = g^{-1} \nabla (g s) + (g^{-1} \d g) \tensor s .
+\]
+If we write $\nabla = \d + \theta$ and $g \cdot \nabla = \d + g \cdot \theta$, then 
+\[
+g \cdot \theta = g^{-1} \theta g + g^{-1} \d g .
+\] 
+
+One says that two connections $\nabla,\nabla'$ are {\em gauge equivalent} if there exists an automorphism $g$ such that $\nabla' = g \cdot \nabla$. 
+Note that gauge equivalence preserves the space of flat connections. 
+
+\begin{ex}
+Suppose $\nabla,\nabla'$ are two gauge equivalent flat connections. 
+Construct an isomorphism from the $\nabla$-flat sections 
+\[
+\Gamma^{flat}_{\nabla}(E) := \ker \nabla \subset \Gamma(E)
+\]
+to the $\nabla'$-flat sections $\Gamma^{flat}_{\nabla'}(E)$. 
+\end{ex}
+
+The moduli space of flat connections is the space of flat connections modulo gauge. 
+
+\subsubsection{}
+Suppose that $\theta$ defines a flat connection. 
+Then, we see that to first order, $\theta + \epsilon \theta^{(1)}$ defines a flat connection if and only if 
+\[
+\d \theta^{(1)} + [\theta, \theta^{(1)}] = 0 .
+\] 
+One can check that two first-order deformations $\theta^{(1)}$ and $\theta^{(1)'}$ determine gauge equivalent connections if and only if there exists a section $X \in \Gamma(\End(E))$ such that
+\[
+\theta^{(1)} - \theta^{(1)'} = \d X + [\theta, X] .
+\]
+This shows that the moduli space of first-order deformations is precisely the first cohomology of the bundle $\End(E)$
+\[
+H^1(M, \End(E)) = H^1 \left(\Omega^*(M, \End(E)), \d + [\theta,-] \right)
+\]
+
+\section{A general structure}
+
+So far, we have seen how various deformations problems can be turned into more familiar problems in cohomology or algebra. 
+Common to all of the examples was a certain piece of structure called a {\em differential graded Lie algebra}. 
+
+\subsection{Endomorphisms of a complex}
+
+We begin with the example from Section \ref{sec: cochain}. 
+Given a cochain complex $(V,\d)$ we saw that first order deformations were characterized by $H^1(\End(V))$. 
+Moreover, there was an {\em obstruction} to finding a lift of a first order deformation which we found was an element in $H^2(\End(V))$. 
+
+If $W$ is an ordinary vector space, the vector space $\End(W)$ has the structure of a {\em Lie algebra}. 
+The Lie bracket is given by the commutator of endomorphisms. 
+Similarly, the cochain complex $(\End(V), \d_{\End})$ has a sort of Lie bracket. 
+To define it correctly, we need to be careful of signs:
+\[
+[\varphi, \psi] = \varphi \circ \psi - (-1)^{|\varphi| |\psi|} \psi \circ \varphi .
+\] 
+The bracket satisfies a graded version of skew symmetry and a graded version of the Jacobi identity. 
+In addition, it is compatible with the differential in the sense that $\d_{\End}$ is a graded derivation for it. 
+Such a triple $(\End(V), \d_{\End}, [-,-])$ is called a {\em differential graded Lie algebra}. 
+
+This language offers a clean description of deformations of $(V,\d)$ in the following way. 
+The space $H^1(\End(V))$ does not use the Lie bracket and still parametrizes first-order deformations. 
+Now, the obstruction to lifting a first order deformation $\epsilon \d^{(1)}$ to a second order deformation $\Tilde{\d}^{(2)} = \epsilon \d^{(1)} + \epsilon^2 \d^{(2)}$ is of the form
+\[
+\d_{\rm End} (\Tilde{\d}^{(2)}) + \frac{1}{2} [\Tilde{\d}^{(2)}, \Tilde{\d}^{(2)}] = 0 \mod \epsilon^2 .
+\]
+This is called the {\em Maurer-Cartan equation} for the dg Lie algebra. 
+
+We summarize the deformation theory of cochain complexes as:
+\begin{itemize}
+\item $H^0({\rm End}(V))$ is the Lie algebra of symmetries of a fixed deformation. 
+\item $H^1(\End(V))$ is the space of first-order deformations modulo equivalence.
+\item $H^2(\End(V))$ is the space where the obstruction to lifting first-order deformations lives.
+\end{itemize}
+
+\subsection{Hochschild cohomology}
+We saw that the first-order deformations of an algebra $(A, m)$ can be realized as the quotient space $\ker(\delta_2) / {\rm im}(\delta_1)$. 
+This expression should look familiar, as a cohomology. 
+Indeed, we can think of space as the first cohomology of the complex
+\[
+\Hom(A, A) \xto{\delta_1} \Hom(A^{\tensor 2}, A) \xto{\delta_2} \Hom (A^{\tensor 3}, A) .
+\] 
+This is a piece of a well-studied object called the {\em Hochschild cohomology} of the algebra $A$. 
+Indeed, this sequence can be extended to the left and right to yield
+\[
+\begin{array}{ccccccccccc}
+& \ul{-1} & & \ul{0} & & \ul{1} & & \ul{2} & & \\
+& A & \xto{[-,-]} & \Hom(A, A) & \xto{\delta_1} & \Hom(A^{\tensor 2}, A) & \xto{\delta_2} & \Hom (A^{\tensor 3}, A) & \to \cdots
+\end{array}
+\]
+The first map is simply $a \mapsto [a,-]$. 
+This sequence is actually a complex.
+The Hochschild cohomology is the cohomology of this complex, denoted $HH^*(A, A)$. 
+
+There is a dg Lie algebra structure on the (shift of the) Hochschild cohomology cochain complex. 
+In degree zero, $\Hom(A,A) = \End(A)$ we know there is the obvious structure of a Lie algebra.
+In the full complex, the differential is the one we've just described.
+There is a natural extension of the Lie bracket in degree zero to one on the full complex.
+It is perhaps easiest to think about pictorially. 
+
+\begin{itemize}
+\item $HH^0(A,A)$ is the center of $A$.
+\item $HH^1(A,A)$ is equal to the space of derivations of $A$ modulo inner derivations. 
+\item $HH^2(A,A)$ is equal to the space of first-order deformations of $A$ modulo equivalence.
+\item $HH^3(A,A)$ is the space where the obstruction to extending a deformation lives.
+\end{itemize}
+
+\subsection{Flat bundles}
+
+For the flat bundle case, there is also a dg Lie algebra floating around. 
+For a fixed flat connection $\nabla = \d + \theta$ on a vector bundle $E \to M$, it is of the form
+\[
+\left(\Omega^{*}(M, \End(E)), \d + [\theta,-]\right) .
+\]
+The Lie bracket is induced from the obvious one on $\End(E)$ together with the wedge product of differential forms.
+Notice that the Maurer-Cartan equation for this dg Lie algebra is the usual one from geometry. 
+
+\subsection{The fundamental theorem of deformation theory}
+
+The general heuristic, or ``experimental fact", widely believed well before its full proof appeared is the following. 
+
+\begin{ef}
+For every formal moduli space one can find a differential graded (dg) Lie algebra {\bf controlling} it. 
+Equivalences of deformation problems are detected by quasi isomorphisms of dg Lie algebras.
+\end{ef}
+
+By controlling, we have been purposefully vague.
+Part of what this means is that for any formal moduli space $F$, there is a dg Lie algebra $\fg_{F}$ whose first cohomology $H^1(\fg_F)$ labels the first-order deformations. 
+Any deformation $\theta$ must satisfy the Maurer-Cartan equation in $\fg_{F}$:
+\[
+\d_{\fg_{F}} \theta + \frac{1}{2} [\theta,\theta] = 0 .
+\] 
+Making this heuristic precise is most of the problem. 
+In any case, we can state the full result in slightly more categorical terms as:
+
+\begin{thm}[Lurie, Hinich and Pridham]
+There is an equivalence of ($\infty$-)categories between:
+\begin{itemize}
+\item the category of {\bf formal moduli spaces} over a field $k$ of characteristic zero and
+\item the category of {\bf dg Lie algebras} over $k$. 
+\end{itemize}
+\end{thm} 
+
+In this statement we have not yet made evident the exact mechanism that one can arrive at a dg Lie algebra from a formal moduli space, or vice-versa. 
+Most of the work involved is in setting this up.
+To formulate and prove this theorem we must use some technology in the theory of higher algebra and $\infty$-categories. 
+
+\end{document}
+ 
