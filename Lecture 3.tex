@@ -240,14 +240,14 @@ Given any Lie group $G$, the tangent space at the unit $T_e G$ has the natural s
 Conversely, if $\fg$ is any Lie algebra there is a unique simply connected Lie group whose tangent space at the unit is $\fg$. 
 This means that phenomena in Lie groups can be translated to problems in Lie algebras and vice-versa. 
 
-For simplicity, we work over $\CC$. 
-Let $G$ is a Lie group with Lie algebra $\fg$. 
+For simplicity and motivation, we will momentarily work over $\CC$. 
+Let $G$ be a Lie group with Lie algebra $\fg$. 
 For any $X \in \fg$ there is a map of Lie algebras
 \[
 \tau_X : \CC \to \fg
 \]
 sending $t \mapsto t X$. 
-Here, $\CC$ is a Lie algebra with trivial bracket. 
+Here, we view $\CC$ as a Lie algebra with trivial bracket. 
 Via the correspondence between Lie groups and Lie algebras, there is then a unique map of Lie groups
 \[
 \gamma_X : \CC \to G .
@@ -286,7 +286,8 @@ In formulas, if $X \in \fg^0$ and $Y \in \fg^n$ then this action is
 The object we are interested in is the Maurer-Cartan set $\MC(\fg)$ of the dg Lie algebra. 
 Although $\fg^0$ does not act on $\MC(\fg)$ in any natural way (in fact, $\MC(\fg)$ is rarely even a vector space) we can formally define the action of a group $\exp(\fg^0)$ on $\MC(\fg)$. 
 For now, we think of $\exp(\fg^0)$ as the simply connected Lie group corresponding via Lie's theorem to $\fg^0$. 
-In most examples, this is not quite valid since $\fg^0$ may not even by finite dimensional. 
+In most examples this is subtle since $\fg^0$ may not be finite dimensional. 
+Even so, we can make sense of the construction. 
 
 Assuming that this exponential exists, we observe the following. 
 Since $\fg^1$ is a $\fg^0$-module, we see that $\fg^1$ is formally a $\exp(\fg^0)$-representation. 
@@ -329,12 +330,14 @@ Moreover, $G^0$ preserves the solutions to the Maurer-Cartan equation in $\fg^1$
 \end{lem}
 
 There is an explicit formula for this action given by the BCH formula. 
+For an original reference see the paper \cite{GM}. 
 Given $X \in \fg^0$ and $\alpha \in \fg$, we have
 \[
 \exp(X) \cdot \alpha = \alpha + \sum_{n \geq 0} \frac{{\rm ad}(X)^n}{(n+1)!} ([X, \alpha] - \d X) .
 \] 
 Evidently, the right hand side only makes sense if $\ad(X)^n = 0$ for $n$ large enough.
 This is where nilpotence is essential!
+For a nice overview of nilpotence for dg Lie algebras see \cite{Getzler}. 
 
 \begin{rmk}
 Note that if $\fg^0$ is nilpotent, then the action of $\exp(X)$ corresponding to an element in $X \in \fg^0$ on $\fg^1$ makes sense even if $\fg^0$ is infinite dimensional. 
@@ -348,5 +351,9 @@ If $\fg^0$ is nilpotent, then for any $X \in \fg^0$ there is an isomorphism of d
 \]
 defined by $\varphi_X(y) = \exp(X) \cdot y$. 
 \end{lem}
+
+\bibliographystyle{alpha}
+%\bibliographystyle{spmpsci}  
+\bibliography{def}
 
 \end{document}

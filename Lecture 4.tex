@@ -17,6 +17,7 @@
 \def\dgLienil{{\sf Lie}^{\sf dg, nil}}
 \def\Moduli{{\sf Moduli}}
 \def\dgMod{{\sf Mod}^{\sf dg}}
+\def\cdga{{\sf CAlg}^{\sf dg}}
 
 \begin{document}
 
@@ -230,6 +231,9 @@ Thus, we see that $T_{\Def_\fg} = T_{\MC_\fg} / \d \fg^0 = Z^1 \fg / B^1 \fg = H
 
 \subsection{Aside on obstruction space}
 
+The following subsection is an aside from the main goal of this lecture. 
+We don't recall the full theory of obstruction, but refer to Chapter 2 of \cite{Manetti1999} or Chapter 4 of \cite{Manetti2009} for a nice treatment. 
+
 Suppose we have a small exact sequence of Artinian algebras
 \beqn\label{smallexact}
 0 \to M \to B \xto{\sigma} A \to 0 .
@@ -284,9 +288,25 @@ Thus, there are forgetful functors
 \[
 \oblv_{C}, \oblv_{A}, \oblv_L : \dgCAlg_k, \dgAss_k, \dgLie_k \to \dgVect_k .
 \] 
+Furthermore, we have seen in the last lecture that there is a functor 
+\[
+(-)_L : \dgAss_k \to \dgLie_k
+\]
+which takes a dg associative algebra to the dg Lie algebra whose underlying dg vector space is the same, and Lie bracket is given by the (graded) commutator. 
 
 \subsection{A slew of functors}
 \def\Tens{{\rm Tens}}
+
+The forgetful functors above fit in as the straight arrows in the diagram below. 
+\[
+\begin{tikzcd}
+& \dgAss_k \ar[dd, "\oblv_A"] \ar[dl, "(-)_L"] & \\
+\dgLie_k \ar[dr, "\oblv_L"] & &  \cdga_k \ar[dl,"\oblv_C"] \\
+& \dgVect_k & 
+\end{tikzcd}
+\]
+Our goal is to construct the curved arrows in this diagram. 
+It turns out, as we will see, each of the curved arrows are {\em left adjoints} to the straight forgetful functors in the diagram. 
 
 \subsubsection{The free algebras}
 
@@ -396,8 +416,15 @@ Then, the corresponding map of deformation functors
 is an {\bf isomorphism}. 
 \end{thm}
 
+In fact, in order to obtain an isomorphism of deformation functors, all one needs to assume is certain conditions on the map of dg Lie algebras at the level of $H^0, H^1$, and $H^2$. 
+This is reasonable since $\Def_\fg$ only cares about the dg Lie algebra in those degrees.
+The proof of this claim will lead us too far astray from our present goal, but can be found in Chapter 3 of \cite{Manetti1999}. 
 
 
+%\input{first section}
+\bibliographystyle{alpha}
+%\bibliographystyle{spmpsci}  
+\bibliography{def}
 \end{document}
 
 

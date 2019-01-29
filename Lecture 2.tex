@@ -178,6 +178,8 @@ In other words, $\sX^{\Hat{\;\;}}_x(B)$ fits into a pull-back square of sets
 
 \section{Formal deformation problems}
 
+The following axioms for formal deformation problems as functors out of the category of Artinian algebras were originally proposed by Schlessinger in \cite{Sch}. 
+
 \begin{dfn}\label{dfn: def}
 A {\em formal deformation problem} is a formal pre-deformation problem $F : \Art_k \to \Set$ such that for every fiber product
 \[
@@ -416,7 +418,6 @@ The map $\Psi$ sends a deformation $(\Tilde{X}, \Tilde{\varphi})$ over $\Spec(B 
 \[
 (\Tilde{X} |_{\Spec(B)}, \Tilde{\varphi}_B) \times (\Tilde{X} |_{\Spec(C)}, \Tilde{\varphi}_C) .
 \]
-where ...
 We denote by $(Y, \sO_Y)$ either of the isomorphic schemes $(X_B, \sO_B) \cong_f (X_C, \sO_C)$. 
 Note that there are natural maps $X_B \leftarrow Y \to X_C$. 
 Define $Z$ to be the pushout in the category of ringed spaces
@@ -454,8 +455,11 @@ We have just constructed a pair $(Z, \varphi : X \to Z)$ where $Z$ is flat over 
 It is immediate to check that $\varphi$ induces an isomorphism $\varphi |_{\Spec(k)} : X \xto{\cong} Z|_{\Spec(k)}$ so that $(Z, \varphi)$ is an $B \times_A C$-deformation of $X$. 
 Also, as an exercise one can check that $\Psi$ maps $(Z, \varphi)$ to the pair $(X_B, \varphi_B) \times (X_C,\varphi_C)$ we started with.
 
-It remains to see that $\Psi$ is an isomorphism when $A = k$. 
+It is a direct, but useful, exercise to see that $\Psi$ is an isomorphism when $A = k$.
 \end{proof}
+
+We have sketched the proof above, but for more details we recommend most any text on formal moduli spaces in algebraic geometry, such as in Chapter 3 of \cite{Hartshorne}.
+For another nice reference and a wealth of other examples, we recommend a nice summary of deformation theory in the context of algebraic geometry in \cite{Talpo}. 
 
 A standard lemma in commutative algebra shows that over smooth affine schemes, all first-order deformations are trivial. 
 
@@ -526,6 +530,7 @@ In particular, if $H^2(X, T_X) = 0$ (say, if $X$ is a Riemann surface) then ther
 
 \begin{proof} 
 (Sketch)
+We follow the proof of Theorem 5.5 in \cite{Hartshorne}. 
 We have just mentioned that over affine schemes, all first-order deformations are trivial. 
 So, pick a cover of $X$ by open affines
 \[
@@ -571,5 +576,9 @@ Just as in the case above we obtain a \v{C}ech $1$-cochain defined on the overla
 The problem is, this $1$-cochain does not necessarily satisfy the $1$-cocycle condition Equation (\ref{cocycle}), and hence we may not be able to glue the $B$-deformation along $X$. 
 However, its failure {\em does} satisfy the $2$-cocycle condition so that the obstruction determines an element in $H^2(X, T_X)$. 
 \end{proof}
+
+\bibliographystyle{alpha}
+%\bibliographystyle{spmpsci}  
+\bibliography{def}
 
 \end{document}

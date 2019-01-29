@@ -1,0 +1,20 @@
+\begin{thebibliography}{Har10}
+
+\bibitem[Har10]{Hartshorne}
+Robin Hartshorne.
+\newblock {\em Deformation theory}, volume 257 of {\em Graduate Texts in
+  Mathematics}.
+\newblock Springer, New York, 2010.
+
+\bibitem[Sch68]{Sch}
+Michael Schlessinger.
+\newblock Functors of {A}rtin rings.
+\newblock {\em Trans. Amer. Math. Soc.}, 130:208--222, 1968.
+
+\bibitem[TV13]{Talpo}
+Mattia Talpo and Angelo Vistoli.
+\newblock Deformation theory from the point of view of fibered categories.
+\newblock In {\em Handbook of moduli. {V}ol. {III}}, volume~26 of {\em Adv.
+  Lect. Math. (ALM)}, pages 281--397. Int. Press, Somerville, MA, 2013.
+
+\end{thebibliography}
