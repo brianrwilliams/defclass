@@ -8,7 +8,7 @@
 
 \setcounter{tocdepth}{2}
 
-\title{Lecture 4: Modules for dg Lie algebras}
+\title{Lecture 4: dg Modules for dg Lie algebras}
 
 \def\dgVect{{\sf Vect}^{\sf dg}}
 \def\dgLie{{\sf Lie}^{\sf dg}}
@@ -21,7 +21,7 @@
 \begin{document}
 \maketitle
 
-The enveloping algebra of a Lie algebra recognizes quasi-isomorphisms of dg Lie algebras in the following way/
+The enveloping algebra of a Lie algebra recognizes quasi-isomorphisms of dg Lie algebras in the following way.
 
 \begin{lem}
 A map of dg Lie algebras $f : \fg \to \fh$ is a quasi-isomorphism if and only if the induced map
@@ -62,29 +62,43 @@ Let $\dgMod_{\fg}$ denote the category of dg $\fg$-modules.
 \end{dfn}
 
 \begin{rmk}
+The notion of a (left) dg module for an associative dg algebra is defined in the natural way.
 By the universal property of the enveloping algebra, we see that a dg module for $\fg$ is equivalent to a (left) dg module for the associative dg algebra $U(\fg)$. 
 \end{rmk}
 
-The category of modules is an abelian category in the obvious way. 
-Also, there is the notion of tensor product. 
+Unlike the category of dg Lie algebras, the category of dg $\fg$-modules is an abelian category in the obvious way. 
 
-\begin{dfn}
-Suppose $M,N$ are two dg $\fg$-modules.
-Define the tensor product dg $\fg$-module $M \tensor N$ to be the tensor product of underlying dg vector spaces with $\fg$-module structure given by
+As a matter of notation, when $M, N \in \dgMod_\fg$, we will write 
 \[
-\rho_{M} \tensor 1 + 1 \tensor \rho_N : \fg \to \End_k(M \tensor_k N) = \End_k(M) \tensor_k \End_k(N) .
+M \tensor_k N \in \dgVect_k
 \]
-\end{dfn}
+to be the tensor product as underlying dg vector spaces. 
+While it is true that this tensor product still has the structure of a dg Lie algebra, we will not use it in what immediately follows. \footnote{In fact, the category $\dgMod_\fg$ is symmetric monoidal.}
 
-\begin{rmk}
-If we think of $M,N$ as dg $U\fg$-modules, then 
-\[
-M \tensor N = M \tensor_{U\fg} N
-\]
-as $U \fg$-modules. 
-\end{rmk}
+%Also, there is the notion of tensor product. 
+%
+%\begin{dfn}
+%Suppose $M,N$ are two dg $\fg$-modules.
+%Define the tensor product dg $\fg$-module $M \tensor N$ to be the tensor product of underlying dg vector spaces with $\fg$-module structure given by
+%\[
+%\rho_{M} \tensor 1 + 1 \tensor \rho_N : \fg \to \End_k(M \tensor_k N) = \End_k(M) \tensor_k \End_k(N) .
+%\]
+%\end{dfn}
+
+%\begin{rmk}
+%If we think of $M,N$ as dg $U\fg$-modules, then 
+%\[
+%M \tensor N = M \tensor_{U\fg} N
+%\]
+%as $U \fg$-modules. 
+%\end{rmk}
+
+%This tensor product endows the category $\dgMod_{\fg}$ with the structure of a {\em symmetric monoidal category}. 
 
 \subsection{(Co)Homology}
+
+In what follows we only recount facets of Lie algebra homology/cohomology that we will use later on. 
+For a more complete survey of these ideas we recommend the textbook reference \cite{FF}.
 
 As for ordinary modules, we have a pair of functors
 \[
@@ -106,6 +120,7 @@ and
 \[
 M_\fg = k \tensor_{U \fg} M .
 \] 
+Here, we regard $M$ as a left dg $U(\fg)$-module and $k$ as a trivial (left and right) dg $U(\fg)$-module. 
 \end{rmk}
 
 \begin{lem}
@@ -152,18 +167,18 @@ H_{\rm Lie}^*(\fg ; M) = {\rm Ext}^*_{U \fg}(k, M) .
 
 To compute the Lie algebra homology, for instance, one uses the usual trick for derived functors. 
 By first finding a projective resolution, tensoring, then computing the cohomology. 
-We proceed by finding a projective resolution of $U\fg$ 
+We proceed by finding a projective resolution of $U\fg$
 
 \subsubsection{}
 
 First, we sketch the following general construction for dg Lie algebras.
 Given a dg Lie algebra $\fg$ define its {\em cone} to be the dg Lie algebra ${\rm Cone}(\fg)$ to be
 \[
-{\rm Cone}(\fg)_n = \fg_n \oplus \fg_{n-1}
+{\rm Cone}(\fg)^n = \fg^{n+1} \oplus \fg^n
 \]
 with differential
 \[
-\d_n = \left(\begin{array}{cc} \d_{\fg,n} & {\rm id}_{\fg_{n}} \\ 0 & \d_{\fg, n-1} \end{array}\right) : {\rm Cone}(\fg)_{n} = \fg_n \oplus \fg_{n-1} \to \fg_{n+1} \oplus \fg_n = {\rm Cone}(\fg)_{n+1}
+\d_n = \left(\begin{array}{cc} \d_{\fg,n+1} & 0 \\ {\rm id}_{\fg^{n+1}}  & \d_{\fg, n} \end{array}\right) : {\rm Cone}(\fg)^{n} = \fg^{n+1} \oplus \fg^{n} \to \fg^{n+2} \oplus \fg^{n+1} = {\rm Cone}(\fg)^{n+1}
 \]
 and bracket
 \[
@@ -177,6 +192,36 @@ There is a natural map of dg Lie algebras
 \]
 Furthermore, ${\rm Cone}(\fg)$ is acyclic.
 \end{lem} 
+\begin{proof}
+The construction of the cone above is a special case of a general construction. 
+Given any map of dg vector spaces
+\[
+f : V \to W
+\]
+we can construct the {\em cone} of $f$, ${\rm Cone}(f)$, as follows. 
+For a textbook reference on these sorts of things, see \cite{Weibel}. 
+The complex ${\rm Cone}(\fg)$ is the special case where $V = W = \fg$ and $f = {\rm id}$. 
+
+As an underlying vector space
+\[
+{\rm Cone}(f) = V[1] \oplus W
+\]
+(thus ${\rm Cone}(f)^n = V^{n+1} \oplus W^n)$. 
+The differential is
+\[
+\d_{{\rm Cone}} =  \left(\begin{array}{cc} \d_{V[1]} & 0 \\ f[1]  & \d_W \end{array}\right) .
+\]
+
+Observe that the cone of the identity morphism is acyclic.
+An explicit nullhomotopy is given by the identity map itself. 
+\end{proof}
+
+\begin{rmk}
+The reason for the terminology comes from topology. 
+If $f : X \to Y$ is a map of topological spaces then it induces a map of singular cochains $f^* : {\rm C}_{\rm sing}^*(Y) \to {\rm C}_{\rm sing}^*(Y)$. 
+Then, in the construction above, ${\rm Cone}(f^*)$ is equal to singular cochains of the {\em mapping cone} of $f$.
+From this intuition, it is easy to see why the cone of the identity is contractible / acyclic. 
+\end{rmk}
 
 By functoriality of the enveloping functor, the associative algebra $U({\rm Cone}(\fg))$ is acyclic and hence a resolution for the trivial $U \fg$-module.
 Thus, we have
@@ -185,7 +230,7 @@ H^{\rm Lie}_*(\fg, M) = H^*\left(U({\rm Cone}(\fg)) \tensor_{U \fg} M \right) .
 \] 
 
 \begin{dfn}
-The Chevalley-Eilenberg complex computing Lie algebra {\em homology} is the dg vector space
+The Chevalley-Eilenberg cochain complex computing Lie algebra {\em homology} is the dg vector space
 \[
 \clieu_*(\fg ; M) := U({\rm Cone}(\fg)) \tensor_{U \fg} M .
 \] 
@@ -201,6 +246,7 @@ Tracing through these isomorphisms, one can deduce that the differential is
 \begin{align*}
 \d_{CE} (x_1,\ldots, x_n) & = \sum_{i = 1}^n (\pm) x_1 \cdots x_{i-1} (\d x_i) x_{i+1} \cdots x_n \\ & + \sum_{i < j} (\pm) x_1\cdots \Hat{x_i} \cdots x_{j-1} [x_i,x_j] x_{j+1} \cdots x_n .
 \end{align*}
+Thus, we can write the differential as a sum of two terms $$\d_{CE} = \d_{\fg} + \d_{\rm Lie}$$ where $\d_{\fg}$ is the differential induced from that on the dg Lie algebra $\fg$ by the Leibniz rule (this preserves Sym-degree) and $\d_{\rm Lie}$ encodes the Lie bracket (this decreases Sym-degree by one). 
 \end{rmk}
 
 \subsubsection{}
@@ -208,7 +254,7 @@ Tracing through these isomorphisms, one can deduce that the differential is
 There is a completely analogous construction for Lie algebra cohomology. 
 
 \begin{dfn}
-The Chevalley-Eilenberg complex computing Lie algebra {\em cohomology} is the dg vector space
+The Chevalley-Eilenberg cochain complex computing Lie algebra {\em cohomology} is the dg vector space
 \[
 \clie^*(\fg ; M) := U({\rm Cone}(\fg)) \tensor_{U \fg} M .
 \] 
@@ -228,6 +274,12 @@ Note that, when $M = k$ there is an identification
 \clie^*(\fg ; k) = \left(\clieu_*(\fg ; k)\right)^\vee = \Hom_k(\clieu_*(\fg ;k), k) .
 \] 
 \end{rmk}
+
+\begin{warn}
+We abusively refer to $\clieu_*(\fg ; -)$ and $\clie^*(\fg; -)$ as the Chevalley-Eilenberg (CE) chain and cochain complexes, respectively.
+Note that both are really {\em cochain complexes} (equivalently dg vector spaces) since their differentials increase grading degree.
+We keep this terminology since they compute Lie algebra homology and cohomology, respectively. 
+\end{warn}
 
 \subsubsection{}
 
@@ -253,7 +305,33 @@ The CE complex for homology/cohomology determine functors
 \clie^*(-) : & \dgLie_k & \to & \left(\dgVect_k\right)^{op} .
 \end{array}
 \]
-Moreover, if $f : \fg \to \fh$ is a quasi-isomorphism of dg Lie algebras, then the induced maps
+\end{lem}
+
+\subsubsection{}
+
+There is a filtration on CE chains/cochains similar to the one we discussed for the enveloping algebra.
+
+For chains, the filtration is increasing 
+\[
+k = F^0 \clieu_*(\fg) \hookrightarrow F^1 \clieu_*(\fg) \hookrightarrow \cdots
+\]
+defined by
+\[
+F^{k} \clieu_*(\fg) = \left(\Sym^{\leq k} (\fg[1]) , \d_{CE}\right) 
+\] 
+with the obvious inclusions. 
+Note that the successive quotients are
+\[
+F^k / F^{k-1} \cong \left(\Sym^k(\fg) , \d_{\fg}\right)
+\]
+where $\d_{\fg}$ denotes the differential on the symmetric algebra induced from that on the dg Lie algebra $\fg$ by the Leibniz rule. 
+The filtration is complete in the sense that $\clieu_*(\fg) \cong {\rm colim}_{k} F^k$. 
+
+The filtration on cochains is defined similarly. 
+
+\begin{lem}
+Let $\fg,\fh$ be dg Lie algebras.
+If $f : \fg \to \fh$ is a quasi-isomorphism of dg Lie algebras, then the induced maps
 \[
 \begin{array}{cccc}
 \clieu_*(f) : & \clieu_*(\fg) & \to & \clieu_*(\fh)\\
@@ -262,6 +340,24 @@ Moreover, if $f : \fg \to \fh$ is a quasi-isomorphism of dg Lie algebras, then t
 \]
 are quasi-isomorphisms. 
 \end{lem}
+\begin{proof}
+We prove the statement for chains.
+The proof for cochains is completely analogous. 
+Note that the induced map $\clieu_*(f)$ preserves Sym-degree, and in particular, preserves the filtration $\clieu_*(f) : F^\bullet \clieu_*(\fg) \to F^\bullet \clieu_*(\fh)$. 
+
+We prove the claim by induction. 
+When $n = 0$ it is obvious. 
+In general, consider the map of short exact sequences induced from $F^{n-1} \to F^n \to F^n / F^{n-1}$:
+\[
+\begin{tikzcd}
+F^{n-1} \clieu_* (\fg) \ar[r] \ar[d, "f"] & \clieu_*(\fg) \ar[r] \ar[d,"f"] & \Sym^n(\fg [1]) \ar[d, "f"] \\
+F^{n-1} \clieu_* (\fh) \ar[r] & \clieu_*(\fh) \ar[r] & \Sym^n(\fh [1]) .
+\end{tikzcd}
+\]
+By assumption, the left vertical arrow is a quasi-isomorphism.
+Also, since $k$ is characteristic zero, the map $\tensor^n f : \tensor^n \fg \to \tensor^n \fh$ is a quasi-isomorphism since $f$ is. 
+Thus, the middle arrow is a quasi-isomorphism.
+\end{proof}
 
 \bibliographystyle{alpha}
 %\bibliographystyle{spmpsci}  
