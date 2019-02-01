@@ -107,9 +107,119 @@ there exists a dotted map $h : Z \to X$ making the total diagram commute.
 \begin{dfn}
 A model category is a category with weak equivalences $(\sC, \sW)$ together with distinguished classes ${\rm Cof}, {\rm Fib} \subset {\rm Mor}(\sC)$ satisfying the following axioms:
 \begin{enumerate}
+\item[(1)] ...
+\end{enumerate}
+\end{dfn}
+
+\subsection{Retracts}
+
+Let $\sC$ be any category.
+An object $X \in \sC$ is said to be a retract of $Y \in \sC$ if there exists morphisms $i : X \to Y$ and $r : Y \to X$ such that $r \circ i = \id_X$. 
+
+\begin{eg}
+A dg vector space $V$ is a retract of $W$ if and only if there exists a dg vector space $W$ such that $W \cong V \oplus Z$.
+In this case, the maps can be taken to be the inclusion $i : V \hookrightarrow V \oplus Z$ and the projection $r : V \oplus Z \to V$. 
+\end{eg}
+
+\def\Arr{{\sf Arr}}
+
+Given any category $\sC$ we can define its associated {\em arrow category} $\Arr(\sC)$ as follows. 
+The objects are the morphisms ${\rm Mor}(\sC)$. 
+A morphism from $f : X \to Y$ to $g : X' \to Y'$ is a commutative square
+\[
+\begin{tikzcd}
+X \ar[r] \ar[d,"f"] & X' \ar[d, "g"] \\
+Y \ar[r] & Y' .
+\end{tikzcd}
+\]
+
+\begin{dfn}
+A morphism $f \in {\rm Mor}(\sC)$ is a {\bf retract of a morphism} $g \in {\rm Mor}(\sC)$ if $f$ is a retract of $g$ in the arrow category $\Arr(\sC)$. 
+Concretely, this means that we have a commutative diagram
+\[
+\begin{tikzcd}
+X \ar[r] \ar[d,"f"] & X' \ar[d, "g"] \ar[r] & X\ar[d, "f"] \\
+Y \ar[r] & Y' \ar[r] & Y 
+\end{tikzcd}
+\]
+such that both horizontal compositions are the identity. 
+\end{dfn}
+
+Retracts are well-behaved under many categorical properties.
+
+\begin{lem}
+If $g$ is an isomorphism and $f$ is a retract of $g$, then $f$ is an isomorphism. 
+\end{lem}
+
+We will also consider retracts in the setting of model categories. 
+One technical result we will use quite often is the following. 
+ 
+\begin{prop}
+Suppose we have a commuting triangle
+\[
+\begin{tikzcd}
+X \ar[rr,"f"] \ar[dr,"i"] & & Y \\
+& Z \ar[ur, "p"] & .
+\end{tikzcd}
+\]
+Then:
+\begin{enumerate}
 \item[(1)] 
+if $f$ has LLP with respect to $p$, then $f$ is a retract of $i$;
+\item[(2)] if $f$ has RLP with respect to $i$, then $f$ is a retract of $p$. 
+\end{enumerate}
+\end{prop}
 
 \section{Localization}
+
+Roughly, a localization of a category with weak equivalences is another category in which all of the weak equivalences are isomorphisms. 
+Many such categories might exist, and we look at the {\em initial one} with respect to this property. 
+
+\begin{dfn}
+Let $(\sC, \sW)$ be a category with weak equivalences. 
+A {\bf localization} of $\sC$ with respect to $\sW$ is a category $\sC[\sW^{-1}]$ equipped with a functor
+\[
+\Gamma : \sC \to \sC[\sW^{-1}]
+\]
+such that:
+\begin{enumerate}
+\item if $f \in \sW$ then $\Gamma(f) \in {\rm Mor}(\sC[\sW^{-1}])$ is an isomorphism;
+\item if $F : \sC \to \sD$ is any functor such that $f \in \sW$ implies $F(f)$ is an isomorphism, then there is a unique factorization 
+\[
+\begin{tikzcd}
+\sC \ar[rr, "F"] \ar[dr, "\Gamma"] & & \sD \\
+& \sC[\sW^{-1}] \ar[ur, dotted, "\exists !"] & .
+\end{tikzcd}
+\] 
+\end{enumerate}
+\end{dfn}
+It is immediate to see that when a localization exists it is unique. 
+
+The problem of existence is one issue. 
+The other, more serious problem for us, is coming up with a model for the localization when it exists. 
+This is one problem that {\em model} categories solve!
+
+\subsection{(Co)Fibrancy}
+
+\begin{dfn}
+An object $X$ in a model category $\sC$ is called {\bf cofibrant} if the unique map $0 \to X$ is a cofibration. 
+An object $X$ in a model category $\sC$ is called {\bf fibrant} if the unique map $X \to \star$ is a fibration. 
+\end{dfn}
+
+Every object $X$ admits a {\em cofibrant replacement}
+\[
+\begin{tikzcd}
+0 \ar[rr] \ar[dr, "{\rm Cof}"'] & & X \\
+& Q X \ar[ur, "\simeq", "{\rm Fib} \cap \sW"'] & 
+\end{tikzcd}
+\] 
+and a {\em fibrant replacement}:
+\[
+\begin{tikzcd}
+X \ar[rr] \ar[dr, "\simeq", "{\rm Cof} \cap \sW"'] & & \star \\
+& R X \ar[ur, "{\rm Fib}"'] & .
+\end{tikzcd}
+\] 
 
 %\brian{Whitehead localization of cat with weak equiv. Cof/fib construction for model cats. Why its better behaved for model cats.}
 
@@ -118,6 +228,8 @@ A model category is a category with weak equivalences $(\sC, \sW)$ together with
 %\brian{Quillen adjunction, left/right Kan extensions, examples, Quillen equivalence}
 
 \section{Examples}
+
+
 
 \section{dgVect, dgLie, etc. Top.}
 
