@@ -10,6 +10,15 @@
 
 \title{Lecture 4: More on dg Lie algebras}
 
+\def\dgVect{{\sf Vect}^{\sf dg}}
+\def\dgLie{{\sf Lie}^{\sf dg}}
+\def\dgAss{{\sf Ass}^{\sf dg}}
+\def\dgCAlg{{\sf CAlg}^{\sf dg}}
+\def\dgLienil{{\sf Lie}^{\sf dg, nil}}
+\def\Moduli{{\sf Moduli}}
+\def\dgMod{{\sf Mod}^{\sf dg}}
+\def\cdga{{\sf CAlg}^{\sf dg}}
+
 \begin{document}
 
 \section{Deformation problems from dg Lie algebras}
@@ -26,7 +35,7 @@ For any $x,y \in V$ one has $xy = (-1)^{|x||y|} y x$;
 \item[(2)] Derivation. $\d (xy) = (\d x) y + (-1)^{|x|} x \d y$.
 \end{enumerate}
 A morphism of cdgas is a linear map preserving the differential and product. 
-Denote the category of cdgas by $\dgCAlg_k$.
+Denote the category of cdgas by ${\sf CAlg}_{k}^{\sf dg}$.
 \end{dfn}
 
 \begin{dfn} Suppose $(R,\d_R)$ is a cdga and $(\fg,\d_{\fg}, [-,-]_\fg)$ is a dg Lie algebra. 
@@ -41,7 +50,7 @@ and the bracket is defined by
 This construction defines a functor
 \[
 \begin{array}{cccc}
-\fg \tensor (-) : & \dgCAlg_k & \to & \dgLie_k \\
+\fg \tensor (-) : & {\sf CAlg}_{k}^{\sf dg} & \to & {\sf Lie}_k^{\sf dg} \\
 & R & \mapsto & \fg \tensor R .
 \end{array}
 \]
@@ -222,6 +231,9 @@ Thus, we see that $T_{\Def_\fg} = T_{\MC_\fg} / \d \fg^0 = Z^1 \fg / B^1 \fg = H
 
 \subsection{Aside on obstruction space}
 
+The following subsection is an aside from the main goal of this lecture. 
+We don't recall the full theory of obstruction, but refer to Chapter 2 of \cite{Manetti1999} or Chapter 4 of \cite{Manetti2009} for a nice treatment. 
+
 Suppose we have a small exact sequence of Artinian algebras
 \beqn\label{smallexact}
 0 \to M \to B \xto{\sigma} A \to 0 .
@@ -276,9 +288,25 @@ Thus, there are forgetful functors
 \[
 \oblv_{C}, \oblv_{A}, \oblv_L : \dgCAlg_k, \dgAss_k, \dgLie_k \to \dgVect_k .
 \] 
+Furthermore, we have seen in the last lecture that there is a functor 
+\[
+(-)_L : \dgAss_k \to \dgLie_k
+\]
+which takes a dg associative algebra to the dg Lie algebra whose underlying dg vector space is the same, and Lie bracket is given by the (graded) commutator. 
 
 \subsection{A slew of functors}
 \def\Tens{{\rm Tens}}
+
+The forgetful functors above fit in as the straight arrows in the diagram below. 
+\[
+\begin{tikzcd}
+& \dgAss_k \ar[dd, "\oblv_A"] \ar[dl, "(-)_L"] & \\
+\dgLie_k \ar[dr, "\oblv_L"] & &  \cdga_k \ar[dl,"\oblv_C"] \\
+& \dgVect_k & 
+\end{tikzcd}
+\]
+Our goal is to construct the curved arrows in this diagram. 
+It turns out, as we will see, each of the curved arrows are {\em left adjoints} to the straight forgetful functors in the diagram. 
 
 \subsubsection{The free algebras}
 
@@ -378,29 +406,6 @@ This definition simply ports the notion of quasi-isomorphism of dg vector spaces
 We can do the same trick for commutative and associative dg algebras.
 Namely, a map of commutative/associative dg algebras is a quasi-isomorphism if and only if it is a quasi-isomorphism of underlying dg vector spaces. 
 
-Given this, the following lemma is easy. 
-
-\begin{lem}
-A map of dg Lie algebras $f : \fg \to \fh$ is a quasi-isomorphism if and only if the induced map
-\[
-U(f) : U(\fg) \to U(\fh)
-\]
-is a quasi-isomorphism of associative dg algebras. 
-\end{lem}
-\begin{proof}
-We consider the spectral sequences induced by the natural filtrations on the enveloping algebras of $\fg$ and $\fh$. 
-The map $U(f)$ clearly preserves the natural filtration on the enveloping algebra and so it induces a map of spectral sequences. 
-In particular, it induces a map at the $E_1$ page, which is simply the associated graded algebras
-\[
-{\rm Gr} \; U(f) : \Sym^*(\fg) \to \Sym^*(\fh) .
-\] 
-The map of spectral sequence converges to the map $U(f) : U(\fg) \to U(\fh)$. 
-
-Now, it is an easy exercise to show that $\fg \to \fh$ is a quasi-isomorphism if and only if it induces a quasi-isomorphism of free commutative dg algebras $\Sym^*(\fg) \to \Sym^*(\fh)$. 
-Thus, in one direction, if $\fg \to \fh$ is a quasi-isomorphism, we obtain a quasi-isomorphism at the $E_1$-page, and the result follows. 
-
-In the other direction, if $U(\fg) \to U(\fh)$ is a quasi-isomorphism, then taking associated gradeds we obtain a quasi-isomorphism $\Sym^*(\fg) \to \Sym^*(\fh)$ and hence $\fg \to \fh$ is a quasi-isomorphism by the above remark. 
-\end{proof}
 
 \begin{thm}
 Suppose $f : \fg \xto{\simeq} \fh$ is a quasi-isomorphism of dg Lie algebras. 
@@ -411,225 +416,15 @@ Then, the corresponding map of deformation functors
 is an {\bf isomorphism}. 
 \end{thm}
 
+In fact, in order to obtain an isomorphism of deformation functors, all one needs to assume is certain conditions on the map of dg Lie algebras at the level of $H^0, H^1$, and $H^2$. 
+This is reasonable since $\Def_\fg$ only cares about the dg Lie algebra in those degrees.
+The proof of this claim will lead us too far astray from our present goal, but can be found in Chapter 3 of \cite{Manetti1999}. 
 
-\section{Modules and (co)homology}
 
-\subsection{(dg) Modules}
-
-Recall that to every dg vector space $V$ we can associated an associative dg algebra $\End_k(V)$ of endomorphisms. 
-
-\begin{dfn}
-Let $\fg$ be a dg Lie algebra.
-A {\bf dg $\fg$-module} is a dg vector space $M$ together with a map of dg Lie algebras
-\[
-\rho : \fg \to \End_k(M) .
-\]
-A map of dg modules is defined in the obvious way. 
-Let $\dgMod_{\fg}$ denote the category of dg $\fg$-modules. 
-\end{dfn}
-
-\begin{rmk}
-By the universal property of the enveloping algebra, we see that a dg module for $\fg$ is equivalent to a (left) dg module for the associative dg algebra $U(\fg)$. 
-\end{rmk}
-
-The category of modules is an abelian category in the obvious way. 
-Also, there is the notion of tensor product. 
-
-\begin{dfn}
-Suppose $M,N$ are two dg $\fg$-modules.
-Define the tensor product dg $\fg$-module $M \tensor N$ to be the tensor product of underlying dg vector spaces with $\fg$-module structure given by
-\[
-\rho_{M} \tensor 1 + 1 \tensor \rho_N : \fg \to \End_k(M \tensor_k N) = \End_k(M) \tensor_k \End_k(N) .
-\]
-\end{dfn}
-
-\begin{rmk}
-If we think of $M,N$ as dg $U\fg$-modules, then 
-\[
-M \tensor N = M \tensor_{U\fg} N
-\]
-as $U \fg$-modules. 
-\end{rmk}
-
-\subsection{(Co)Homology}
-
-As for ordinary modules, we have a pair of functors
-\[
-\begin{array}{cccl}
-(-)^\fg : & \dgMod_\fg & \to & \dgVect_k  \\
-& M & \mapsto & M^\fg = \{m \in M \; | \; x \cdot m = m \; , \; \forall x \in \fg\} \\
-(-)_{\fg} : & \dgMod_{\fg} & \to & \dgVect_k \\
-& M & \mapsto & M / \fg \cdot M 
-\end{array}
-\]
-called the invariants/coinvariants respectively. 
-
-\begin{rmk}
-Note that 
-\[
-M^\fg = {\rm Hom}_{U \fg}(k, M)
-\]
-and 
-\[
-M_\fg = k \tensor_{U \fg} M .
-\] 
-\end{rmk}
-
-\begin{lem}
-Consider the functor
-\[
-{\rm triv}_\fg : \dgVect_k \to \dgMod_\fg
-\]
-that sends a dg vector space to the trivial $\fg$-module.
-The functor $M \mapsto M^\fg$ is left adjoint to ${\rm triv}_\fg$. 
-The functor $M \mapsto M_\fg$ is right adjoint to ${\rm triv}_\fg$. 
-\end{lem}
-
-As a consequence, taking invariants/coinvariants is left/right exact respectively. 
-This motivates the following definition. 
-
-\begin{dfn}
-Let $\fg$ be a dg Lie algebra.
-The {\bf Lie algebra homology} of $\fg$ is the left derived functor of coinvariants
-\[
-\begin{array}{cccc}
-H_*(\fg ; -) : & \dgMod_\fg & \to & \Vect_k \\ 
-& M & \mapsto & \LL_*(-)_\fg (M) \\ .
-\end{array}
-\]
-Similarly, the {\bf Lie algebra cohomology} of $\fg$ is the right derived functor of invariants
-\[
-\begin{array}{cccc}
-H^*(\fg ; -) : & \dgMod_\fg & \to & \Vect_k \\ 
-& M & \mapsto & \RR_*(-)^\fg (M) \\ .
-\end{array}
-\]
-\end{dfn}
-
-\begin{rmk}
-Using the Tor and Ext notation, we can write
-\[
-H^{\rm Lie}_*(\fg ; M) = {\rm Tor}^{U \fg}_* (k, M)
-\]
-and 
-\[
-H_{\rm Lie}^*(\fg ; M) = {\rm Ext}^*_{U \fg}(k, M) .
-\] 
-\end{rmk}
-
-To compute the Lie algebra homology, for instance, one uses the usual trick for derived functors. 
-By first finding a projective resolution, tensoring, then computing the cohomology. 
-We proceed by finding a projective resolution of $U\fg$ 
-
-\subsubsection{}
-
-First, we sketch the following general construction for dg Lie algebras.
-Given a dg Lie algebra $\fg$ define its {\em cone} to be the dg Lie algebra ${\rm Cone}(\fg)$ to be
-\[
-{\rm Cone}(\fg)_n = \fg_n \oplus \fg_{n-1}
-\]
-with differential
-\[
-\d_n = \left(\begin{array}{cc} \d_{\fg,n} & {\rm id}_{\fg_{n}} \\ 0 & \d_{\fg, n-1} \end{array}\right) : {\rm Cone}(\fg)_{n} = \fg_n \oplus \fg_{n-1} \to \fg_{n+1} \oplus \fg_n = {\rm Cone}(\fg)_{n+1}
-\]
-and bracket
-\[
-[(x,y), (x',y')] = \left([x,y]_{\fg}, [x,y'] + [y,x']\right) .
-\]
-
-\begin{lem}
-There is a natural map of dg Lie algebras
-\[
-\fg \hookrightarrow {\rm Cone}(\fg) .
-\]
-Furthermore, ${\rm Cone}(\fg)$ is acyclic.
-\end{lem} 
-
-By functoriality of the enveloping functor, the associative algebra $U({\rm Cone}(\fg))$ is acyclic and hence a resolution for the trivial $U \fg$-module.
-Thus, we have
-\[
-H^{\rm Lie}_*(\fg, M) = H^*\left(U({\rm Cone}(\fg)) \tensor_{U \fg} M \right) .
-\] 
-
-\begin{dfn}
-The Chevalley-Eilenberg complex computing Lie algebra {\em homology} is the dg vector space
-\[
-\clieu_*(\fg ; M) := U({\rm Cone}(\fg)) \tensor_{U \fg} M .
-\] 
-Its cohomology is precisely the Lie algebra homology of $M$.
-\end{dfn}
-
-\begin{rmk}
-Explicitly, as a graded vector space, the CE complex is of the form
-\begin{align*}
-\clieu_*(\fg ; M) & = U({\rm Cone}(\fg)) \tensor_{U \fg} M  \\ & = \left(\Sym(\fg[1]) \tensor_k U(\fg)\right) \tensor_{U \fg} M \\ &= \Sym(\fg[1]) \tensor_k M .
-\end{align*}
-Tracing through these isomorphisms, one can deduce that the differential is
-\begin{align*}
-\d_{CE} (x_1,\ldots, x_n) & = \sum_{i = 1}^n (\pm) x_1 \cdots x_{i-1} (\d x_i) x_{i+1} \cdots x_n \\ & + \sum_{i < j} (\pm) x_1\cdots \Hat{x_i} \cdots x_{j-1} [x_i,x_j] x_{j+1} \cdots x_n .
-\end{align*}
-\end{rmk}
-
-\subsubsection{}
-
-There is a completely analogous construction for Lie algebra cohomology. 
-
-\begin{dfn}
-The Chevalley-Eilenberg complex computing Lie algebra {\em cohomology} is the dg vector space
-\[
-\clie^*(\fg ; M) := U({\rm Cone}(\fg)) \tensor_{U \fg} M .
-\] 
-Its cohomology is precisely the Lie algebra homology of $M$
-\[
-H_{\rm Lie}^*(\fg ; M) = H^*\left(\Hom_{U \fg}(U({\rm Cone}(\fg)), M)\right) .
-\]
-\end{dfn}
-
-\begin{rmk}
-One can identify $\clie^*(\fg ; M)$ with a complex of the form
-\[
-\clie^*(\fg ; M) = \left(\Sym(\fg^\vee[-1]) \tensor_k M , \d^{CE}\right) .
-\]
-Note that, when $M = k$ there is an identification 
-\[
-\clie^*(\fg ; k) = \left(\clieu_*(\fg ; k)\right)^\vee = \Hom_k(\clieu_*(\fg ;k), k) .
-\] 
-\end{rmk}
-
-\subsubsection{}
-
-The CE complexes for homology and cohomology are functorial in the module input.
-They both determine functors
-\[
-\begin{array}{cccc}
-\clieu_*(\fg ; -) : & \dgMod_\fg & \to & \dgVect_k\\
-\clie^*(\fg ; -) : & \dgMod_{\fg} & \to & \dgVect_k .
-\end{array}
-\]
-
-We are interested in a different type of functoriality in the case that $M = k$, the trivial module. 
-In this case, we write $\clieu_*(\fg) = \clieu(\fg;k)$ and similarly for cohomology.
-A silly statement is that this trivial module is {\em universal} in the sense that it is a module for all dg Lie algebras.
-Thus, we can contemplate the functoriality of homology/cohomology in the Lie algebra factor. 
-
-\begin{lem}
-The CE complex for homology/cohomology determine functors
-\[
-\begin{array}{cccc}
-\clieu_*(-) : & \dgLie_k & \to & \dgVect_k\\
-\clie^*(-) : & \dgLie_k & \to & \left(\dgVect_k\right)^{op} .
-\end{array}
-\]
-Moreover, if $f : \fg \to \fh$ is a quasi-isomorphism of dg Lie algebras, then the induced maps
-\[
-\begin{array}{cccc}
-\clieu_*(f) : & \clieu_*(\fg) & \to & \clieu_*(\fh)\\
-\clie^*(\fg) : & \clie^*(\fh) & \to & \clie^*(\fg) 
-\end{array}
-\]
-are quasi-isomorphisms. 
-\end{lem}
-
+%\input{first section}
+\bibliographystyle{alpha}
+%\bibliographystyle{spmpsci}  
+\bibliography{def}
 \end{document}
 
 

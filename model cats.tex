@@ -10,7 +10,57 @@
 
 \title{Lecture 4: Model categories}
 
+\def\Fun{{\sf Fun}}
+\def\colim{{\rm colim}}
+\def\Set{{\sf Set}}
+\def\Top{{\sf Top}}
+
 \begin{document}
+
+\section{Some categorical remarks}
+
+\subsection{(Co)Limits}
+
+We recall some general notions in ordinary category theory. 
+For a textbook reference see \cite{MacLane}.
+
+Let $\sC$ and $\sI$ be categories. 
+For each object $X \in \sC$ let $\ul{X} : \sI \to \sC$ be the functor that sends every object of $\sI$ to $X \in \sC$ and every morphism to the identity. 
+This construction extends to a functor
+\[
+\ul{(-)} : \sC \to \Fun(\sI, \sC) .
+\]
+
+\begin{dfn}
+Suppose $\sI$ is a small category and let $F : \sI \to \sC$ be a functor. 
+A {\bf colimit} of $F$ is an object $X \in \sC$ together with a natural transformation
+\[
+t : F \to \ul{X}
+\]
+such that for every $Y \in \sC$ and every natural transformation $s : F \to \ul{Y}$ there exists a unique map $s' : X \to Y$ making $\ul{s'} t = s$. 
+\end{dfn}
+
+Any two colimits are naturally isomorphic. 
+If the colimit of a functor $F : \sI \to \sC$ exists, we will write it as $\colim_{\sI} F \in \sC$. 
+
+Many familiar categories posses the property that {\em all} colimits exist. 
+These include $\Set, \Top$, and $\Vect_k$.
+Moreover, colimits are functorial in the natural way. 
+
+\begin{dfn}
+A category $\sI$ is called {\bf filtered} if, for any finite category $\sJ$ and functor $J : \sJ \to \sI$, there exists an object $i \in \sI$ and a natural transformation $F \to \ul{i}$. 
+\end{dfn}
+
+If $F : \sI \to \sC$ is a functor, $\sI$ is filtered, and $\colim_{\sI} F$ exists, then the colimit is called a {\em filtered colimit}. 
+A natural example of a filtered category is the poset
+\[
+\sI = \ZZ_+ = \{0 \to 1 \to 2 \to \cdots \} .
+\]
+Resulting colimits are special types of filtered colimits called {\em sequential colimits}. 
+
+\subsubsection{}
+The notion of a limit is defined in a dual way. 
+The aforementioned categories also admit all limits. 
 
 \section{The idea of a model category}
 Roughly, the theory of model categories was developed to better handle the notion of a ``homotopy equivalence". 
@@ -31,13 +81,41 @@ such that
 \end{enumerate}
 \end{dfn}
 
+\subsection{Model categories}
+
+\begin{dfn}
+Let $\sC$ be a category and $K \subset {\rm Mor}(\sC)$ be a subset of morphisms. 
+A morphism $f : X \to Y$ in $\sC$ has the {\bf left lifting property} (LLP) with respect to $K$ if for any morphism $g : W \to Z$ in $K$ and solid line diagram
+\[
+\begin{tikzcd}
+X \ar[r] \ar[d,"f"] & W \ar[d,"g"] \\ 
+Y \ar[r] \ar[ur, dotted, "\exists h"'] & Z 
+\end{tikzcd}
+\]
+there exists a dotted map $h : Y \to W$ making the total diagram commute. 
+Dually, we say $f : X \to Y$ has the {\bf right lifting property} (RLP) with respect to $K$ if
+for any morphism $g : W \to Z$ in $K$ and solid line diagram
+\[
+\begin{tikzcd}
+W \ar[r] \ar[d,"g"] & X \ar[d,"f"] \\ 
+Z \ar[r] \ar[ur, dotted, "\exists h"'] & Y
+\end{tikzcd}
+\]
+there exists a dotted map $h : Z \to X$ making the total diagram commute. 
+\end{dfn}
+
+\begin{dfn}
+A model category is a category with weak equivalences $(\sC, \sW)$ together with distinguished classes ${\rm Cof}, {\rm Fib} \subset {\rm Mor}(\sC)$ satisfying the following axioms:
+\begin{enumerate}
+\item[(1)] 
+
 \section{Localization}
 
-\brian{Whitehead localization of cat with weak equiv. Cof/fib construction for model cats. Why its better behaved for model cats.}
+%\brian{Whitehead localization of cat with weak equiv. Cof/fib construction for model cats. Why its better behaved for model cats.}
 
 \section{Adjoints and extensions}
 
-\brian{Quillen adjunction, left/right Kan extensions, examples, Quillen equivalence}
+%\brian{Quillen adjunction, left/right Kan extensions, examples, Quillen equivalence}
 
 \section{Examples}
 
