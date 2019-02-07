@@ -1,0 +1,302 @@
+\documentclass[11pt]{amsart}
+
+\usepackage{macros}
+
+\linespread{1.25}
+
+\usepackage[final]{pdfpages}
+
+\setcounter{tocdepth}{2}
+
+\title{Lecture 6: Model categories, I}
+
+\def\Fun{{\sf Fun}}
+\def\colim{{\rm colim}}
+\def\Set{{\sf Set}}
+\def\Top{{\sf Top}}
+
+\begin{document}
+\maketitle
+
+\section{Some categorical remarks}
+
+\subsection{(Co)Limits}
+
+We recall some general notions in ordinary category theory. 
+For a textbook reference see \cite{MacLane}.
+
+Let $\sC$ and $\sI$ be categories. 
+Unless otherwise stated, the category $\sI$ is assumed to be small.
+For each object $X \in \sC$ let $\ul{X} : \sI \to \sC$ be the functor that sends every object of $\sI$ to $X \in \sC$ and every morphism to the identity. 
+This construction extends to a functor
+\[
+\ul{(-)} : \sC \to \Fun(\sI, \sC) .
+\]
+
+\begin{dfn}
+Suppose $\sI$ is a small category and let $F : \sI \to \sC$ be a functor. 
+A (small) {\bf colimit} of $F$ is an object $X \in \sC$ together with a natural transformation
+\[
+t : F \to \ul{X}
+\]
+that is {\em initial} among all such natural transformations. 
+In more detail, one requires that for every $Y \in \sC$ and every natural transformation $s : F \to \ul{Y}$, there exists a unique map $s' : X \to Y$ making $\ul{s'} t = s$. 
+\end{dfn}
+
+Any two colimits are naturally isomorphic. 
+If the colimit of a functor $F : \sI \to \sC$ exists, we will write it as $\colim_{\sI} F \in \sC$. 
+
+Note that for any functor $G : \sC \to \sD$ there is a natural map
+\[
+\colim_{\sI} (G \circ F) \to G \left(\colim_{\sI} F\right)
+\]
+We say that the functor $G : \sC \to \sD$ {\em preserves} the colimit defined by $F : \sI \to \sC$ if this map is an isomorphism.
+
+Many familiar categories posses the property that {\em all} (small) colimits exist. 
+These include $\Set, \Top$, and $\Vect_k$.
+Also colimits are functorial in the natural way. 
+
+\subsubsection{Examples of colimits}
+
+\begin{eg}
+\begin{enumerate}
+\item[(1)] Suppose $\sI$ is the empty category and $F$ is the unique functor. 
+If the colimit of $F$ exists, it is the initial object for the category $\sC$. 
+\item[(2)] 
+Let $\sI = \{0,1\}$ be the category with two objects and no non-identity morphisms. 
+Then, $\colim_{\sI} F$, if it exists, is denoted $F(0) \sqcup F(1)$ and called the {\em coproduct} of $F(0)$ and $F(1)$. 
+\item[(2)] Let $\sI = \{b \leftarrow a \to c\}$.
+If $\colim_{\sI} F$ exists, it is called a {\em push-out} of the diagram $F(b) \leftarrow F(a) \to F(c)$. \\
+
+\item[(3)]
+
+\begin{dfn}
+A category $\sI$ is called {\bf filtered} if, for any finite category $\sJ$ and functor $J : \sJ \to \sI$, there exists an object $i \in \sI$ and a natural transformation $F \to \ul{i}$. 
+\end{dfn}
+
+If $F : \sI \to \sC$ is a functor, $\sI$ is filtered, and $\colim_{\sI} F$ exists, then the colimit is called a {\em filtered colimit}. 
+
+\item[(4)] A natural example of a filtered category is the poset
+\[
+\sI = \ZZ_+ = \{0 \to 1 \to 2 \to \cdots \} .
+\]
+Resulting colimits are special types of filtered colimits called {\em sequential colimits}. 
+\end{enumerate}
+\end{eg}
+
+\subsubsection{}
+The notion of a limit is defined in a dual way. 
+The aforementioned categories also admit all limits. 
+
+\section{The idea of a model category}
+Roughly, the theory of model categories was developed to better handle the notion of a ``homotopy equivalence". 
+For us, the fundamental example of a homotopy equivalence is a quasi-isomorphism of dg vector spaces. 
+
+The first, and perhaps most obvious, attempt to encode homotopy, or {\em weak}, equivalences in a category is to prescribe some class of morphisms that are well-behaved with respect to composition. 
+The definition is the following. 
+
+\begin{dfn}
+A {\bf category with weak equivalences} is a category $\sC$ together with a set
+\[
+\sW \subset {\rm Mor}(\sC)
+\]
+such that
+\begin{enumerate}
+\item If $f$ is an isomorphism, then $f \in \sW$;
+\item if $f,g$ are morphisms such that $f \circ g$ exists then: if two of $f, g, f \circ g$ are in $\sW$ then the third is as well (`two out of three").
+\end{enumerate}
+\end{dfn}
+
+\subsection{Model categories}
+
+\begin{dfn}
+Let $\sC$ be a category and $K \subset {\rm Mor}(\sC)$ be a subset of morphisms. 
+A morphism $f : X \to Y$ in $\sC$ has the {\bf left lifting property} (LLP) with respect to $K$ if for any morphism $g : W \to Z$ in $K$ and solid line diagram
+\[
+\begin{tikzcd}
+X \ar[r] \ar[d,"f"] & W \ar[d,"g"] \\ 
+Y \ar[r] \ar[ur, dotted, "\exists h"'] & Z 
+\end{tikzcd}
+\]
+there exists a dotted map $h : Y \to W$ making the total diagram commute. 
+Dually, we say $f : X \to Y$ has the {\bf right lifting property} (RLP) with respect to $K$ if
+for any morphism $g : W \to Z$ in $K$ and solid line diagram
+\[
+\begin{tikzcd}
+W \ar[r] \ar[d,"g"] & X \ar[d,"f"] \\ 
+Z \ar[r] \ar[ur, dotted, "\exists h"'] & Y
+\end{tikzcd}
+\]
+there exists a dotted map $h : Z \to X$ making the total diagram commute. 
+\end{dfn}
+
+\subsection{Retracts}
+
+Let $\sC$ be any category.
+An object $X \in \sC$ is said to be a retract of $Y \in \sC$ if there exists morphisms $i : X \to Y$ and $r : Y \to X$ such that $r \circ i = \id_X$. 
+
+\begin{eg}
+A dg vector space $V$ is a retract of $W$ if and only if there exists a dg vector space $W$ such that $W \cong V \oplus Z$.
+In this case, the maps can be taken to be the inclusion $i : V \hookrightarrow V \oplus Z$ and the projection $r : V \oplus Z \to V$. 
+\end{eg}
+
+\def\Arr{{\sf Arr}}
+
+Given any category $\sC$ we can define its associated {\em arrow category} $\Arr(\sC)$ as follows. 
+The set of objects is the set of morphisms ${\rm Mor}(\sC)$ of the starting category. 
+A morphism from $f : X \to Y$ to $g : X' \to Y'$ is a commutative square
+\[
+\begin{tikzcd}
+X \ar[r] \ar[d,"f"] & X' \ar[d, "g"] \\
+Y \ar[r] & Y' .
+\end{tikzcd}
+\]
+
+\begin{dfn}
+A morphism $f \in {\rm Mor}(\sC)$ is a {\bf retract of a morphism} $g \in {\rm Mor}(\sC)$ if $f$ is a retract of $g$ in the arrow category $\Arr(\sC)$. 
+Concretely, this means that we have a commutative diagram
+\[
+\begin{tikzcd}
+X \ar[r] \ar[d,"f"] & X' \ar[d, "g"] \ar[r] & X\ar[d, "f"] \\
+Y \ar[r] & Y' \ar[r] & Y 
+\end{tikzcd}
+\]
+such that both horizontal compositions are the identity. 
+\end{dfn}
+
+Retracts are well-behaved under many categorical properties.
+For instance, the following is easy to check.
+
+\begin{lem}
+If $g$ is an isomorphism and $f$ is a retract of $g$, then $f$ is an isomorphism. 
+\end{lem}
+
+We will also consider the behavior of retracts with respect to the lifting properties we just defined in the previous section.  
+To get a flavor of he type of arguments one makes, consider the following easy lemma.
+ 
+\begin{prop}
+Suppose we have a commuting triangle
+\[
+\begin{tikzcd}
+X \ar[rr,"f"] \ar[dr,"i"] & & Y \\
+& Z \ar[ur, "p"] & .
+\end{tikzcd}
+\]
+Then:
+\begin{enumerate}
+\item[(1)] 
+if $f$ has LLP with respect to $p$, then $f$ is a retract of $i$;
+\item[(2)] if $f$ has RLP with respect to $i$, then $f$ is a retract of $p$. 
+\end{enumerate}
+\end{prop}
+\begin{proof}
+For (1) consider the diagram
+\[
+\begin{tikzcd}
+X \ar[r,"i"] \ar[d,"f"] & Z \ar[d,"p"] \\ 
+Y \ar[r,equals] \ar[ur, dotted, "\exists h"'] & Y .
+\end{tikzcd}
+\]
+The lift $h$ exists by the LLP. 
+Such an $h$ defines the desired retract:
+\[
+\begin{tikzcd}
+X \ar[r,equals] \ar[d,"f"] & X \ar[d, "i"] \ar[r,equals] & X \ar[d, "f"] \\
+Y \ar[r,"h"] & Z \ar[r,"p"] & Y 
+\end{tikzcd}
+\]
+\end{proof}
+
+\subsection{The definition of a model category}
+
+\begin{dfn}
+A model category is a category with weak equivalences $(\sC, \sW)$ together with distinguished classes ${\rm Cof}, {\rm Fib} \subset {\rm Mor}(\sC)$ (cofibrations, fibrations respectively) satisfying the following axioms:
+\begin{enumerate}
+\item[(1)] for a map $f \in {\rm Mor}(\sC)$ one has:
+\begin{itemize}
+\item $f \in {\rm Cof} \iff f$ has the LLP with respect to ${\rm Fib} \cap \sW$;
+\item $f \in {\rm Fib} \cap \sW \iff f$ has the RLP with respect to ${\rm Cof}$; 
+\item $f \in {\rm Fib} \iff f$ has the RLP with respect to ${\rm Cof} \cap \sW$;
+\item $f \in {\rm Cof} \cap \sW \iff f$ has the LLP with respect to ${\rm Fib}$. 
+\end{itemize}
+\item[(2)] One can factor any map $f : X \to Y$ in two ways:
+\[
+\begin{tikzcd}
+X \ar[rr,"f"] \ar[dr, "{\rm Cof}"'] & & Y \\
+& Z \ar[ur, "{\rm Fib} \cap \sW"'] & .
+\end{tikzcd}
+\]
+and
+\[
+\begin{tikzcd}
+X \ar[rr,"f"] \ar[dr, "{\rm Cof} \cap \sW"'] & & Y \\
+& W \ar[ur, "{\rm Fib}"'] & .
+\end{tikzcd}
+\]
+\item[(3)] The category $\sC$ has all (small) colimits and limits. 
+\end{enumerate}
+\end{dfn}
+
+\begin{rmk}
+We will refer to maps in ${\rm Cof} \cap \sW$ and ${\rm Fib} \cap \sW$ as acyclic cofibrations and acyclic fibrations respectively. 
+\end{rmk}
+
+\begin{eg}
+The original example of a model category is the Quillen-Serre model structure on the category of topological spaces. 
+The weak equivalences are given by weak homotopy equivalences.
+These are maps of topological spaces that induce isomorphisms at the level of the homotopy groups. 
+The cofibrations are those maps that arise as retracts of ``cell-gluings".
+A cell-gluing $X \to Y$ is a map arising from pushout diagram of the form
+\[
+\begin{tikzcd}
+S^n \ar[r,"\phi"] \ar[d,"\partial"'] & X \ar[d] \\
+D^{n+1} \ar[r] & Y  .
+\end{tikzcd}
+\] 
+The fibrations are the {\em Serre fibrations}.
+These are maps that have the RLP with respect to maps of the form $(\id, 0) : D^n \hookrightarrow D^n \times I$. 
+Check that $(\id,0)$ is indeed an acyclic cofibration!
+\end{eg}
+
+\section{The idea of localization}
+
+Roughly, a localization of a category with weak equivalences is another category in which all of the weak equivalences are isomorphisms. 
+Many such categories might exist, and we look at the {\em initial one} with respect to this property. 
+
+\begin{dfn}
+Let $(\sC, \sW)$ be a category with weak equivalences. 
+A {\bf localization} of $\sC$ with respect to $\sW$ is a category $\sC[\sW^{-1}]$ equipped with a functor
+\[
+\Gamma : \sC \to \sC[\sW^{-1}]
+\]
+such that:
+\begin{enumerate}
+\item if $f \in \sW$ then $\Gamma(f) \in {\rm Mor}(\sC[\sW^{-1}])$ is an isomorphism;
+\item if $F : \sC \to \sD$ is any functor such that $f \in \sW$ implies $F(f)$ is an isomorphism, then there is a unique factorization 
+\[
+\begin{tikzcd}
+\sC \ar[rr, "F"] \ar[dr, "\Gamma"] & & \sD \\
+& \sC[\sW^{-1}] \ar[ur, dotted, "\exists !"] & .
+\end{tikzcd}
+\] 
+\end{enumerate}
+\end{dfn}
+It is immediate to see that when a localization exists it is unique. 
+
+The problem of existence is one issue. 
+The other, more serious problem for us, is coming up with a model for the localization when it exists. 
+This is the problem that {\em model} categories solve!
+
+%\brian{Whitehead localization of cat with weak equiv. Cof/fib construction for model cats. Why its better behaved for model cats.}
+
+%\section{Adjoints and extensions}
+%
+%%\brian{Quillen adjunction, left/right Kan extensions, examples, Quillen equivalence}
+%
+%\section{Examples}
+%
+%
+%
+%\section{dgVect, dgLie, etc. Top.}
+
+\end{document}

@@ -1,0 +1,480 @@
+\documentclass[11pt]{amsart}
+
+\usepackage{macros}
+
+\tikzset{%
+    symbol/.style={%
+        ,draw=none
+        ,every to/.append style={%
+            ,edge node={%
+                node [%
+                    ,sloped
+                    ,allow upside down
+                    ,auto=false
+                    ]{$#1$}
+                }
+            }
+        }
+    }
+
+\linespread{1.25}
+
+\usepackage[final]{pdfpages}
+
+\setcounter{tocdepth}{2}
+
+\title{Lecture 7: Model categories, II}
+
+\def\Fun{{\sf Fun}}
+\def\colim{{\rm colim}}
+\def\Set{{\sf Set}}
+\def\Top{{\sf Top}}
+\def\Cyl{{\rm Cyl}}
+\def\ho{{\rm ho}}
+\def\Ran{{\rm Ran}}
+\def\Lan{{\rm Lan}}
+
+\begin{document}
+\maketitle
+
+We begin by covering some more basic categorical facts relating to model categories. 
+By definition, a {\em cobase change} of a map $f : X \to Y$ in any category, is a map $g : W \to Z$ that fits in pushout diagram
+\[
+\begin{tikzcd}
+X \ar[d,"f"] \ar[r] & W \ar[d,"g"] \\
+Y \ar[r] & Z .
+\end{tikzcd}
+\]
+Similarly, a {\em base change} of a map $f : X \to Y$ is a map $g : W \to Z$ that sits in a pullback diagram
+\[
+\begin{tikzcd}
+W \ar[d,"g"] \ar[r] & X \ar[d,"f"] \\
+Z \ar[r] & Y .
+\end{tikzcd}
+\]
+
+\begin{prop}
+Suppose $\sC$ is a model category.
+Then:
+\begin{enumerate}
+\item ${\rm Cof} \subset {\rm Mor}(\sC)$ is closed under cobase change.
+\item ${\rm Cof} \cap \sW \subset {\rm Mor}(\sC) $ is closed under cobase change.
+\item ${\rm Fib} \subset {\rm Mor}(\sC)$ is closed under base change.
+\item ${\rm Fib} \cap \sW \subset {\rm Mor}(\sC)$ is closed under base change. 
+\end{enumerate}
+\end{prop}
+\begin{proof}
+We prove (1), the rest are similar. 
+Let $f : X \to Y$ be a cofibration and $g : W \to Z$ be a cobase change of $f$. 
+By the axioms of a model category, it is enough to show that $g$ has the LLP with respect to acyclic fibrations. 
+Indeed, suppose $p : A \to B$ is an acyclic fibration and consider a diagram
+\[
+\begin{tikzcd}
+W \ar[d,"g"] \ar[r] & A \ar[d,"p"] \\
+Z \ar[r] & B .
+\end{tikzcd}
+\]
+We want to produce a lift $h : Z \to A$.
+Amending this diagram to the left with $f$ we have a diagram
+\[
+\begin{tikzcd}
+X \ar[r] \ar[d, "f"] & W \ar[r] & A \ar[d,"p"] \\
+Y \ar[urr, dotted] \ar[r] &  Z \ar[r] & B .
+\end{tikzcd}
+\]
+The dotted arrow lift exists since $f$ is a cofibration. 
+By the universal property of pushouts, the dotted arrow defines a map $h : Z \to A$ lifting $g$ against $p$ as desired. 
+\end{proof} 
+
+
+
+\section{Localization for model categories}
+
+Localization is a general notion one can define for any category with weak equivalences. 
+For model categories, we see that localizations exists in a constructive way. 
+The key idea is that one can use the concept of homotopy equivalence, which makes sense in a general model category.
+We met the definition of homotopy equivalence for general maps in a model category in the last lecture. 
+We begin by exhibiting a class of objects for which homotopy equivalences are particularly well-behaved. 
+
+\subsection{(Co)Fibrancy}
+
+Throughout, $\sC$ is a model category. 
+
+\begin{dfn}
+An object $X$ in a model category $\sC$ is called {\bf cofibrant} if the unique map $0 \to X$ is a cofibration. 
+An object $X$ in a model category $\sC$ is called {\bf fibrant} if the unique map $X \to \star$ is a fibration. 
+\end{dfn}
+
+\begin{rmk}
+Every object $X$ admits a {\em cofibrant replacement}
+\[
+\begin{tikzcd}
+0 \ar[rr] \ar[dr, "{\rm Cof}"'] & & X \\
+& Q X \ar[ur, "\simeq", "{\rm Fib} \cap \sW"'] & 
+\end{tikzcd}
+\] 
+and a {\em fibrant replacement}:
+\[
+\begin{tikzcd}
+X \ar[rr] \ar[dr, "\simeq", "{\rm Cof} \cap \sW"'] & & \star \\
+& R X \ar[ur, "{\rm Fib}"'] & .
+\end{tikzcd}
+\] 
+\end{rmk}
+
+When we restrict ourselves to maps {\em from} a cofibrant object, we see that left homotopy equivalence is actually an equivalence relation!
+
+\begin{prop}
+Suppose $X$ is cofibrant. 
+Then, {\em left} homotopy equivalence $\sim_L$ is an equivalence relation on the set $\Hom_{\sC}(X,Y)$. 
+\end{prop}
+
+Before proving this, we prove the following lemma. 
+\begin{lem}
+Suppose $X$ is cofibrant, and let $\Cyl(X)$ be a cylinder object. 
+Then, the maps
+\[
+i_1, i_2 : X \xto{j_1,j_2} X \sqcup X \to \Cyl(X)
+\]
+are both acyclic cofibrations. 
+\end{lem}
+\begin{proof}
+Let's prove this for $i_1$. 
+By assumption, we can factor $\id_X : X \to X$ as
+\[
+X \xto{i_1} \Cyl(X) \xto{\simeq} X .
+\] 
+By two out of three, we know that $i$ must be a weak equivalence. (This does not yet use cofibrancy.)
+
+Now, $X \sqcup X$ is a coproduct, so it fits in a pushout diagram
+\[
+\begin{tikzcd}
+0 \ar[r] \ar[d] & X \ar[d, "j_1"] \\
+X \ar[r,"j_2"] & X \sqcup X .
+\end{tikzcd}
+\]
+By assumption $0 \to X$ is a cofibration.
+Since cofibrations are closed under cobase change, we conclude that $j_1 : X \to X \sqcup X$ is a cofibration. 
+Finally, cofibrations are closed under composition, we see that $i_1$ is a cofibration. 
+\end{proof}
+
+Now on to the proof of the proposition. 
+
+\begin{proof}
+Since $X$ is cofibrant, we can take $A$ to be its own cylinder object ${\rm Cyl}(X) = X$. 
+Then, we see that any map $f : X \to Y$ is left homotopy equivalent to itself using homotopy $f : \Cyl(X) = X \to X$. 
+Thus $f \sim_L f$ via $f$. 
+
+Now, we want to see that $f \sim_L g$ then $g \sim_L f$. 
+If $\sigma : X \sqcup X \to X \sqcup X$ is the flip map, then we have $(f + g) \circ \sigma = g + f$. 
+
+Finally, suppose $f \sim_L g$ and $g \sim_L h$ with left homotopies $H : \Cyl(X) \to X$, $H' : \Cyl(X)' \to X$. 
+Then, consider the pushout diagram
+\[
+\begin{tikzcd}
+X \ar[r,"i_0", "\simeq"'] \ar[d, "i_1'"', "\simeq"] & \Cyl(X) \ar[d] \\
+\Cyl(X)' \ar[r] & Z
+\end{tikzcd}
+\]
+By the lemma above, we know that $i_0, i_1'$ are acyclic cofibrations. 
+Thus, by the universal property of pushouts it is immediate to see that $Z$ itself is a cylinder object for $X$, $Z = \Cyl(X)''$ and the induced map $H'' : \Cyl(X)''\to X$ is a left homotopy $f \sim_L h$. 
+
+\end{proof}
+
+A very similar proof shows the dual notion.
+
+\begin{prop}
+Suppose $Y$ is fibrant. 
+Then $\sim_R$ is an equivalence relation on ${\rm Hom}_{\sC}(X,Y)$. 
+In fact, if $X$ is also cofibrant, then $f,g \in {\rm Hom}_\sC(X,Y)$ satisfy
+\[
+f \sim_L g \iff f \sim_R g .
+\]
+\end{prop}
+
+Thus, when we look at the full subcategory of objects that are both fibrant and cofibrant 
+\[
+\sC^{\circ} \subset \sC 
+\]
+the relations $\sim_L,\sim_R$ are equivalent equivalence relations.
+
+\begin{dfn}
+The {\bf homotopy category} $\ho \sC$ of a model category $\sC$ is the subcategory of $\sC$ consisting of objects that are fibrant and cofibrant (so the same objects as $\sC^{\circ}$), and morphisms are
+\[
+\Hom_{\ho \sC} (X,Y) = \Hom_{\sC}(X,Y) / \sim
+\]
+where $\sim$ is either $\sim_L$ or $\sim_R$. 
+\end{dfn}
+
+\subsection{Back to localization}
+
+%
+%Note that there are natural functors
+%\[
+%\sC^{\circ} \to \sC \to \ho \sC .
+%\]
+%The first is just the inclusion of the full subcategory of fibrant-cofibrant objects. 
+%The next is the quotient map
+
+We go back to the notion of localization of a category with weak equivalences. 
+Given any model category $\sC$, we will see that $\ho \sC$ is a model for its localization. 
+
+\begin{prop}
+[Whitehead]
+Suppose $\sC$ is a model category and $X,Y$ are both fibrant and cofibrant.
+Then, $f : X \xto{\simeq} Y$ is a weak equivalence if and only if $f$ is a (left or right) homotopy equivalence. 
+\end{prop}
+
+\begin{proof}
+First, the forward direction. 
+By the factorization axioms of a model category we can factor any map as an acyclic cofibration followed by a fibration. 
+If $f$ is a weak equivalence, by the two out of three property we see that $f$ actually factors as an acyclic cofibration followed by an {\em acyclic} fibration. 
+\[
+\begin{tikzcd}
+X \ar[rr,"f"] \ar[dr, "{\rm Cof} \cap \sW"', "g"] & & Y \\
+& Z \ar[ur, "{\rm Fib} \cap \sW"', "h"] & .
+\end{tikzcd}
+\]
+Since $X,Y$ are both fibrant and cofibrant, we see that $Z$ is also both fibrant and cofibrant. 
+Since the composition of homotopy equivalences is a homotopy equivalence, it suffices to show that both $g,h$ are homotopy equivalences. 
+
+We consider the acyclic fibration $h : Z \to Y$, where both $Z,Y$ are fibrant cofibrant.
+The proof for the acyclic cofibration $g : X \to Z$ is completely similar.
+By the LLP of cofibrations against acyclic fibrations, there exists a dotted map $\Tilde{h}^{-1}$ in the diagram
+\[
+\begin{tikzcd}
+0 \ar[r] \ar[d,"{\rm Cof}"'] & Z \ar[d, "h"] \\
+Z \ar[r, equals] \ar[ur, dotted, "\Tilde{h}^{-1}"] & Z .
+\end{tikzcd}
+\]
+Note that $\Tilde{h}^{-1}$ is an ordinary right inverse to $h$, $h \circ \Tilde{h}^{-1} = \id_Z$.
+We want show that $\Tilde{h}^{-1} \circ h \sim_L \id_Z$. 
+
+Let $\Cyl(Z)$ be a cylinder object for $Z$
+\[
+Z \sqcup Z \to \Cyl(Z) \xto{r} Z
+\] 
+and consider the commuting diagram
+\[
+\begin{tikzcd}
+Z \sqcup Z \ar[d] \ar[r, "\Tilde{h}^{-1} \circ h + \id_Z"] & Z \ar[d,"h"] \\
+\Cyl(Z) \ar[ur, dotted] \ar[r, "h \circ r"] & Y .
+\end{tikzcd}
+\]
+Note the diagram commutes since $\Tilde{h}^{-1}$ is a right inverse to $h$. 
+Again, by the LLP of cofibrations against acyclic fibrations, the dotted map above exists. 
+One immediately checks that this is the desired homotopy. 
+
+Now, for the converse. 
+
+\end{proof}
+
+This proposition implies the following result of Whitehead. 
+
+\begin{thm}[Whitehead]
+Let $\sC$ be a model category. 
+Then, there is an equivalence of categories
+\[
+\sC[\sW^{-1}] \xto{\cong} \ho \sC .
+\]
+\end{thm}
+
+\subsection{Another model for the homotopy category}
+
+There is another description of the homotopy category of a model category. 
+
+We have already mentioned how every object $X \in \sC$ admits a, non-unique, fibrant and cofibrant replacement that we denote by $RX$ and $QX$, respectively. 
+Although these are not unique replacements when viewed in the whole category, they do descend to functors
+\begin{align*}
+R : & \sC \to \sC^{fib} / \sim_R \\
+Q : & \sC \to \sC^{cof} / \sim_L .
+\end{align*}
+Here, $\sC^{fib} / \sim_R$ is the category of fibrant objects with morphisms given by $\sim_R$-equivalence classes.
+Similarly for $\sC^{cof}$. 
+If we restrict $R$ to the full subcategory of {\em cofibrant} objects, we see that it induces a functor
+\[
+R |_{cof} : \sC^{cof} \to \sC^{\circ}/\sim = \ho \sC .
+\]
+Similarly, the functor $Q$ restricted to $\sC^{fib}$ determines a functor
+\[
+Q |_{fib} : \sC^{fib} \to \sC^{\circ}/\sim = \ho \sC .
+\]
+
+\begin{prop}
+The homotopy category $\ho \sC$ is equivalent to the category consisting of {\bf all} objects of $\sC$, and whose morphisms between $X, Y \in \sC$ are
+\[
+\Hom_{\ho \sC}(R|_{cof} Q X, R|_{cof} Q X) .
+\]
+The equivalence is induced by the natural functor $\sC \to \ho \sC$. 
+\end{prop}
+
+\begin{rmk}
+We could have also used $\Hom_{\ho \sC}(Q|_{fib} R X, Q|_{fib} R X)$ and this would give yet another equivalent category to $\ho \sC$. 
+\end{rmk}
+
+\section{Model structure on $\dgVect_k$}
+
+There is a model structure on the category $\sC = \dgVect_k$ of dg vector spaces over a field $k$ where:
+\begin{itemize}
+\item The weak equivalences are the quasi-isomorphisms.
+That is, maps of dg vector spaces $f : V \to W$ inducing and isomorphism $H^*f : H^*V \to H^*W$. 
+\item The cofibrations are maps of dg vector spaces $f : V \to W$ that are degreewise injective maps of vector spaces:
+\[
+f^n : V^n \hookrightarrow W^n .
+\]
+\item The fibrations are maps of dg vector spaces $f : V \to W$ that are degreewise surjective maps of vector spaces:
+\[
+f^n : V^n \twoheadrightarrow W^n .
+\] 
+\end{itemize}
+
+\begin{thm}[Hovey]
+The choices above make $\dgVect_k$ into a cofibrantly generated model category.
+\end{thm}
+
+Roughly, cofibrantly generated means that there is a set cofibrations that generate all other cofibrations. 
+We will come back to the concept later. 
+
+\section{Adjunctions}
+
+A natural question is when a functor $F : \sC \to \sD$ between model categories descends to a functor between the associated homotopy categories. 
+When $F$ is a {\em homotopy invariant functor}, meaning it preserves weak equivalences, then it does indeed descend 
+\[
+\Bar{F} : \ho \sC \to \ho \sD .
+\]
+The problem is, homotopy invariance is a quite a strong condition, and many functors we run into in practice do not satisfy the condition. 
+
+To answer the question in more generality, we introduce the concept of a {\em derived functor}.
+First, the following general idea.
+\begin{dfn}
+A {\bf left Kan extension} of a functor $F : \sC \to \sD$ along a functor $G : \sC \to \sE$ is a pair of a functor $\Lan_G(F) : \sE \to \sD$ fitting into the diagram
+\[
+\begin{tikzcd}
+\sC \ar[d, "G"'] \ar[r,"F"] & \sD \\
+\sE \ar[ur, dotted, "\Lan_G(F)"'] &
+\end{tikzcd}
+\]
+together with a natural transformation $\eta_L : F \to \Lan_G(F) \circ G$ that is {\em initial} among all such pairs. 
+
+A {\bf right Kan extension} of $F$ along $G$ is a pair of a functor $\Ran_G(F) : \sE \to \sD$ fitting into the diagram
+\[
+\begin{tikzcd}
+\sC \ar[d, "G"'] \ar[r,"F"] & \sD \\
+\sE \ar[ur, dotted, "\Ran_G(F)"'] &
+\end{tikzcd}
+\]
+together with a natural transformation $\eta_R : \Ran_G(F) \circ G \to F$ that is {\em final} among all such pairs. 
+\end{dfn}
+
+When Kan extensions exists they are unique by their universal properties. 
+
+\begin{dfn}
+Let $\sC$ be a model category, $\sD$ be any category, and $F : \sC \to \sD$ a functor. 
+A {\bf left derived functor} $\LL ' F$ of $F$ is a {\em right} Kan extension of $F$ along the $\sC$-localization $\Gamma_\sC : \sC \to \ho (\sC)$:
+\[
+\LL ' F = \Ran_{\Gamma_\sC} (F) : \ho \sC \to \sD .
+\] 
+A {\bf right derived functor} $\RR ' F$ of $F$ is a {\em left} Kan extension
+\[
+\RR ' F = \Lan_{\Gamma_{\sC}} (G) : \ho \sC \to \sD .
+\] 
+\end{dfn}
+
+When both $\sC$ and $\sD$ are model categories, there is a notion of a {\em total} derived functor.
+
+\begin{dfn}
+Let $\sC, \sD$ be model categories, and $F : \sC \to \sD$ a functor. 
+A {\bf total left derived functor} $\LL F$ of $F$ is a {\em right} Kan extension of the composition $\Gamma_\sD \circ F$ along the $\sC$-localization $\Gamma_\sC : \sC \to \ho (\sC)$:
+\[
+\LL F = \Ran_{\Gamma_\sC} (\Gamma_{\sD} \circ F) : \ho \sC \to \ho\sD .
+\] 
+A {\bf right derived functor} $\RR F$ of $F$ is a {\em left} Kan extension 
+\[
+\RR F = \Lan_{\Gamma_{\sC}} (\Gamma_{\sD} \circ G) : \ho \sC \to \ho \sD .
+\] 
+\end{dfn}
+
+Recall, we say a functor $F : \sC \to \sD$ is {\em left adjoint} to a functor $U : \sD \to \sC$ if there exists a natural isomorphism of bifunctors $\sC \times \sD \to \Set$
+\[
+\Hom_{\sD}(F(-), -) \to \Hom_{\sC}(-, U(-)) .
+\]
+Thus, for each $X \in \sC$ and $Y \in \sD$ we have
+\[
+\Hom_{\sD}(F(X), Y) \xto{\cong} \Hom_{\sC}(X, U(Y)) .
+\]
+In symbols, we write $F \dashv G$.
+
+\begin{dfn}
+An adjunction between model categories
+\[
+\begin{tikzcd}
+\sC\ar[r,bend left,"F",""{name=A, below}] & \sD\ar[l,bend left,"U",""{name=B,above}] \ar[from=A, to=B, symbol=\dashv]
+\end{tikzcd}
+\]
+is a {\bf Quillen adjunction} if $F$ preserves cofibrations and acyclic cofibrations. 
+\end{dfn}
+
+\begin{rmk}
+Equivalently, a Quillen adjunction is an adjunction as above such that $U$ that preserves fibrations and acyclic fibrations. 
+For instance, note that all of the data in the diagram 
+\[
+\begin{tikzcd}
+FX \ar[r] \ar[d, "{\rm Cof} \cap \sW"'] & Y \ar[d, "{\rm Fib}"] \\
+FX' \ar[r] \ar[ur, dotted] & Y' 
+\end{tikzcd}
+\]
+is equivalent, by the adjunction, to the diagram
+\[
+\begin{tikzcd}
+X \ar[r] \ar[d, "{\rm Cof} \cap \sW"'] & U Y \ar[d, "{\rm Fib}"] \\
+X' \ar[r] \ar[ur, dotted] & U Y' .
+\end{tikzcd}
+\]
+\end{rmk}
+
+\begin{thm}[Quillen]
+If $F\dashv U$ is a Quillen adjunction, then $\LL F$ and $\RR U$ exist and define an adjoint pair between homotopy categories
+\[
+\begin{tikzcd}
+\ho \sC\ar[r,bend left,"\LL F",""{name=A, below}] & \ho \sD\ar[l,bend left,"\RR U",""{name=B,above}] \ar[from=A, to=B, symbol=\dashv]
+\end{tikzcd}
+\]
+Furthermore, $\LL F$ and $\RR U$ are computed by formulas
+\begin{align*}
+\LL F (X) & = \Gamma_\sD F(Q X) \\
+\RR G (Y) & = \Gamma_\sC G(R Y) .
+\end{align*}
+\end{thm}
+
+\begin{rmk}
+It is not necessary to assume $F,U$ participate in a Quillen adjunction to ensure that $\LL F, \RR U$ exist. 
+However, their formulas may not be as simple as in the theorem. 
+\end{rmk}
+
+\begin{dfn}
+A {\bf Quillen equivalence} is a Quillen pair $F \dashv U$ such that $\LL F \dashv \RR U$ is an equivalence of respective homotopy categories.
+\end{dfn}
+
+\newcommand{\verteq}{\rotatebox{90}{$\,\cong$}}
+
+\begin{thm}[Quillen]
+Suppose $F \dashv U$ is a Quillen pair. 
+If, for every cofibrant object $X \in \sC^{cof}$ and fibrant object $Y \in \sC^{fib}$ one has
+\[
+(f : X \to U Y) \in \sW_\sC \iff (\eta f : F X \to Y) \in \sW_\sD
+\]
+then $\LL F$ (and $\RR G$) defines an equivalence of categories
+\[
+\begin{tikzcd}
+\ho \sC\ar[r,bend left,"\LL F",""{name=A, below}] & \ho \sD\ar[l,bend left,"\RR U",""{name=B,above}] \ar[from=A, to=B, symbol=\verteq] .
+\end{tikzcd}
+\]
+\end{thm}
+
+
+\end{document}
+
+
+
+
+\end{document}
