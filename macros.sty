@@ -25,6 +25,21 @@
 \usetikzlibrary{decorations.pathreplacing}
 \usepackage{pgffor}
 
+\tikzset{%
+    symbol/.style={%
+        ,draw=none
+        ,every to/.append style={%
+            ,edge node={%
+                node [%
+                    ,sloped
+                    ,allow upside down
+                    ,auto=false
+                    ]{$#1$}
+                }
+            }
+        }
+    }
+
 %%Feynman diagrams
 \usetikzlibrary{decorations.pathmorphing}
 \usetikzlibrary{decorations.markings}
@@ -81,6 +96,14 @@
 \def\eeqnarray{\end{eqnarray}}
 \def\beqnstar{\begin{eqnarray*}}
 \def\eqnestar{\end{eqnarray*}}
+
+\def\dgVect{{\sf Vect}^{\sf dg}}
+\def\dgLie{{\sf Lie}^{\sf dg}}
+\def\dgAss{{\sf Ass}^{\sf dg}}
+\def\dgCAlg{{\sf CAlg}^{\sf dg}}
+\def\dgLienil{{\sf Lie}^{\sf dg, nil}}
+\def\Moduli{{\sf Moduli}}
+\def\dgMod{{\sf Mod}^{\sf dg}}
 
 \def\CAlg{{\sf CAlg}}
 \def\Set{{\sf Set}}

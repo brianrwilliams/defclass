@@ -1,0 +1,251 @@
+\documentclass[11pt]{amsart}
+
+\usepackage{macros}
+
+\linespread{1.25}
+
+\usepackage[final]{pdfpages}
+
+\setcounter{tocdepth}{2}
+
+\def\Fun{{\sf Fun}}
+\def\Top{{\sf Top}}
+\def\colim{{\rm colim}\;}
+\def\Sing{{\rm Sing}}
+\def\Cat{{\sf Cat}}
+
+\title{Lecture 8: Simplicial Sets, I}
+
+\begin{document}
+\maketitle
+\section{Definitions}
+
+Let $\Delta$ be the following category. 
+\begin{itemize}
+\item Objects: totally ordered sets
+\[
+[n] = \{0 < 1 < \cdots < n\}
+\]
+where $n \geq 0$ is any non-negative integer.
+
+\item Morphisms: order preserving maps of sets $\theta : [n] \to [m]$. 
+That is, $i < j \implies \theta(i) < \theta(j)$. 
+\end{itemize}
+
+\begin{rmk}
+If we think about the objects of $\Delta$ as categories themselves
+\[
+[n] = \{0 \to 1 \to \cdots \to n\}
+\]
+then the morphisms in $\Delta$ are precisely the functors. 
+\end{rmk}
+
+We refer to $\Delta$ as the {\em finite ordinal category}. 
+
+\begin{dfn}
+A {\bf simplicial set} is a functor
+\[
+X : \Delta^{op} \to \Set .
+\]
+In general, if $\sC$ is any category, a {\em simplicial object in $\sC$} is a functor 
+\[
+X : \Delta^{op} \to \sC .
+\]
+\end{dfn}
+
+If $X$ is a simplicial set, we let $X[n]$ denote the image of the object $[n] \in \Delta$. 
+The category of simplicial sets is the functor category
+\[
+\Set_{\Delta} = \Fun(\Delta^{op}, \Set) .
+\]
+Unwinding the definition, a morphism of simplicial sets $f : X \to Y$ is equivalent to prescribing a map of sets
+\[
+f[n] : X[n] \to Y[n]
+\]
+for each $n$ satisfying some conditions that we spell out below.
+
+\begin{eg}\label{eg: sing}
+Singular set.
+Let $\Top$ be the category of topological spaces, and let
+\[
+|\Delta^n| = \{(t_0,\ldots,t_n) \in (\RR_{\geq 0})^{n+1} \; | \; \sum_{i\geq 0} t_i = 1\}
+\]
+be the standard $n$-simplex. 
+For any order preserving map $\theta : [n] \to [m]$ there is a natural map of spaces
+\[
+\theta_* : |\Delta^n| \to |\Delta^m| .
+\]
+This defines a functor $\Delta \to \Top, [n] \mapsto |\Delta^n|$. 
+Further, for any topological space $Y \in \Top$, we have the simplicial set
+\[
+\begin{array}{cccl}
+{\rm Sing} (Y) : & \Delta^{op} & \to & \Set \\
+& [n] & \mapsto & \Hom_{\Top}(|\Delta^n|, Y)
+\end{array}
+\]
+called the {\em singular simplicial set} associated to $Y$. 
+\end{eg}
+
+\begin{eg} 
+Standard simplex.
+For each $n$ let 
+\[
+\Delta^n = \Hom_{\Delta}(-, [n]) : \Delta^{op} \to \Set .
+\]
+This is called the {\em standard $n$-simplex}. 
+Note that this is simply the image of $[n]$ under the Yoneda embedding
+\[
+\Delta \to \Fun(\Delta^{op}, \Set) = \Set_{\Delta} .
+\]
+In particular
+\[
+\Hom_{\Set_\Delta} (\Delta^n, X) = X[n]
+\]
+for each $n$. 
+\end{eg}
+
+In pictures, we can think about $\Delta^1$ as simply the two vertex diagram
+\[
+\Delta^1 \;\; : \;\; 0 \to 1
+\]
+and $\Delta^2$ as being prescribed by the following diagram
+\[
+\begin{tikzcd}
+& & 1 \ar[dr] & \\
+\Delta^2 \; :  & 0 \ar[ur] \ar[rr] && 2 . 
+\end{tikzcd}
+\]
+For instance, 
+\[
+\Delta^2 ([1]) = \Delta([1],[2]) = \{0 \to 1, 1 \to 2, 1 \to 2\}
+\]
+reads off all the $1$-simplices inside $\Delta^2$. 
+
+\subsection{A combinatorial description}
+
+So far, the definition of a simplicial set might seem a little abstract. 
+One can prescribe the data of a simplicial set more explicitly as a collection of sets
+\[
+\{X[n]\}_{n \geq 0}
+\]
+together with the following data of {\em coface} and {\em codegeneracy} maps. 
+
+
+
+
+\section{Geometric Realization}
+We have already constructed a functor ${\rm Sing} (-) : \Top \to \Set_{\Delta}$ given by the singular set. 
+One utility of simplicial sets is that they give us combinatorial rules for gluing spaces together in terms of simplices. 
+Geometric realization makes this precise. 
+
+I'm going to write the abstract definition, then interpret it in a way that hopefully makes clear what is going on.
+
+Given any category $\sC$ and object $X \in \sC$ one can consider the {\em overcategory} (or slice category) $\sC_{/X}$ whose objects are maps
+\[
+Y \to X 
+\]
+and whose morphisms are commuting triangles
+\[
+\begin{tikzcd}
+Y \ar[rr] \ar[dr] & & Y' \ar[dl] \\
+& X & 
+\end{tikzcd}
+\]
+There is a dual notion of an undercategory. 
+
+Given a simplicial set $X$ we can then consider the overcategory $\Set_{\Delta / X}$.
+Think about this as the category of maps of simplical sets into $X$.
+We want to think about a smaller category, namely the category of maps of just the {\em $n$-simplices} into $X$, that we denote $\Delta_{/ X}$. 
+This category fits into a commutative diagram
+\[
+\begin{tikzcd}
+\Delta_{/X} \ar[r] \ar[d] & \Set_{\Delta / X} \ar[d] \\
+\Delta \ar[r, "\Delta^{(-)}"] & \Set_{\Delta}
+\end{tikzcd}
+\]
+The lower horizontal map is the Yoneda embedding sending $[n] \mapsto \Delta^n$. 
+The right vertical map is the map that forgets the map into $X$ defining the object of the overcategory and just remembers the source object. \footnote{This is a pullback diagram in the category of categories.}
+
+Concretely, the objects $\Delta_{/X}$ consists of maps, for each $n$
+\[
+\Delta^n \to X .
+\]
+These are precisely the $n$-simplices $X[n]$ of $X$. 
+The morphisms are commuting triangles of simplicial sets
+\[
+\begin{tikzcd}
+\Delta^n \ar[rr] \ar[dr] & & \Delta^m \ar[dl] \\
+& X & 
+\end{tikzcd}
+\]
+
+Note that any simplicial set defines a composition of functors
+\[
+\Delta_{/X} \to \Delta \xto{\Delta^{(-)}} \Set_{\Delta} .
+\]
+The following lemma consists of throwing definitions around
+
+\begin{lem}
+There is an isomorphism of simplicial sets
+\[
+\colim \left(\Delta_{/X} \to \Delta \xto{\Delta^{(-)}} \Set_{\Delta} \right) \xto{\cong} X
+\]
+\end{lem}
+
+Roughly, this lemma just says that $X$ is glued together from its $n$-simplices.
+Using this perspective, the following definition is properly motivated. 
+
+\begin{dfn}
+Let $X$ be a simplicial set. 
+Define the {\bf geometric realization} of $X$ to be the topological space
+\[
+|X| := \colim \left(\Delta_{/X} \to \Delta \xto{|\Delta^{(-)}|} \Top \right) .
+\]
+Here, $|\Delta^{(-)}|$ is the functor from Example \ref{eg: sing} which sends $[n]$ to the geometric $n$-simplex $|\Delta^n| \subset \RR^n$.
+\end{dfn}
+
+We have already seen how colimits can be used to glue together a space.
+
+Almost tautologically, one has the following.
+
+\begin{prop}
+The functor $|-|$ is left adjoint to $\Sing(-)$:
+\[
+\begin{tikzcd}
+\Set_{\Delta} \ar[r,bend left,"|-|",""{name=A, below}] & \Top \ar[l,bend left,"\Sing",""{name=B,above}] \ar[from=A, to=B, symbol=\dashv] .
+\end{tikzcd}
+\]
+\end{prop}
+
+\section{We have the nerve}
+
+Not only do simplicial sets give us a nice combinatorial description of topological spaces, but they provide a great organizational tool for many categorical constructions. 
+
+Let $\Cat$ be the category of categories. 
+Here, we mean the category whose objects are categories, and whose morphisms are functors. 
+Recall, the objects of the ordinal category $\Delta$ consisted of ordered sets $[n]$ which we can think of as categories 
+\[
+[n] = \{0 \to 1 \to \cdots \to n\} .
+\]
+Thus, we have a functor $\Delta \hookrightarrow \Cat$. 
+
+Abstractly, the {\em nerve} is a functor $N : \Cat \to \Set_{\Delta}$ given by the left Kan extension of $\Delta \hookrightarrow \Cat$ along the Yoneda embedding $\Delta \to \Set_{\Delta}$. 
+\[
+\begin{tikzcd}
+\Delta \ar[r] \ar[d] & \Set_{\Delta} \\
+\Cat \ar[ur, dotted, "N(-)"'] & .
+\end{tikzcd} 
+\]
+A more explicit definition is the following. 
+
+\begin{dfn}
+Let $\sC$ be a category.
+Define the simplicial set $N \sC$ whose $n$-simplices are all $n$-composable chains
+\[
+X_0 \to X_1 \to \cdots \to X_n
+\]
+in $\sC$. 
+In other words, $N \sC [n] = \Hom_{\Cat}([n], \sC)$. 
+\end{dfn}
+
+\end{document}
