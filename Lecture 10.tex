@@ -1,0 +1,114 @@
+\documentclass[11pt]{amsart}
+
+\usepackage{macros}
+
+\linespread{1.25}
+
+\usepackage[final]{pdfpages}
+
+\setcounter{tocdepth}{2}
+
+\def\Fun{{\sf Fun}}
+\def\Top{{\sf Top}}
+\def\colim{{\rm colim}\;}
+\def\Sing{{\rm Sing}}
+\def\Cat{{\sf Cat}}
+
+\title{Lecture 10: Introduction to higher categories}
+
+\begin{document}
+\maketitle
+
+Last time, we met the definition of a {\em quasi-category} as a simpicial set satisfying a certain lifting property.
+While this definition is rather direct and simple, it lacks to provide any interpretation as a model for a higher category.
+In this lecture, we hope to give a broad picture of higher categories, and to relate more intuitive approaches to that of quasi-categories. 
+
+If a category is like a set with arrows between the elements of the set, we should inductively think of a $2$-category as a category with arrows between the morphisms of $\sC$.
+Thus, what we mean by ``higher category" is a category in which one can speak of arrows between arrows, and so on. 
+
+\section{The idea of enrichment}
+
+Let $K^{\tensor}$ be a (unital) monoidal category.
+A {\em category enriched in $K$} is a category $\sC$ together such that for all $X,Y \in \sC$ the morphism sets $\Hom_{\sC}(X,Y)$ are objects of $K$. 
+One must also prescribe the data of identities and compositions in the appropriate way.
+For instance, the composition rule
+\[
+c_{XYZ} : \Hom_{\sC}(Y,Z) \tensor \Hom_{\sC}(X,Y) \to \Hom_{\sC}(X,Z)
+\]
+must be a morphism in the category $K$. 
+
+\begin{eg}
+There are many examples of enriched categories. 
+For instance, the category of dg vector spaces $\dgVect_k$ is enriched in {\em itself}.
+The category of topological spaces also admits a natural enrichment.
+Indeed, one can speak of ``mapping spaces", which gives $\Top$ an enrichment over itself as well. 
+\end{eg}
+
+Note that when we say category, what we really mean is a category enriched in $\Set$. 
+Following this logic, the idea of enrichment gives a natural first guess of what a higher category is. 
+
+\begin{dfn}
+A {\bf strict $2$-category} is a category enriched over the category of categories $\Cat$. 
+\end{dfn}
+
+\begin{rmk}
+When we say the category of categories $\Cat$ we mean the (large) category whose objects are categories and morphisms are functors between categories.
+\end{rmk}
+
+Concretely, this definition means that for any two objects $X,Y$ of a $2$-category $\sC^{(2)}$ there is a morphism {\em category} $\Hom_{\sC^{(2)}}(X,Y)$. 
+Within this morphism category, we can then talk about ``morphisms between morphisms" in a rigorous way. 
+
+Why have we called such $2$-categories {\em strict}?
+This comes from thinking about associativity of the composition rule (which is now a functor)
+\[
+c_{XYZ} : \Hom_{\sC^{(2)}}(Y,Z) \circ \Hom_{\sC^{(2)}}(X,Y) \to \Hom_{\sC^{(2)}}(X,Z) .
+\]
+By the definition of enrichment, associativity says that we have an equality of functors
+\[
+c_{XZW} \circ (c_{XYZ} \times \id) = c_{XYW} \circ (\id \times c_{YZW})
+\]
+for all $X,Y,Z,W \in \sC^{(2)}$. 
+It is generally not good practice to ask for two functors to be equal. 
+Indeed, it is more natural to ask for the data of a {\em natural isomorphism}
+\[
+\eta_{XYZW} : c_{XZW} \circ (c_{XYZ} \times \id) \implies c_{XYW} \circ (\id \times c_{YZW}) .
+\]
+Asking for such data leads one to the definition of a (weak = non-strict) $2$-category.
+
+\begin{rmk}
+It turns out that weak and strict $2$-categories are equivalent, but this should be thought of as a happy accident.
+When we go higher up the chain, strict $n$-categories are not at all the same as weaker definitions one can come up with.
+\end{rmk}
+
+When we say ``higher category" we are referring to a category in which one has morphisms of arbitrary level. 
+
+\section{Fluffy morphisms}
+
+In practice we will still only be concerned with results at the $1$-categorical level. 
+Really, we will use the theory of higher categories as a robust model for the concept of ``homotopy equivalence". 
+This means that we will only ever care about higher categories in which all the higher morphisms are quite boring. 
+
+\begin{dfn}
+An $(\infty,n)$-{\bf category} is a higher category in which all $k$-morphisms are invertible for $k > n$. 
+We will simply refer to a $(\infty,1)$-category as an $\infty$-{\bf category}.
+\end{dfn}  
+
+\begin{eg}
+An intuitive example of higher categories comes from topology.
+Let $X$ be a topological space.
+Define the category $\pi_{\leq 1}(X)$ whose objects are the points of $X$ and morphisms are paths. 
+Note that to every path, we can invert time to obtain an inverse. 
+Thus, this is a category in which all morphisms are invertible. 
+Hence $\pi_{\leq 1}(X)$ is a {\em groupoid} called the ``fundamental groupoid" of $X$. 
+
+Going further, we can define the $2$-category $\pi_{\leq 2} (X)$ whose objects and morphisms are the same as $\pi_{\leq 1}(X)$. 
+The $2$-morphisms are the homotopies between paths. 
+This is what one might call a ``2-groupoid", since it is a $2$-category in which all $1,2$-morphisms are invertible. 
+
+One can inductively define a higher category $\pi_{\leq \infty}(X)$, whose morphsims of all levels are invertible. 
+This is a particular example of a $(\infty,0)$-category, which we might as well refer to as an $\infty$-{\em groupoid}. 
+We will soon see why one should think of all $\infty$-groupoids as arising in this way. 
+Thus, ``$\infty$-groupoid" is just a fancy way of saying ``topological space". 
+\end{eg}
+
+\end{document}
