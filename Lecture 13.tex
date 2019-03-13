@@ -27,12 +27,216 @@ In this lecture we have two goals:
 
 \section{Transferring model structures}
 
+\begin{thm}
+\label{thm: trans}
+Suppose
+\[
+\begin{tikzcd}
+\sC\ar[r,bend left,"F",""{name=A, below}] & \sD\ar[l,bend left,"U",""{name=B,above}] \ar[from=A, to=B, symbol=\dashv]
+\end{tikzcd}
+\]
+is an adjoint pair and that $\sC$ is a cofbrantly generated model category. 
+Suppose further that
+\begin{itemize}
+\item[(1)] the functor $G$ commutes with sequential colimits;
+\item[(2)] a map in $\sD$ that has the LLP with respect to $G^{-1}({\rm Fib}_{\sC}) \subset {\rm Mor}(\sD)$ is in $G^{-1}(\sW)$. 
+\end{itemize}
+Then, $\sD$ has the structure of a cofibrantly generated model category where 
+\begin{itemize}
+\item the sets
+\[
+\{F(i) \; | \; i \in {\rm Cof}_\sC\} \;\; , \;\; \{F(j) \; | \; j \in {\rm Cof}_{\sC} \cap \sW_{\sC} \}
+\]
+generated the cofibrations and acyclic cofibrations respectively;
+\item $f \in {\rm Mor}(\sD)$ is a fibration / weak equivalence if and only if $G(f)$ is a fibration / weak equivalence. 
+\end{itemize}
+\end{thm}
+
+We can say condition (2) as follows. 
+First, call $f \in {\rm Mor}(\sD)$ a fibration / weak equivalence if and only if $G(f)$ is a fibration / weak equivalence in $\sC$. 
+Then, (2) requires that if a map in $\sD$ has the LLP with respect to all fibrations in $\sD$ then its a weak equivalence. 
+
+This condition is quite hard to verify in practice, but thankfully there is an easier condition one can verify to ensure this holds. 
+
+\begin{prop}\label{prop: easy}
+Let $F,G$ be adjoint functors as above where $\sC$ is {\em any} model category. 
+Call $f \in {\rm Mor}(\sD)$ a fibration / weak equivalence if and only if $G(f)$ is a fibration / weak equivalence in $\sC$. 
+If
+\begin{itemize}
+\item[(a)] every object in $\sD$ is fibrant;
+\item[(b)] every object in $\sD$ has a path object;
+\end{itemize}
+then a map that has the LLP with respect to every fibration is a weak equivalence.
+\end{prop}
+
+\begin{rmk}
+The path object is the dual notion to a cylinder object.
+Recall, if $X$ is an object of a model category, a path object is an object $PX$ together with maps $s : X \to PX$, $(p_0,p_1) : PX \to X$ such that $s$ is a weak equivalence, $p_0 \times p_1$ is a fibration, and the diagram
+\[
+\begin{tikzcd}
+X \ar[r,"s"', "\simeq"]  \ar[dr, "1 \times 1"'] & P X \ar[d, "p_0 \times p_1"] \\
+& X \times X .
+\end{tikzcd}
+\]
+commutes.
+\end{rmk}
+
+\section{Transferring from $\dgVect$}
+
+First of all, there is a natural model structure on the category of dg vector spaces given by the following:
+\begin{itemize}
+\item a map $f : V \to W$ in $\dgVect_k$ is a fibration if an only if $f : V^n \to W^n$ is surjective for each $n$;
+\item a map $f : V \to W$ in $\dgVect_k$ is a cofibration if and only if $f : V^n \to W^n$ is injective for each $n$;
+\item a map $f : V \to W$ in $\dgVect_k$ is a weak equivalence if and only if $f$ is a quasi-isomorphism. 
+\end{itemize}
+
+\begin{ex}
+Show that this is a model structure on $\dgVect_k$.
+What are the fibrant / cofibrant objects?
+\end{ex}
+
+\begin{thm}[\cite{Hov}]
+This model structure is a cofibrantly generated model structure on $\dgVect_k$. 
+\end{thm}
+
+\begin{rmk}
+Suppose that $W$ is an ordinary vector space.
+Define the dg vector space $D^n(W)$ by 
+\[
+\fc^n (W) = W[-n] \xto{\id_W} W[-n-1] .
+\]
+We see that $\fc^n(W)$ is acyclic and that there is a natural inclusion of dg vector spaces $W[-n] \to \fc^n(W)$.
+Note that $\fc^n(W)$ is precisely the cone of the map of dg vector spaces $\id : W[-n] \to W[-n]$. 
+
+The set of all inclusions
+\[
+\{k[-n] \to \fc^n(k)\}_{n \in \ZZ}
+\]
+is a generating set for the cofibrations above. 
+The set of maps
+\[
+\{0 \to \fc^n(k)\}_{n \in \ZZ}
+\]
+is a generating set for the acyclic cofibrations. 
+\end{rmk}
+
+\subsection{The model structure on $\dgCAlg$}
+\def\oblv{{\rm oblv}}
+\def\Tens{{\rm Tens}}
+
+We use Theorem \ref{thm: trans} to induce a model structure on commutative dg algebras in the following way. 
+Recall the adjunction
+\[
+\begin{tikzcd}
+\dgVect_k \ar[r,bend left,"\Sym(-)",""{name=A, below}] & \dgCAlg_k \ar[l,bend left,"{\rm oblv}_C",""{name=B,above}] \ar[from=A, to=B, symbol=\dashv]
+\end{tikzcd}
+\]
+Where $\Sym(-) : V \mapsto \Sym(V)$ is the symmetric algebra functor, and $\oblv_C$ is the forgetful functor. 
+
+In order to apply Theorem \ref{thm: trans}, we need to verify that the following two conditions are satisfied:
+\begin{itemize}
+\item[(1)] The functor $\oblv_C$ preserves sequential colimits;
+\item[(2)] Call a map $f : A \to B$ of commutative dg algebras is a fibration if $\oblv_C(f)$ is a fibration. 
+Then, we need to show that if a map of commutative dg algebras has the LLP with respect to every fibration, then it is a quasi-isomorphism.
+\end{itemize}
+
+Item (1) follows from the stronger result:
+
+\begin{lem}
+The forgetful functor 
+\[
+\oblv_C : \dgCAlg_k \to \dgVect_k
+\]
+creates sifted colimits.
+\end{lem}
+
+To show (2) we appeal to Proposition \ref{prop: easy}. 
+The first condition in Proposition \ref{prop: easy} is immediate since every dg vector space is fibrant. 
+So, all we need to show is the following. 
+
+\begin{lem}
+Every object in $\dgCAlg_k$ has a path object.
+\end{lem}
+\begin{proof}
+Let $A$ be a commutative dg algebra. 
+Define
+\[
+M = \bigoplus_{n \in \ZZ} \bigoplus_{(a_1,a_2) \in (A \times A)_n} \fc^n(k) .
+\]
+This looks complicated, but its just a huge acyclic object that we will construct the path space out of. 
+For each $(a_1,a_2) \in (A \times A)_n$ we have a map of dg vector spaces
+\[
+p_{(a_1,a_2)} : \fc^n(k) \to A \times A
+\]
+that sends the generator in degree $n$, $1 \in \fc^n(k)^n = k$ to $(a_0,a_1)$, and the generator in degree $n+1$, $1 \in \fc^n(k)^{n+1}$ to $\d_{A \times A} (a_0, a_1)$. 
+By the universal property of direct sums, the collection of all of these define a map
+\[
+p : M \to A \times A
+\]
+and by the universal property of the symmetric algebra we have a map of commutative algebras
+\[
+\Sym(p) : \Sym(M) \to A \times A .
+\]
+Note that $\Sym(p)$ is degreewise surjective by construction. 
+
+In any symmetric algebra we have a unit $1 \in \Sym^0(M) = k \subset \Sym(M)$. 
+Compiling these facts we obtain a commutative diagram
+\[
+\begin{tikzcd}
+A \ar[r, "\id \tensor 1"] \ar[dr, "\id \times \id"'] & A \tensor_k \Sym(M) \ar[d, "(\id \times \id) \tensor \Sym(p)"] \\
+& A \times A .
+\end{tikzcd}
+\]
+By construction, $\Sym(M)$ is acyclic, so the top map is a quasi-isomorphism. 
+Also, the vertical right map is a fibration since $\Sym(p)$ is. 
+\end{proof}
+
+To summarize, we have endowed $\dgCAlg_k$ with a cofibrantly generated model category structure with the properties:
+\begin{itemize}
+\item[(1)] A map $f : A \to B$ of commutative dg algebras is a weak equivalence if and only if $\oblv_C(f) : \oblv_C(A) \to \oblv_C(B)$ is a weak equivalence in $\dgVect_k$.
+That is, a quasi-isomorphism. 
+\item[(2)] A map $f : A \to B$ of commutative dg algebras is a fibration if and only if $\oblv_C(f) : \oblv_C(A) \to \oblv_C(B)$ is a fibration in $\dgVect_k$.
+That is, a degreewise surjection. 
+\item[(3)] The set of maps
+\[
+\{{\rm Tens}_L(k[n]) \to {\rm Tens}_L (\fc^n(k))\}_{n \in \ZZ}
+\]
+generate the cofibrations. 
+\end{itemize}
+
+
+\subsection{The model structure on $\dgLie$}
+
+We can also utilize the transfer theorem to endow $\dgLie_k$ with a model structure by appealing to the adjunction
+\[
+\begin{tikzcd}
+\dgVect_k \ar[r,bend left,"{\rm free}_L(-)",""{name=A, below}] & \dgLie_k \ar[l,bend left,"{\rm oblv}_L",""{name=B,above}] \ar[from=A, to=B, symbol=\dashv]
+\end{tikzcd}
+\]
+between the free Lie algebra functor and the forgetful functor from Lie algebras to vector spaces. 
+
+The proof is very similar, so we just read off the properties of this model structure on $\dgLie_k$. 
+
+\begin{itemize}
+\item[(1)] A map $f : \fg \to \fh$ of dg Lie algebras is a weak equivalence if and only if $\oblv_L(f) : \oblv_L(\fg) \to \oblv_L(\fh)$ is a weak equivalence in $\dgVect_k$.
+That is, a quasi-isomorphism. 
+\item[(2)] A map $f : \fg \to \fh$ of dg Lie algebras is a fibration if and only if $\oblv_L(f), \oblv_L(\fh)$ is a fibration in $\dgVect_k$.
+That is, a degreewise surjection. 
+\item[(3)] The set of maps
+\[
+\{{\rm free}_L(k[n]) \to {\rm free}_L (\fc^n(k))\}_{n \in \ZZ}
+\]
+generate the cofibrations. 
+\end{itemize}
+
 \section{From model to $\infty$-categories}
 
 We have already discussed how one can obtain an $\infty$-category both from an ordinary category (the {\em classical} nerve) and a simplicial category (the {\em simplicial} / {\em coherent} nerve). 
 In the latter case, the simplicial nerve remembers the actual simpicial model category structure and set up the equivalence between two different theories of $\infty$-categories. 
 
 Now, we would like to discuss a construction of an $\infty$-category from a model category that is sensitive to all of the structures of the model category. 
-For instance, the $\infty$-category will detect weak equivalences 
+For instance, the $\infty$-category will detect weak equivalences as ordinary equivalences. 
+
+
 
 \end{document}
