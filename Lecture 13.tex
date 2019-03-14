@@ -14,16 +14,19 @@
 \def\Sing{{\rm Sing}}
 \def\Cat{{\sf Cat}}
 
-\title{Lecture 10: Small algebras}
+\title{Lecture 10: Back to model categories}
 
 \begin{document}
 \maketitle
 
-In this lecture we have two goals: 
+This week we have two goals: 
 \begin{itemize}
 \item[(1)] recall the standard model structure on the category of dg vector spaces, and transfer it to model category structures on dg Lie algebras and commutative dg algebras;
 \item[(2)] formulate a variant of the nerve construction that produces an $\infty$-category from an ordinary model category. 
+This is how we will define the underlying $\infty$-categories (Lie, commutative algebras) that make up our derived enhancement of deformation theory. 
 \end{itemize}
+
+In todays lecture we will tackle (1). 
 
 \section{Transferring model structures}
 
@@ -51,8 +54,56 @@ generated the cofibrations and acyclic cofibrations respectively;
 \item $f \in {\rm Mor}(\sD)$ is a fibration / weak equivalence if and only if $G(f)$ is a fibration / weak equivalence. 
 \end{itemize}
 \end{thm}
+\begin{proof}(Idea)
+For a full proof see Chapter II of \cite{GJ}.
+We won't repeat the proof, but let me hint at how each condition is used. 
 
-We can say condition (2) as follows. 
+The core of the proof boils down to verifying the factorization axiom. 
+That is, we we need to show that every map $f : X \to Y$ in $\sD$ can be factored as
+\[
+X \xto{i} Z \xto{p} Y
+\]
+where $i$ is a cofibration and $p$ is an acyclic fibration.
+
+To construct it, one defines an inductive sequence of cofibrations
+\[
+X = Z_0 \xto{i_0} Z_1 \xto{i_1} \cdots \to Z_n \xto{i_n} Z_{n+1} \to \cdots
+\]
+together with maps $p_n : Z_n \to Y$ satisfying $p_n = p_{n+1} \circ i_n$. 
+Define 
+\[
+Z = \underset{n}{\colim} Z_n .
+\]
+By construction this fits into a sequence $X \xto{i} Z \xto{p} Y$. 
+It is immediate that $i$ is a cofibration, one must show that $p$ is an acyclic fibration. 
+
+For this, we need to see that given any diagram
+\[
+\begin{tikzcd}
+A \ar[r] \ar[d,"j"] & G(Z) \ar[d, "G(p)"] \\
+B \ar[r] & G(Y) 
+\end{tikzcd}
+\]
+such that $j$ is a cofibration, a lift $B \to G(Z)$ exists. 
+Since {\em $G$ commutes with sequential colimits} we see this becomes equivalent to constructing an inductive set of lifts for each diagram
+\[
+\begin{tikzcd}
+A \ar[r] \ar[d,"j"] & G(Z_n) \ar[d, "G(p_n)"] \\
+B \ar[r] & G(Y) .
+\end{tikzcd}
+\]
+Now, we can use the adjunction to turn this into a lifting problem
+\[
+\begin{tikzcd}
+F(A) \ar[r] \ar[d,"F(j)"] & Z_n \ar[d, "p_n"] \\
+F(B) \ar[r] & Y 
+\end{tikzcd}
+\]
+which exists by definition. 
+\end{proof}
+
+
+We can restate condition (2) as follows. 
 First, call $f \in {\rm Mor}(\sD)$ a fibration / weak equivalence if and only if $G(f)$ is a fibration / weak equivalence in $\sC$. 
 Then, (2) requires that if a map in $\sD$ has the LLP with respect to all fibrations in $\sD$ then its a weak equivalence. 
 
@@ -140,6 +191,8 @@ In order to apply Theorem \ref{thm: trans}, we need to verify that the following
 Then, we need to show that if a map of commutative dg algebras has the LLP with respect to every fibration, then it is a quasi-isomorphism.
 \end{itemize}
 
+\subsubsection{}
+
 Item (1) follows from the stronger result:
 
 \begin{lem}
@@ -147,8 +200,60 @@ The forgetful functor
 \[
 \oblv_C : \dgCAlg_k \to \dgVect_k
 \]
-creates sifted colimits.
+creates filtered colimits.
 \end{lem}
+
+\begin{rmk}
+A functor $G : \sC \to \sD$ {\em creates} colimits for a diagram $F : J \to \sC$ if whenever $\colim (G \circ F)$ exists, the colimit $\colim F$ exists and $G(\colim F) = \colim (G \circ F)$.
+\end{rmk}
+
+\begin{proof}
+Let $F : J \to \dgCAlg_k$ be any filtered diagram and denote by $G$ the composition of functors
+\[
+J \xto{F} \dgCAlg_k \xto{\oblv_C} \dgVect_k .
+\]
+Let $A$ be the colimit of this functor (which exists as all colimits do in $\dgVect_k$), which we can express by
+\[
+A = \underset{j \in J}{\colim} G(j) .
+\] 
+As we show below, the key property of a filtered category is that the diagonal morphism $J \to J \times J$ is {\em final}. 
+
+Using this, we have the following composition of dg vector spaces
+\[
+A \tensor_k A = \left(\underset{j \in J}{\colim} G(j)\right) \tensor_k \left(\underset{j' \in J}{\colim} G(j')\right) \cong \underset{(j,j') \in J\times J}{\colim} G(j) \tensor_k G(j') \xto{\cong} \underset{j \in J}{\colim} G(j) \tensor_k G(j) .
+\]
+We used finality of the diagonal functor $J \to J \times J$ in the last isomorphism. 
+
+Now, for each $j$ we have the multiplication map $\mu_j : F(j) \tensor_k F(j) \to F(j)$.
+Applying $G$ and taking the colimit we obtain a map
+\[
+\underset{j \in J}{\colim} G(j) \tensor_k G(j) \to \underset{j \in J}{\colim} G(j) = A .
+\]
+Thus, combining these two composition we obtain a map $\mu : A \tensor_k A \to A$, as desired. 
+It is an exercise to show that this endows $(A, \mu)$ with the structure of a dg commutative algebra. 
+\end{proof}
+
+In the proof we have used a useful property of the diagonal functor $J \to J \times J$ of a filtered category $J$. 
+Namely, that it is {\em final}. 
+
+\begin{dfn}
+A functor $F : J \to I$ is {\em final} if it satisfies the either of the following two equivalent properties:
+\begin{itemize}
+\item[(a)] 
+For every object $i \in I$, the undercategory 
+\[
+F^{i /} =  
+\]
+is nonempty and connected. 
+\item[(b)] for all categories $\sC$ and functors $G : I \to \sC$, the natural map
+\[
+\colim_{J} (G \circ F) \xto{\cong} \colim_{I} G
+\]
+is an isomorphism in $\sC$. 
+\end{itemize}
+\end{dfn}
+
+\subsubsection{}
 
 To show (2) we appeal to Proposition \ref{prop: easy}. 
 The first condition in Proposition \ref{prop: easy} is immediate since every dg vector space is fibrant. 
@@ -229,13 +334,7 @@ That is, a degreewise surjection.
 generate the cofibrations. 
 \end{itemize}
 
-\section{From model to $\infty$-categories}
 
-We have already discussed how one can obtain an $\infty$-category both from an ordinary category (the {\em classical} nerve) and a simplicial category (the {\em simplicial} / {\em coherent} nerve). 
-In the latter case, the simplicial nerve remembers the actual simpicial model category structure and set up the equivalence between two different theories of $\infty$-categories. 
-
-Now, we would like to discuss a construction of an $\infty$-category from a model category that is sensitive to all of the structures of the model category. 
-For instance, the $\infty$-category will detect weak equivalences as ordinary equivalences. 
 
 
 
