@@ -1,0 +1,181 @@
+\documentclass[11pt]{amsart}
+
+\usepackage{macros}
+
+\linespread{1.25}
+
+\usepackage[final]{pdfpages}
+
+\setcounter{tocdepth}{2}
+
+\def\Fun{{\sf Fun}}
+\def\Top{{\sf Top}}
+\def\colim{{\rm colim}\;}
+\def\Sing{{\rm Sing}}
+\def\Cat{{\sf Cat}}
+\def\Spec{{\rm Spec}}
+
+\title{Lecture 15: Augmented algebras}
+
+\begin{document}
+\maketitle
+
+In order to formulate deformation theory at the level of $\infty$-categories, we first must provide a substitute for the category of Artinian algebras. 
+For ordinary deformation theory, we saw that Artinian algebras were the correct test objects needed to define a formal scheme. 
+In this lecture, we define the correct enhancement of Artinian algebras in the  $\infty$-category of commutative dg algebras $\CAlg_k$. 
+
+\section{Overcategories and joins}
+
+The data of an Artinian algebra is a pair $(A, \fm)$ where $A$ is a commutative algebra and $\fm$ is a maximal ideal satisfying $A / \fm = k$. 
+In particular, there is a canonical map $A \to A / \fm = k$ for every such algebra. 
+Moreover, a map of Artinian algebras must necessarily preserve these canonical maps. 
+
+An algebra $A$ together with a map $\epsilon : A \to k$ is called {\em augmented}. 
+Geometrically, augmented algebras correspond to pointed affine schemes
+\[
+* = \Spec(k) \to \Spec(A) .
+\]
+
+The first notion which we transfer to the $\infty$-category setting is that of an augmented algebra. 
+To do this, we need to step aside and define what is meant by an {\em overcategory}. 
+
+\subsection{$\infty$-overcategories}
+
+If $\sC$ is any category and $X \in \sC$ is an object, we know how to define the overcategory $\sC_{/X}$. 
+Its objects are arrows $Y \to X$ in $\sC$ and morphisms are commuting triangles. 
+
+\begin{eg}
+Let $\dgCAlg_k$ be the ordinary category of dg commutative algebras. 
+Then $(\dgCAlg_k)_{/ k}$ is the ordinary category of augmented dg commutative algebras. 
+\end{eg}
+
+There is a way of defining the overcategory $\sC_{/X}$ via a universal property, which makes use of the following categorical construction. 
+
+\begin{dfn}
+Let $\sC,\sD$ be two categories. 
+The {\bf join} of $\sC$ with $\sD$ is the category $\sC \star \sD$ whose objects are 
+\[
+{\rm ob}(\sC \star \sD) = {\rm ob} (\sC) \sqcup {\rm ob} (\sD)
+\]
+and morphisms are:
+\[
+\Hom_{\sC \star \sD} (X, Y) =  \left\{  \begin{array}{ccccc} \Hom_{\sC}(X,Y) & {\rm if} & X, Y \in \sC \\ 
+										       \Hom_{\sD}(X,Y) & {\rm if} & X,Y \in \sD \\ 
+										       \{\star\} & {\rm if} & X \in \sC , Y \in \sD \\
+										       \emptyset  & {\rm if} & X \in \sD , Y \in \sC . \end{array} \right.
+\]
+\end{dfn}
+
+Roughly, this is like the ``disjoint union" of two categories where we throw in a unique morphism from every object of $\sC$ to every object of $\sD$. 
+Note that there is a natural functor
+\[
+\sD \to \sC \star \sD .
+\]
+
+\begin{ex} 
+Recall the definition of the {\em join} of two topological spaces $S,S'$
+\[
+S \star T = (S \times T \times [0,1]) / \sim
+\]
+where the equivalence relation is $(a,b, 0) \sim (a,b', 0)$ and $(a,b,1) \sim (a',b,1)$ for all $a,a' \in S$ and $b,b' \in T$. 
+This equivalence relation simply collapses $T$ to a point at $t = 0$ and collapses $S$ to a point at $t = 1$. 
+In particular, both $S, T$ map into $S \star T$.
+
+Given any category $\sC$ we can consider the simplicial set $N\sC$ given by the nerve. 
+Show that
+\[
+|N\sC \star N \sD| \simeq |N \sC| \star |N \sD|
+\]
+where $|N \sC|$ is the geometric realization of the simplicial set $N \sC$. 
+\end{ex}
+
+Joins allow us to make the following universal property for overcategories. 
+As above, let $X \in \sC$ be some object in a category.
+We can view this as the data of a functor
+\[
+X : [0] \to \sC
+\]
+where $[0]$ is the category with a single object $0$ and no non-identity morphisms. 
+
+\begin{lem}
+The category $\sC_{/X}$ satisfies the following universal property: for any category $\sD$ one has an equivalence of categories
+\[
+\Fun(\sD, \sC_{/X}) = \Fun_{X} (\sD \star [0], \sC)
+\]
+where $\Fun_{X} (\sD \star [0], \sC)$ is the full subcategory of functors $G : \sD \star [0] \to \sC$ for which the composition 
+\[
+[0] \to \sD \star [0] \xto{G} \sC
+\]
+is $X$. 
+\end{lem}
+\begin{proof}
+This is almost tautological. 
+Suppose we have a functor $G : \sD \star [0] \to \sC$ whose restriction to $[0]$ is the constant functor based on $X$.
+Define a functor $G |_{\sD} : \sD \to \sC_{/X}$ as follows.
+To any object $d \in \sD$ we have a unique map $d \to 0$ in $\sD \star [0]$ by definition. 
+Then $G|_{\sD} (d) = G(d \to 0) = \left(G(d) \to G(0) = X\right) \in \sC_{/X}$. 
+It is an exercise to see how this defines a functor. 
+\end{proof}
+
+\begin{ex} 
+Modify this lemma to characterize the overcategory $\sC_{/F}$ where $F$ is any functor $F : \sC' \to \sC$ by a similar universal property.  
+\end{ex}
+
+\subsubsection{}
+
+One can also define the join of two simplicial sets via the same formula as for topological spaces. 
+In this way, joins commute with geometric realization in the sense: if $K, K'$ are two simplicial sets, then
+\[
+|K \star K'| \simeq |K| \star |K'| .
+\]
+
+\begin{lem}
+If $\sC$ and $\sD$ are $\infty$-categories, then so is $\sC \star \sD$. 
+\end{lem}
+
+With this definition, we can define the over category of an $\infty$-category over an object in a completely analogous way as the usual case. 
+
+\begin{dfn}
+Let $\sC$ be an $\infty$-category and $X \in \sC$ an object. 
+Define the $\infty$-category $\sC_{/X}$ by the universal property: for any $\infty$-category $\sD$, $\sC_{/X}$ is the $\infty$-category so that there is a natural equivalence
+\[
+\Fun(\sD, \sC_{/X}) \simeq \Fun_X(\sD \star \Delta^0, \sC)
+\]
+where the right-hand side consists of maps of simplicial sets $G : \sD \star \Delta^0 \to \sC$ such that the induced map
+\[
+\Delta^0 \to \sD \star [0] \xto{G} \sC
+\]
+is $X$. 
+\end{dfn}
+
+\begin{ex}
+Note that an object in an $\infty$-category is nothing but a map of simplicial sets $X : \Delta^0 \to \sC$. 
+Define the notion of an $\infty$-category over a functor $F : \sC' \to \sC$ where $\sC'$ is any other $\infty$-category. 
+\end{ex}
+
+One can also define, in a completely analogous way, the notion of an {\em under} category in the $\infty$-categorical sense. 
+The key idea is that instead of $\sD \star \Delta^0$, one uses $\Delta^0 \star \sD$ in the universal property. 
+
+\section{Augmentations}
+
+We can now define the $\infty$-categorical notion of an augmentation for a commutative algebra. 
+
+\begin{dfn}
+Define the $\infty$-category of {\bf augmented} commutative algebras by
+\[
+\CAlg_k^{\rm aug} = \left(\CAlg_k\right)_{/k} 
+\]
+where $\CAlg_k$ is the $\infty$-category of all commutative algebras. 
+\end{dfn}
+
+\begin{rmk}
+Recall, $\CAlg_k$ was constructed from the model category of commutative dg algebras $\dgCAlg_k$. 
+There is an ordinary category of {\em augmented} commutative dg algebras $\CAlg_k^{\sf dg,aug}$, which are simply commutative dg algebras $A$ together with a map of commutative dg algebras $A \to k$. 
+The maps are those of commutative dg algebras preserving the augmentation. 
+
+There is a natural model structure on $\CAlg_k^{\sf dg,aug}$. 
+The Dwyer-Kan localization of this model category produces an $\infty$-category equivalent to the one $\CAlg^{\rm aug}_k$ we have just defined. 
+\end{rmk}
+
+
+\end{document}

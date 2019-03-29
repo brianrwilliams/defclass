@@ -1,0 +1,191 @@
+\documentclass[11pt]{amsart}
+
+\usepackage{macros}
+
+\linespread{1.25}
+
+\usepackage[final]{pdfpages}
+
+\setcounter{tocdepth}{2}
+
+\def\Fun{{\sf Fun}}
+\def\Top{{\sf Top}}
+\def\colim{{\rm colim}\;}
+\def\Sing{{\rm Sing}}
+\def\Cat{{\sf Cat}}
+\def\Spec{{\rm Spec}}
+\def\lcone{\triangleleft}
+\def\rcone{\triangleright}
+
+
+\title{Lecture 15: Small algebras}
+
+\begin{document}
+\maketitle
+
+\section{Excursion: (co)limits in $\infty$-categories}
+
+We have so far avoided talking about (co)limits in the $\infty$-categorical sense. 
+We cannot avoid this anymore. 
+
+In practice, defining categorical construction, such as (co)limits, at the level of $\infty$-categories is completely analogous to the ordinary categorical versions. 
+The main advantage, is that $\infty$-category is constructed in such a way that these constructions play well with homotopy equivalence.
+Thus, from a model categorical perspective, they behave a lot like homotopy (co)limits. 
+
+\subsection{A reminder on ordinary (co)limts}
+
+We take a brief aside to remind ourselves about ordinary (co)limits, and state a potentially unfamiliar axiomatic way of defining at them. 
+
+So, let $F : \sI \to \sC$ be a functor between ordinary categories. 
+The most standard definition of a colimit of $F$ is given by a collection of arrows in $\sC$
+\[
+\{ \eta_{i} : F(i) \to X \;, \; i \in \sI | F(i \to j) \circ \eta_i = \eta_j \; \forall i \to j\}
+\]
+that is {\em initial} among all such collections. 
+This means that given any other collection of arrows $\{\eta_i' : F(i) \to Y\}$ there is a unique map $f : X \to Y$ compatible with the collections. 
+In this situation, we usually say $X$ is the colimit of $F$ and write $\colim_\sI F = X$. 
+There is the clear dual notion for limits. 
+
+In the last lecture, we have introduced the {\em join} of two categories $\sC \star \sD$. 
+Also, recall the ``singleton category", $[0]$ which consists of a single object $0$ and no non-identity maps. 
+For any ordinary category $\sI$, define the two categories
+\[
+\begin{array}{ccccc}
+({\rm Left \; cone}) & \sI^{\lcone} & := & [0] \star \sI \\
+({\rm Right \; cone}) & \sI^{\rcone} & := & \sI \star [0]
+\end{array}
+\]
+Note that in both cases, there are natural functors $\sI \to \sI^{\lcone} , \sI^{\rcone}$. 
+
+Last time we recalled the over/under category of category over / under an object. 
+Here is a more general construction. 
+
+\begin{dfn}
+Let $F : \sI \to \sC$ be a functor. 
+\begin{itemize}
+\item[(1)]
+Define the {\bf over category} $\sC_{/F}$ to be the full subcategory
+\[
+\sC_{/F} \subset \Fun(\sI^{\lcone}, \sC)
+\]
+consisting of functors $G : \sI^{\rcone} \to \sC$ such that the composition
+\[
+\sI \to \sI^{\rcone} \xto{G} \sC
+\]
+is $F$. 
+
+\item[(2)]
+Define the under category $\sC_{F /}$ to be the full subcategory
+\[
+\sC_{F / } \subset \Fun(\sI^{\rcone}, \sC)
+\]
+consisting of functors $G : \sI^{\rcone} \to \sC$ such that the composition
+\[
+\sI \to \sI^{\rcone} \xto{G} \sC
+\]
+is $F$. 
+\end{itemize}
+\end{dfn}
+
+Let $F : \sI \to \sC$ be a functor.
+Note that any object $X \in \sC$ determines a functor
+\[
+X_F : \sI^{\lcone} \to \sC
+\]
+which sends an object $j \in \sI$ to $F(j)$ and $[0]$ to $X$. 
+Clearly, then, this determines an element $X_F \in \sC_{F /}$. 
+Similarly for the right cone and the overcategory. 
+
+The following is a tautological observation. 
+\begin{lem}
+The object $X \in \sC$ is a {\em colimit} of $F : \sI \to \sC$ if and only if $X_F \in \sC_{F /}$ is an {\em initial} object.
+Similarly, $X \in \sC$ is a limit of $F : \sI \to \sC$ if and only if $X_F \in \sC_{/F}$ is a {\em final} object. 
+\end{lem}
+
+This means that we can define limits / colimits using the universal property of being final / initial in an appropriate diagram category!
+This observation is actually most of the work in defining the notion of a (co)limit in an $\infty$-category.
+The only thing we are missing is the appropriate notion of initial and final.
+
+\subsection{Initial / final objects}
+
+For an ordinary category, an object $0 \in \sC$ is {\em initial} if $\Hom(0, X) = \{\star\}$ is the singleton set for any $X \in \sC$. 
+For the appropriate notion in $\infty$-categories it is then fairly clear what we must say: an object $0 \in \sC$ is initial if the {\em space} of maps from $0$ to any other object is {\em contractible}. 
+
+\begin{dfn}
+Let $\sC$ be an $\infty$-category.
+An object $0 \in \sC$ is {\bf initial} if 
+\[
+\Map_{\sC}(0, X)
+\]
+is contractible for all $X \in \sC$.
+An object $\star \in \sC$ is {\bf final} if 
+\[
+\Map_{\sC}(X, \star)
+\]
+is contractible for all $X \in \sC$. 
+\end{dfn}
+
+\subsection{(Co)limits}
+
+Finally, we can define (co)limits. 
+If $\sI$ is any $\infty$-category, define the auxiliary $\infty$-categories
+\[
+\begin{array}{ccccc}
+({\rm Left \; cone}) & \sI^{\lcone} & := & \Delta^0 \star \sI \\
+({\rm Right \; cone}) & \sI^{\rcone} & := & \sI \star \Delta^0
+\end{array}
+\]
+just as before. 
+(Recall, we have made sense of what it means to take the join of two simplicial sets). 
+We can then define the over / under infinity categories $\sC_{/F} \subset \Fun(\sI^{\lcone}, \sC)$ and $\sC_{F/} \subset \Fun(\sI^{\rcone}, \sC)$ just as in the ordinary way. 
+Here, of course, by functors between $\infty$-categories we mean the simplicial set of maps, which is again an $\infty$-category. 
+The only non-obvious thing to verify is why these simplicial sets still satisfy the weak Kan condition, but we leave it as an exercise. 
+
+\begin{dfn}
+Let $F : \sI \to \sC$ be a functor of $\infty$-categories.
+\begin{itemize}
+\item[(1)] We say $X \in \sC_{/F}$ is a {\em limit} of $F$ if $X$ is a final object in $\sC_{/F}$. 
+\item[(2)] We say $X \in \sC_{F/}$ is a {\em colimit} of $F$ if $X$ is an initial object in $\sC_{F/}$. 
+\end{itemize}
+\end{dfn}
+
+\subsection{The relation to model categories}
+
+For $\infty$-categories that arise from model categories through Dwyer-Kan localization, there is a beautiful relationship between (co)limits in $\infty$-categories and the corresponding {\em homotopy} (co)limits at the model category level.
+
+Dwyer-Kan localization produces a simplicial category, which is at the level that this theorem is stated. 
+Note that given any functor $F : \sI \to \sC$ of simplicial categories, there is an induced functor on the simplicial nerve.
+This means, we have a functor of $\infty$-categories
+\[
+N_{\Delta} (F) : N_{\Delta}(\sI) \to N_{\Delta}(\sC) .
+\]
+
+\begin{thm}
+Suppose $F : \sI \to \sC$ is a functor of simplicial categories.
+Suppose 
+\[
+\{\eta_i : F(i) \to X \; | \; i \in \sI\}
+\]
+is some collection of arrows in $\sC$. 
+The following conditions are equivalent:
+\begin{itemize}
+\item 
+The collection $\{\eta_i\}$ exhibits $X \in \sC$ as the homotopy colimit of $F$;
+\item 
+The collection $\{\eta_i\}$ defines an extension of $N_{\Delta} (F)$ to a functor
+\[
+N_{\Delta} (F)_{\eta} : N_{\Delta}(\sI)^{\rcone} \to N_{\Delta}(\sC) 
+\]
+which is an initial object in $N_{\Delta}(\sC)_{N_{\Delta}(F) / }$. 
+In other words, $X$ is a colimit of $N_{\Delta}(F)$, in the $\infty$-categorical sense.
+\end{itemize}
+There is a completely similar statement for limits.
+\end{thm}
+
+\section{Small algebras}
+
+
+
+
+ 
+\end{document}
