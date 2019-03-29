@@ -14,7 +14,7 @@
 \def\Sing{{\rm Sing}}
 \def\Cat{{\sf Cat}}
 
-\title{Lecture 10: Small algebras}
+\title{Lecture 13: Transferring model structures}
 
 \begin{document}
 \maketitle
@@ -25,14 +25,14 @@ In this lecture we have two goals:
 \item[(2)] formulate a variant of the nerve construction that produces an $\infty$-category from an ordinary model category. 
 \end{itemize}
 
-\section{Transferring model structures}
+\section{Model structures on algebras}
 
 \begin{thm}
 \label{thm: trans}
 Suppose
 \[
 \begin{tikzcd}
-\sC\ar[r,bend left,"F",""{name=A, below}] & \sD\ar[l,bend left,"U",""{name=B,above}] \ar[from=A, to=B, symbol=\dashv]
+\sC\ar[r,bend left,"F",""{name=A, below}] & \sD\ar[l,bend left,"G",""{name=B,above}] \ar[from=A, to=B, symbol=\dashv]
 \end{tikzcd}
 \]
 is an adjoint pair and that $\sC$ is a cofbrantly generated model category. 
@@ -52,7 +52,17 @@ generated the cofibrations and acyclic cofibrations respectively;
 \end{itemize}
 \end{thm}
 
-We can say condition (2) as follows. 
+\begin{proof} (Sketch)
+The main thing to verify is that every morphism $f : X \to Y$ in $\sD$ factors as
+\[
+X \xto{i} Z \xto{p} Y
+\]
+where $j$ is a cofibration and $p$ is an acyclic fibration. 
+A major part of the proof involves a diagram in $\sC$ of the form
+
+
+
+We can state condition (2) in the theorem as follows. 
 First, call $f \in {\rm Mor}(\sD)$ a fibration / weak equivalence if and only if $G(f)$ is a fibration / weak equivalence in $\sC$. 
 Then, (2) requires that if a map in $\sD$ has the LLP with respect to all fibrations in $\sD$ then its a weak equivalence. 
 
